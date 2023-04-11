@@ -1,0 +1,41 @@
+.details-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.details-card-wrapper {
+    display: flex;
+    flex-direction: row;
+    height: fit-content;
+}
+
+button {
+    margin-left: 10px;
+}
+
+.DetailsCard {
+    display: flex;
+    border: 1px solid darkgray;
+    font-size: .8rem;
+    width: 27vw;
+    margin: 10px;
+    padding: 5px 5px 0 5px;
+    flex-flow: column wrap;
+}
+
+.details-properties {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 8px;
+    
+}
+.details-properties > .title-property{
+    overflow-wrap: anywhere;
+}
+.title-div {
+    font-weight: bold;
+    margin-right: 5px;
+    font-size: .7rem;
+    min-width: 70px;
+    max-width: 70px;
+}

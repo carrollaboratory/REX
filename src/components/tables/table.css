@@ -1,0 +1,18 @@
+.table-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .table {
+    width: 75%;
+  }
+  
+  .table-title,
+  .search-input {
+    margin: 0 0 0 15px;
+  }
+  
+  .search-input input {
+    width: 200px;
+    height: 20px;
+  }
