@@ -27,6 +27,23 @@ function Table() {
     }
   };
 
+  const tableCustomStyles = {
+    headRow: {
+      style: {
+        backgroundColor: "#E7EEF0",
+      },
+    },
+    rows: {
+      style: {
+        backgroundColor: "#E7EEF0",
+      },
+      stripedStyle: {
+        color: "#000000",
+        backgroundColor: "#FFFFFF",
+      },
+    },
+  };
+
   const paginationComponentOptions = {
     selectAllRowsItem: true,
   };
@@ -137,6 +154,8 @@ function Table() {
           paginationResetDefaultPage={resetPaginationToggle}
           subHeader
           persistTableHead
+          striped={true}
+          customStyles={tableCustomStyles}
         />
       </div>
     </div>

@@ -31,15 +31,6 @@ function DetailsView() {
 
   return (
     <>
-      <button
-        style={{ marginLeft: "10px" }}
-        onClick={() => {
-          setSelectedObject(null);
-          navigate("/");
-        }}
-      >
-        Back
-      </button>
       <div
         className="details-container"
         style={{ display: "flex", flexFlow: "row wrap" }}
@@ -57,16 +48,12 @@ function DetailsView() {
                 <>
                   <div className="title-div">Part of:</div>
                   <div>
-                    <a
-                      href={selectedObject?.resource?.identifier[0]?.system}
-                      target="_blank"
-                    >
-                      {
-                        selectedObject?.resource?.partOf[0]?.reference.split(
-                          "/"
-                        )[1]
-                      }
-                    </a>
+                    {/*TO DO: if relatedArtifact.url includes the partOf reference, link to the related artifact URL*/}
+                    {
+                      selectedObject?.resource?.partOf[0]?.reference.split(
+                        "/"
+                      )[1]
+                    }
                   </div>{" "}
                 </>
               ) : (
@@ -143,6 +130,15 @@ function DetailsView() {
           {<DistributionAncestry focusData={focusData} />}
         </div>
       </div>
+      <button
+        style={{ marginLeft: "10px" }}
+        onClick={() => {
+          setSelectedObject(null);
+          navigate("/");
+        }}
+      >
+        Back
+      </button>
     </>
   );
 }
