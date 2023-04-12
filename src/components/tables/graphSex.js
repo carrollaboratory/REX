@@ -7,27 +7,23 @@ export const GraphSex = ({ focusData }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    console.log("SET ME HERE ", focusData?.entry?.[0]?.resource);
     focusData && getData();
   }, [focusData]);
+
   const getData = () => {
     let graphData = [["Name", "Value"]];
-    console.log("SET ME DATA ", focusData?.entry?.[0]?.resource?.component);
     focusData?.entry?.[0]?.resource?.component.map((c) => {
       if (c.valueInteger !== 0) {
-        console.log("COMP:", c);
         graphData.push([c.code.coding[0].display, c.valueInteger]);
       }
     });
     setData(graphData);
-    console.log("DATA: ", data);
   };
 
   const options = {
-    title: "Sex Distribution",
+    colors: ["#FF8F8F", "#3895D3", "#FFBB28", "#8DCC688"],
+    legend: "bottom",
   };
-
-  const COLORS = ["#FF8F8F", "#3895D3", "#FFBB28", "#8DCC688"];
 
   const renderPie = () => {
     return (
@@ -36,10 +32,74 @@ export const GraphSex = ({ focusData }) => {
         data={data}
         options={options}
         width={"100%"}
-        height={"400px"}
+        height={"250px"}
+        style={{ fontSize: "20px" }}
       />
     );
   };
 
-  return <>{data.length > 0 ? renderPie() : "No available data"}</>;
+  let sum = 0;
+  focusData?.entry?.[0]?.resource?.component.forEach(
+    (d) => (sum += d.valueInteger)
+  );
+
+  return (
+    <>
+      <div
+        className="graph-sex"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          margin: "10px 10px 0 0",
+          height: "fit-content",
+          border: "1px solid darkgray",
+          width: "27vw",
+          textAlign: "center",
+          fontSize: ".8rem",
+          padding: "12px 0",
+        }}
+      >
+        <b>Sex Distribution</b>
+        {focusData?.entry?.[1]?.resource?.component ? (
+          <div>Total: {sum}</div>
+        ) : (
+          ""
+        )}
+        <div
+          style={{
+            display: "flex",
+            flexFlow: "row wrap",
+            justifyContent: "space-evenly",
+            padding: "5px",
+            fontSize: ".8rem",
+            margin: "9px",
+            overflowWrap: "break-word",
+          }}
+        >
+          {focusData?.entry?.[0]?.resource?.component
+            ? focusData?.entry?.[0]?.resource?.component.map((c, index) => {
+                if (c.valueInteger !== 0) {
+                  return (
+                    <>
+                      <div
+                        key={index}
+                        style={{ display: "flex", flexDirection: "column" }}
+                      >
+                        <div>{}</div>
+                        <div className="display">
+                          {c.code?.coding[0]?.display}
+                        </div>
+                        <div className="value-integer">{c.valueInteger}</div>
+                      </div>
+                    </>
+                  );
+                }
+              })
+            : "No available data"}
+        </div>
+
+        {data.length > 0 ? renderPie() : "No available data"}
+      </div>
+    </>
+  );
 };

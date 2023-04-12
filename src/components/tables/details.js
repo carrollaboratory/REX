@@ -5,6 +5,7 @@ import { DistributionAncestry } from "./distributionAncestry";
 import { useNavigate } from "react-router-dom";
 import "./details.css";
 import HtmlReactParser from "html-react-parser";
+import { GraphSex } from "./graphSex";
 
 function DetailsView() {
   const { selectedObject, setSelectedObject } = useContext(myContext);
@@ -96,22 +97,8 @@ function DetailsView() {
             </div>
           </div>
         </div>
-        <div
-          className="graph-sex"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            margin: "10px 10px 0 0",
-            height: "fit-content",
-            border: "1px solid darkgray",
-            width: "27vw",
-            textAlign: "center",
-            fontSize: ".8rem",
-            padding: "12px 0",
-          }}
-        >
-          <b>Sex Distribution</b>
-          <DistributionSex focusData={focusData} />
+        <div>
+          <GraphSex focusData={focusData} />
         </div>
         <div
           className="graph-ancestry"
