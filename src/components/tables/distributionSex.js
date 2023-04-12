@@ -45,8 +45,6 @@ export const DistributionSex = ({ focusData }) => {
             })
           : "No available data"}
       </div>
-
-      <GraphSex focusData={focusData} />
     </>
   );
 };
