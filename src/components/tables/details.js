@@ -1,4 +1,3 @@
-import { DistributionSex } from "./distributionSex";
 import React, { useContext, useEffect, useState } from "react";
 import { myContext } from "../../App";
 import { DistributionAncestry } from "./distributionAncestry";
