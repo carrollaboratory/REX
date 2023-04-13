@@ -26,7 +26,6 @@ function DetailsView() {
       })
       .then((d) => {
         setFocusData(d);
-        console.log(focusData);
       });
   };
 
