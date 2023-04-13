@@ -37,7 +37,6 @@ export const GraphAncestry = ({ focusData }) => {
 
   const options = {
     legend: { position: "none" },
-    // colors: colors[index % colors.length],
   };
 
   const renderBar = () => {
@@ -53,7 +52,7 @@ export const GraphAncestry = ({ focusData }) => {
           chartType="ColumnChart"
           data={data}
           options={options}
-          width={"99%"}
+          width={"100%"}
           height={"250px"}
         />
       </div>
@@ -89,9 +88,10 @@ export const GraphAncestry = ({ focusData }) => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-evenly",
-            padding: "5px",
+            padding: "0 5px",
             fontSize: ".8rem",
             margin: "9px",
+            height: "98px",
           }}
         >
           {focusData?.entry?.[1]?.resource?.component
@@ -105,19 +105,22 @@ export const GraphAncestry = ({ focusData }) => {
                           display: "flex",
                           flexDirection: "column",
                           alignItems: "center",
+                          justifyContent: "space-between",
                         }}
                       >
-                        <div
-                          className="display"
-                          style={{
-                            display: "flex",
-                            flexFlow: "column wrap",
-                            width: "60px",
-                          }}
-                        >
-                          {c.code?.coding[0]?.display}
+                        <div className="display-wrapper">
+                          <div
+                            className="display"
+                            style={{
+                              display: "flex",
+                              flexFlow: "column wrap",
+                              width: "60px",
+                            }}
+                          >
+                            {c.code?.coding[0]?.display}
+                          </div>
+                          <div className="value-integer">{c.valueInteger}</div>
                         </div>
-                        <div className="value-integer">{c.valueInteger}</div>
                         <div
                           className="legend"
                           style={{

@@ -11,8 +11,8 @@ export const GraphSex = ({ focusData }) => {
   }, [focusData]);
 
   const getData = () => {
-    let graphData = [["Name", "Value"]];
-    focusData?.entry?.[0]?.resource?.component.map((c) => {
+    let graphData = [["Sex", "Value"]];
+    focusData?.entry?.[0]?.resource?.component.map((c, index) => {
       if (c.valueInteger !== 0) {
         graphData.push([c.code.coding[0].display, c.valueInteger]);
       }
@@ -21,8 +21,15 @@ export const GraphSex = ({ focusData }) => {
   };
 
   const options = {
-    colors: ["#FF8F8F", "#3895D3", "#FFBB28", "#8DCC688"],
     legend: "bottom",
+    colors: ["#FF8F8F", "#3895D3", "#FFBB28", "#8DCC688"],
+    pieStartAngle: 180,
+    // slices: {
+    //   0: { color: "#FF8F8F" },
+    //   1: { color: "#3895D3" },
+    //   2: { color: "#FFBB28" },
+    //   3: { color: "#8DCC688" },
+    // },
   };
 
   const renderPie = () => {
