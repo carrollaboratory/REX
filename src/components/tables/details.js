@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { myContext } from "../../App";
-import { DistributionAncestry } from "./distributionAncestry";
 import { useNavigate } from "react-router-dom";
 import "./details.css";
 import HtmlReactParser from "html-react-parser";
 import { GraphSex } from "./graphSex";
+import { GraphAncestry } from "./graphAncestry";
 
 function DetailsView() {
   const { selectedObject, setSelectedObject } = useContext(myContext);
@@ -60,18 +60,7 @@ function DetailsView() {
             }}
           >
             <div className="details-properties">
-              <div
-                className="title-div"
-                style={{
-                  fontWeight: "bold",
-                  marginRight: "5px",
-                  fontSize: ".7rem",
-                  minWidth: "70px",
-                  maxWidth: "70px",
-                }}
-              >
-                Title:
-              </div>
+              <div className="title-div">Title:</div>
               <div className="title-property">
                 {selectedObject?.resource?.title}
               </div>
@@ -131,20 +120,8 @@ function DetailsView() {
         <div className="graph-sex-display">
           <GraphSex focusData={focusData} />
         </div>
-        <div
-          className="graph-ancestry"
-          style={{
-            height: "fit-content",
-            width: "42vw",
-            border: "1px solid darkgray",
-            textAlign: "center",
-            fontSize: ".8rem",
-            padding: "12px 0",
-          }}
-        >
-          <b>Ancestry Distribution</b>
-
-          {<DistributionAncestry focusData={focusData} />}
+        <div className="graph-ancestry-display">
+          {<GraphAncestry focusData={focusData} />}
         </div>
       </div>
       <button

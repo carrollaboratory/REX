@@ -11,6 +11,19 @@
     color: white;
   }
 
+.details-properties {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 8px;
+    
+}
 .details-properties > .title-property{
     overflow-wrap: anywhere;
+}
+.title-div {
+    font-weight: bold;
+    margin-right: 5px;
+    font-size: .7rem;
+    min-width: 70px;
+    max-width: 70px;
 }
