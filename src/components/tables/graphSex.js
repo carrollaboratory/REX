@@ -5,6 +5,7 @@ import { myContext } from "../../App";
 export const GraphSex = ({ focusData }) => {
   const { selectedObject, setSelectedObject } = useContext(myContext);
   const [data, setData] = useState([]);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     focusData && getData();
@@ -15,21 +16,23 @@ export const GraphSex = ({ focusData }) => {
     focusData?.entry?.[0]?.resource?.component.map((c, index) => {
       if (c.valueInteger !== 0) {
         graphData.push([c.code.coding[0].display, c.valueInteger]);
+        setShow(true);
       }
     });
     setData(graphData);
   };
 
+  focusData?.entry?.[0]?.resource?.component.map((c, index) => {});
   const options = {
     legend: "bottom",
-    colors: ["#FF8F8F", "#3895D3", "#FFBB28", "#8DCC688"],
+    // colors: ["#FF8F8F", "#3895D3", "#FFBB28", "#8DCC688"],
     pieStartAngle: 180,
-    // slices: {
-    //   0: { color: "#FF8F8F" },
-    //   1: { color: "#3895D3" },
-    //   2: { color: "#FFBB28" },
-    //   3: { color: "#8DCC688" },
-    // },
+    slices: {
+      0: { color: "#FF8F8F" },
+      1: { color: "#3895D3" },
+      2: { color: "#FFBB28" },
+      3: { color: "#8DCC688" },
+    },
   };
 
   const renderPie = () => {
@@ -111,7 +114,7 @@ export const GraphSex = ({ focusData }) => {
             : ""}
         </div>
 
-        {data.length > 0 ? renderPie() : "No available data"}
+        {show ? renderPie() : "No available data"}
       </div>
     </>
   );
