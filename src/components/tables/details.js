@@ -33,12 +33,45 @@ function DetailsView() {
     <>
       <div
         className="details-container"
-        style={{ display: "flex", flexFlow: "row wrap" }}
+        style={{
+          display: "flex",
+          flexFlow: "row wrap",
+          // backgroundColor: "pink",
+          justifyContent: "space-evenly",
+        }}
       >
-        <div className="details-card-wrapper">
-          <div className="DetailsCard">
+        <div
+          className="details-card-wrapper"
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            height: "fit-content",
+          }}
+        >
+          <div
+            className="DetailsCard"
+            style={{
+              display: "flex",
+              border: "1px solid darkgray",
+              fontSize: ".8rem",
+              width: "27vw",
+              padding: "5px 5px 0 5px",
+              flexFlow: "column wrap",
+            }}
+          >
             <div className="details-properties">
-              <div className="title-div">Title:</div>
+              <div
+                className="title-div"
+                style={{
+                  fontWeight: "bold",
+                  marginRight: "5px",
+                  fontSize: ".7rem",
+                  minWidth: "70px",
+                  maxWidth: "70px",
+                }}
+              >
+                Title:
+              </div>
               <div className="title-property">
                 {selectedObject?.resource?.title}
               </div>
@@ -48,7 +81,6 @@ function DetailsView() {
                 <>
                   <div className="title-div">Part of:</div>
                   <div>
-                    {/*TO DO: if relatedArtifact.url includes the partOf reference, link to the related artifact URL*/}
                     {
                       selectedObject?.resource?.partOf[0]?.reference.split(
                         "/"
@@ -96,13 +128,12 @@ function DetailsView() {
             </div>
           </div>
         </div>
-        <div>
+        <div className="graph-sex-display">
           <GraphSex focusData={focusData} />
         </div>
         <div
           className="graph-ancestry"
           style={{
-            marginTop: "10px",
             height: "fit-content",
             width: "42vw",
             border: "1px solid darkgray",
@@ -117,7 +148,7 @@ function DetailsView() {
         </div>
       </div>
       <button
-        style={{ marginLeft: "10px" }}
+        className="button"
         onClick={() => {
           setSelectedObject(null);
           navigate("/");

@@ -27,14 +27,21 @@ export const GraphSex = ({ focusData }) => {
 
   const renderPie = () => {
     return (
-      <Chart
-        chartType="PieChart"
-        data={data}
-        options={options}
-        width={"100%"}
-        height={"250px"}
-        style={{ fontSize: "20px" }}
-      />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
+        <Chart
+          chartType="PieChart"
+          data={data}
+          options={options}
+          width={"99%"}
+          height={"250px"}
+        />
+      </div>
     );
   };
 
@@ -50,7 +57,6 @@ export const GraphSex = ({ focusData }) => {
         style={{
           display: "flex",
           flexDirection: "column",
-          margin: "10px 10px 0 0",
           height: "fit-content",
           border: "1px solid darkgray",
           width: "27vw",
@@ -95,7 +101,7 @@ export const GraphSex = ({ focusData }) => {
                   );
                 }
               })
-            : "No available data"}
+            : ""}
         </div>
 
         {data.length > 0 ? renderPie() : "No available data"}
