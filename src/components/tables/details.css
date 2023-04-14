@@ -3,7 +3,8 @@
     background-color: #4051a3;
     color: white;
     border: none;
-    padding: 5px 13px
+    padding: 5px 13px;
+    margin-top: 5px;
 }
 
 .button:hover {
