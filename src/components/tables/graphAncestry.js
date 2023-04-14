@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import { myContext } from "../../App";
+import { useNavigate } from "react-router-dom";
 
 export const GraphAncestry = ({ focusData }) => {
   const { selectedObject, setSelectedObject } = useContext(myContext);
@@ -10,6 +11,8 @@ export const GraphAncestry = ({ focusData }) => {
   useEffect(() => {
     focusData && getData();
   }, [focusData]);
+
+  const navigate = useNavigate();
 
   const colors = [
     "#ADB5BD",
@@ -69,90 +72,103 @@ export const GraphAncestry = ({ focusData }) => {
 
   return (
     <>
-      <div
-        className="graph-ancestry"
-        style={{
-          height: "fit-content",
-          width: "42vw",
-          border: "1px solid darkgray",
-          textAlign: "center",
-          fontSize: ".8rem",
-          padding: "12px 0",
-        }}
-      >
-        <b>Ancestry Distribution</b>
-        {focusData?.entry?.[1]?.resource?.component ? (
-          <>
-            <div>Total: {sum}</div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-evenly",
-                padding: "0 5px",
-                fontSize: ".8rem",
-                margin: "9px",
-                height: "98px",
-              }}
-            >
-              {focusData?.entry?.[1]?.resource?.component
-                ? focusData?.entry?.[1]?.resource?.component.map((c, index) => {
-                    if (c.valueInteger !== 0) {
-                      return (
-                        <>
-                          <div
-                            key={index}
-                            style={{
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                              justifyContent: "space-between",
-                            }}
-                          >
-                            <div className="display-wrapper">
+      <div>
+        <div
+          className="graph-ancestry"
+          style={{
+            height: "fit-content",
+            width: "42vw",
+            border: "1px solid darkgray",
+            textAlign: "center",
+            fontSize: ".8rem",
+            padding: "12px 0",
+          }}
+        >
+          <b>Ancestry Distribution</b>
+          {focusData?.entry?.[1]?.resource?.component ? (
+            <>
+              <div>Total: {sum}</div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                  padding: "0 5px",
+                  fontSize: ".8rem",
+                  margin: "9px",
+                  height: "98px",
+                }}
+              >
+                {focusData?.entry?.[1]?.resource?.component
+                  ? focusData?.entry?.[1]?.resource?.component.map(
+                      (c, index) => {
+                        if (c.valueInteger !== 0) {
+                          return (
+                            <>
                               <div
-                                className="display"
+                                key={index}
                                 style={{
                                   display: "flex",
-                                  flexFlow: "column wrap",
-                                  width: "60px",
+                                  flexDirection: "column",
+                                  alignItems: "center",
+                                  justifyContent: "space-between",
                                 }}
                               >
-                                {c.code?.coding[0]?.display}
+                                <div className="display-wrapper">
+                                  <div
+                                    className="display"
+                                    style={{
+                                      display: "flex",
+                                      flexFlow: "column wrap",
+                                      width: "60px",
+                                    }}
+                                  >
+                                    {c.code?.coding[0]?.display}
+                                  </div>
+                                  <div className="value-integer">
+                                    {c.valueInteger}
+                                  </div>
+                                </div>
+                                {/*Legend for graph*/}
+                                <div
+                                  className="legend"
+                                  style={{
+                                    width: "12px",
+                                    height: "12px",
+                                    border: "1px solid darkgray",
+                                    background: colors[index % colors.length],
+                                  }}
+                                ></div>
                               </div>
-                              <div className="value-integer">
-                                {c.valueInteger}
-                              </div>
-                            </div>
-                            {/*Legend for graph*/}
-                            <div
-                              className="legend"
-                              style={{
-                                width: "12px",
-                                height: "12px",
-                                border: "1px solid darkgray",
-                                background: colors[index % colors.length],
-                              }}
-                            ></div>
-                          </div>
-                        </>
-                      );
-                    }
-                  })
-                : ""}
-            </div>{" "}
-          </>
-        ) : (
-          ""
-        )}
-        {/*Bar graph is rendered if there is data available*/}
-        {show ? (
-          renderBar()
-        ) : (
-          <>
-            <div style={{ marginTop: "28px" }}>No available data</div>
-          </>
-        )}
+                            </>
+                          );
+                        }
+                      }
+                    )
+                  : ""}
+              </div>{" "}
+            </>
+          ) : (
+            ""
+          )}
+          {/*Bar graph is rendered if there is data available*/}
+          {show ? (
+            renderBar()
+          ) : (
+            <>
+              <div style={{ marginTop: "28px" }}>No available data</div>
+            </>
+          )}
+        </div>
+        <button
+          className="button"
+          onClick={() => {
+            setSelectedObject(null);
+            navigate("/");
+          }}
+        >
+          Back
+        </button>
       </div>
     </>
   );

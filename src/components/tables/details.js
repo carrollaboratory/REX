@@ -124,7 +124,7 @@ function DetailsView() {
           {<GraphAncestry focusData={focusData} />}
         </div>
       </div>
-      <button
+      {/* <button
         className="button"
         onClick={() => {
           setSelectedObject(null);
@@ -132,7 +132,7 @@ function DetailsView() {
         }}
       >
         Back
-      </button>
+      </button> */}
     </>
   );
 }
