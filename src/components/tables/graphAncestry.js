@@ -31,7 +31,7 @@ export const GraphAncestry = ({ focusData }) => {
           c.valueInteger,
           colors[index % colors.length],
         ]);
-        setShow(true);
+        setShow(true); /*Show is set to true if there is data available*/
       }
     });
     setData(graphData);
@@ -41,6 +41,7 @@ export const GraphAncestry = ({ focusData }) => {
     legend: { position: "none" },
   };
 
+  //Function to render the graph
   const renderBar = () => {
     return (
       <div
@@ -123,6 +124,7 @@ export const GraphAncestry = ({ focusData }) => {
                                 {c.valueInteger}
                               </div>
                             </div>
+                            {/*Legend for graph*/}
                             <div
                               className="legend"
                               style={{
@@ -143,7 +145,7 @@ export const GraphAncestry = ({ focusData }) => {
         ) : (
           ""
         )}
-
+        {/*Bar graph is rendered if there is data available*/}
         {show ? (
           renderBar()
         ) : (
