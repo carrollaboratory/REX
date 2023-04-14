@@ -5,6 +5,7 @@ import { myContext } from "../../App";
 export const GraphAncestry = ({ focusData }) => {
   const { selectedObject, setSelectedObject } = useContext(myContext);
   const [data, setData] = useState([]);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     focusData && getData();
@@ -30,6 +31,7 @@ export const GraphAncestry = ({ focusData }) => {
           c.valueInteger,
           colors[index % colors.length],
         ]);
+        setShow(true);
       }
     });
     setData(graphData);
@@ -79,66 +81,76 @@ export const GraphAncestry = ({ focusData }) => {
       >
         <b>Ancestry Distribution</b>
         {focusData?.entry?.[1]?.resource?.component ? (
-          <div>Total: {sum}</div>
+          <>
+            <div>Total: {sum}</div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+                padding: "0 5px",
+                fontSize: ".8rem",
+                margin: "9px",
+                height: "98px",
+              }}
+            >
+              {focusData?.entry?.[1]?.resource?.component
+                ? focusData?.entry?.[1]?.resource?.component.map((c, index) => {
+                    if (c.valueInteger !== 0) {
+                      return (
+                        <>
+                          <div
+                            key={index}
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <div className="display-wrapper">
+                              <div
+                                className="display"
+                                style={{
+                                  display: "flex",
+                                  flexFlow: "column wrap",
+                                  width: "60px",
+                                }}
+                              >
+                                {c.code?.coding[0]?.display}
+                              </div>
+                              <div className="value-integer">
+                                {c.valueInteger}
+                              </div>
+                            </div>
+                            <div
+                              className="legend"
+                              style={{
+                                width: "12px",
+                                height: "12px",
+                                border: "1px solid darkgray",
+                                background: colors[index % colors.length],
+                              }}
+                            ></div>
+                          </div>
+                        </>
+                      );
+                    }
+                  })
+                : ""}
+            </div>{" "}
+          </>
         ) : (
           ""
         )}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            padding: "0 5px",
-            fontSize: ".8rem",
-            margin: "9px",
-            height: "98px",
-          }}
-        >
-          {focusData?.entry?.[1]?.resource?.component
-            ? focusData?.entry?.[1]?.resource?.component.map((c, index) => {
-                if (c.valueInteger !== 0) {
-                  return (
-                    <>
-                      <div
-                        key={index}
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <div className="display-wrapper">
-                          <div
-                            className="display"
-                            style={{
-                              display: "flex",
-                              flexFlow: "column wrap",
-                              width: "60px",
-                            }}
-                          >
-                            {c.code?.coding[0]?.display}
-                          </div>
-                          <div className="value-integer">{c.valueInteger}</div>
-                        </div>
-                        <div
-                          className="legend"
-                          style={{
-                            width: "12px",
-                            height: "12px",
-                            border: "1px solid darkgray",
-                            background: colors[index % colors.length],
-                          }}
-                        ></div>
-                      </div>
-                    </>
-                  );
-                }
-              })
-            : ""}
-        </div>
 
-        {data.length > 0 ? renderBar() : "No available data"}
+        {show ? (
+          renderBar()
+        ) : (
+          <>
+            <div style={{ marginTop: "28px" }}>No available data</div>
+          </>
+        )}
       </div>
     </>
   );

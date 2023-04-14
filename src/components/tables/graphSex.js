@@ -82,6 +82,7 @@ export const GraphSex = ({ focusData }) => {
           ""
         )}
         <div
+          className="container"
           style={{
             display: "flex",
             flexFlow: "row wrap",
