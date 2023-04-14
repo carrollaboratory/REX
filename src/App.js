@@ -24,7 +24,8 @@ export const App = () => {
           }
         >
           <Route index element={<Table />}></Route>
-          <Route path="/details" element={<DetailsView />} />
+          <Route path="/details/:studyId" element={<DetailsView />} />
+          {/* <Route path="details/:studyId" element={<></>} /> */}
         </Route>
       </Routes>
     </myContext.Provider>

@@ -7,6 +7,7 @@ export const GraphAncestry = ({ focusData }) => {
   const { selectedObject, setSelectedObject } = useContext(myContext);
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     focusData && getData();
@@ -26,6 +27,7 @@ export const GraphAncestry = ({ focusData }) => {
   ];
 
   const getData = () => {
+    setLoading(true);
     let graphData = [["Ancestry", "Value", { role: "style" }]];
     focusData?.entry?.[1]?.resource?.component.map((c, index) => {
       if (c.valueInteger !== 0) {
@@ -38,6 +40,7 @@ export const GraphAncestry = ({ focusData }) => {
       }
     });
     setData(graphData);
+    setLoading(false);
   };
 
   const options = {
@@ -163,7 +166,7 @@ export const GraphAncestry = ({ focusData }) => {
         <button
           className="button"
           onClick={() => {
-            setSelectedObject(null);
+            // setSelectedObject(null);
             navigate("/");
           }}
         >

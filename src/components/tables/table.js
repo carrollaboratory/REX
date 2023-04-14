@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import "./table.css";
 import HtmlReactParser from "html-react-parser";
 import { myContext } from "../../App";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function Table() {
   const [data, setData] = useState([]);
@@ -11,6 +11,7 @@ function Table() {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const { setSelectedObject, filterText, setFilterText } =
     useContext(myContext);
+  const { studyId } = useParams();
 
   const getFilteredItems = () =>
     data?.filter(
@@ -96,10 +97,11 @@ function Table() {
       name: "",
       selector: (row) => (
         <Link
-          onClick={() => {
-            setSelectedObject(row);
-          }}
-          to="/details"
+          state={{ propData: row }}
+          // onClick={() => {
+          //   setSelectedObject(row);
+          // }}
+          to={`/details/${row?.resource?.id}`}
         >
           Details
         </Link>
