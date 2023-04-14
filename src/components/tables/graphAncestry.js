@@ -16,14 +16,15 @@ export const GraphAncestry = ({ focusData }) => {
   const navigate = useNavigate();
 
   const colors = [
-    "#ADB5BD",
-    "#4DAA57",
-    "#E63946",
-    "#F95738",
-    "#FFBA08",
-    "#212529",
-    "#2F6690",
-    "#9113A4",
+    "#55ebd8", //aqua
+    "#80c587", //green
+    "#E84B57", //red
+    "#3D85BC", //blue
+    "#FFEE6A", //yellow
+    "#32393F", //black
+    "#FFBB28", //orange
+    "#A579EF", //purple
+    "#ADB5BD", //grey
   ];
 
   const getData = () => {

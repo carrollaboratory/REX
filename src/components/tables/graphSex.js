@@ -22,17 +22,27 @@ export const GraphSex = ({ focusData }) => {
     setData(graphData);
   };
 
-  focusData?.entry?.[0]?.resource?.component.map((c, index) => {});
+  const colors = {
+    Female: "FF8F8F",
+    Male: "3895D3",
+    Intersex: "8DCC68",
+    Unknown: "FFBB28",
+    "Missing Data": "ADB5BD",
+  };
+
+  const customColors = () => {
+    let graphColor = [];
+    focusData?.entry?.[0]?.resource?.component.forEach((c, index) => {
+      if (c.valueInteger !== 0) {
+        graphColor.push(colors[c.code.coding[0].display]);
+      }
+    });
+    return graphColor;
+  };
   const options = {
     legend: "bottom",
-    // colors: ["#FF8F8F", "#3895D3", "#FFBB28", "#8DCC688"],
+    colors: customColors(),
     pieStartAngle: 180,
-    slices: {
-      0: { color: "#FF8F8F" },
-      1: { color: "#3895D3" },
-      2: { color: "#FFBB28" },
-      3: { color: "#8DCC688" },
-    },
   };
 
   const renderPie = () => {
