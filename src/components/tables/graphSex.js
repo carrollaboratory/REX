@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import { myContext } from "../../App";
+import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 
-export const GraphSex = ({ focusData }) => {
+export const GraphSex = ({ focusData, loading }) => {
   const { selectedObject, setSelectedObject } = useContext(myContext);
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
@@ -125,7 +126,13 @@ export const GraphSex = ({ focusData }) => {
             : ""}
         </div>
 
-        {show ? renderPie() : "No available data"}
+        {loading ? (
+          <LoadingSpinner />
+        ) : show ? (
+          renderPie()
+        ) : (
+          "No available data"
+        )}
       </div>
     </>
   );

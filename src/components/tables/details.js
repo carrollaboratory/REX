@@ -13,8 +13,10 @@ function DetailsView() {
   const { studyId } = useParams();
   const location = useLocation();
   const { propData } = location.state;
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     getData();
   }, []);
 
@@ -31,6 +33,7 @@ function DetailsView() {
       .then((d) => {
         setFocusData(d);
       });
+    setLoading(false);
   };
 
   return (
@@ -112,10 +115,10 @@ function DetailsView() {
           </div>
         </div>
         <div className="graph-sex-display">
-          <GraphSex focusData={focusData} />
+          <GraphSex focusData={focusData} loading={loading} />
         </div>
         <div className="graph-ancestry-display">
-          {<GraphAncestry focusData={focusData} />}
+          {<GraphAncestry focusData={focusData} loading={loading} />}
         </div>
       </div>
     </>

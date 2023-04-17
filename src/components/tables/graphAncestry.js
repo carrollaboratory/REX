@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import { myContext } from "../../App";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 
-export const GraphAncestry = ({ focusData }) => {
+export const GraphAncestry = ({ focusData, loading }) => {
   const { selectedObject, setSelectedObject } = useContext(myContext);
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     focusData && getData();
@@ -28,7 +28,6 @@ export const GraphAncestry = ({ focusData }) => {
   ];
 
   const getData = () => {
-    setLoading(true);
     let graphData = [["Ancestry", "Value", { role: "style" }]];
     focusData?.entry?.[1]?.resource?.component.map((c, index) => {
       if (c.valueInteger !== 0) {
@@ -41,7 +40,6 @@ export const GraphAncestry = ({ focusData }) => {
       }
     });
     setData(graphData);
-    setLoading(false);
   };
 
   const options = {
@@ -49,6 +47,7 @@ export const GraphAncestry = ({ focusData }) => {
   };
 
   //Function to render the graph
+
   const renderBar = () => {
     return (
       <div
@@ -64,6 +63,7 @@ export const GraphAncestry = ({ focusData }) => {
           options={options}
           width={"100%"}
           height={"250px"}
+          loader={<div>Loading...</div>}
         />
       </div>
     );
@@ -156,7 +156,9 @@ export const GraphAncestry = ({ focusData }) => {
             ""
           )}
           {/*Bar graph is rendered if there is data available*/}
-          {show ? (
+          {loading ? (
+            <LoadingSpinner />
+          ) : show ? (
             renderBar()
           ) : (
             <>
