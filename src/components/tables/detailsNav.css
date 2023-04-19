@@ -1,0 +1,9 @@
+.details-nav{
+    display: flex;
+    flex-direction: row;
+    width: 75vw;
+}
+
+li {
+    margin-right: 25px;
+}

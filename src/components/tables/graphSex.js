@@ -3,8 +3,8 @@ import { Chart } from "react-google-charts";
 import { myContext } from "../../App";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 
-export const GraphSex = ({ focusData, loading }) => {
-  const { selectedObject, setSelectedObject } = useContext(myContext);
+export const GraphSex = ({ focusData }) => {
+  const { loading } = useContext(myContext);
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
 

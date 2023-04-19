@@ -96,13 +96,7 @@ function Table() {
     {
       name: "",
       selector: (row) => (
-        <Link
-          state={{ propData: row }}
-          // onClick={() => {
-          //   setSelectedObject(row);
-          // }}
-          to={`/details/${row?.resource?.id}`}
-        >
+        <Link state={{ propData: row }} to={`/details/${row?.resource?.id}`}>
           Details
         </Link>
       ),

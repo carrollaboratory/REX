@@ -4,8 +4,8 @@ import { myContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 
-export const GraphAncestry = ({ focusData, loading }) => {
-  const { selectedObject, setSelectedObject } = useContext(myContext);
+export const GraphAncestry = ({ focusData }) => {
+  const { loading } = useContext(myContext);
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
 
