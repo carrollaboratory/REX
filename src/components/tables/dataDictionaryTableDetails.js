@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { myContext } from "../../App";
+import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
+import "./dataDictionaryTableDetails.css";
 
 export const DataDictionaryTableDetails = ({
   selectedDictionaryReferences,
   setDictionaryTableDetails,
-  dataDictionary,
 }) => {
   const [reference, setReference] = useState({});
+  const { loading } = useContext(myContext);
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [selectedDictionaryReferences]);
 
   const getData = async () => {
     Promise.all(
@@ -28,36 +31,45 @@ export const DataDictionaryTableDetails = ({
 
   return (
     <>
-      <button onClick={() => setDictionaryTableDetails(false)}>Back</button>
-      {reference?.length > 0 ? (
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th>Code</th>
-                <th>Display</th>
-                <th>Permitted Data Type</th>
-              </tr>
-            </thead>
-            <tbody>
-              {reference?.map((r) => {
-                return (
-                  <>
-                    <tr>
-                      <td>{r?.code?.coding?.[0]?.code}</td>
-                      <td>{r?.code?.coding?.[0]?.display}</td>
+      {/* <button onClick={() => setDictionaryTableDetails(false)}>Back</button> */}
+      {
+        //   loading ? (
+        //     <LoadingSpinner />
+        //   ) :
+        reference?.length > 0 ? (
+          <div className="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th className="variable-name">Variable Name</th>
+                  <th className="variable-description">Variable Description</th>
+                  <th className="data-type">Permitted Data Type</th>
+                </tr>
+              </thead>
+              <tbody>
+                {reference?.map((r) => {
+                  return (
+                    <>
+                      <tr>
+                        <td className="variable-name">
+                          {r?.code?.coding?.[0]?.code}
+                        </td>
+                        <td className="variable-description">
+                          {r?.code?.coding?.[0]?.display}
+                        </td>
 
-                      <td>{r?.permittedDataType[0]}</td>
-                    </tr>
-                  </>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        ""
-      )}
+                        <td className="data-type">{r?.permittedDataType[0]}</td>
+                      </tr>
+                    </>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          ""
+        )
+      }
     </>
   );
 };

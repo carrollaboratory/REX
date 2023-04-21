@@ -1,3 +1,35 @@
-.DD-title-list {
-    margin-left: 50px;
+.DD-container {
+    display: flex;
+    flex-direction: row;
+    margin: 40px 0 40px 60px;
 }
+
+.DD-title-list {
+    width: 26vw;
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.DD-title-container {
+    width: 21vw;
+    border: 1px solid darkgray;
+    display: flex;
+    flex-direction: column;
+}
+.DD-titles {
+    font-size: .9rem;
+    line-height: 1.8rem;
+    padding: 10px;
+}
+
+.DD-header {
+    height: 50px;
+    font-size: .9rem;
+    cursor: default;
+    background-color: #E7EEF0;
+    border-bottom: 1px solid darkgray;
+    padding-left: 10px;
+}
+
+
+

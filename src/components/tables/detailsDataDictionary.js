@@ -9,6 +9,7 @@ export const DetailsDataDictionary = ({ propData }) => {
   const [selectedDictionaryReferences, setSelectedDictionaryReferences] =
     useState([]);
   const [dictionaryTableDetails, setDictionaryTableDetails] = useState(false);
+  const [active, setActive] = useState(-1);
 
   const valueSplit =
     propData?.resource.identifier?.[0]?.value.split("_").length;
@@ -20,7 +21,7 @@ export const DetailsDataDictionary = ({ propData }) => {
   useEffect(() => {
     setLoading(true);
     getData();
-  }, []);
+  }, [selectedDictionaryReferences]);
 
   const getData = async () => {
     await (valueSplit > 2
@@ -46,77 +47,60 @@ export const DetailsDataDictionary = ({ propData }) => {
     setLoading(false);
   };
 
-  // const getObservationReference =
-  //   dataDictionary.observationResultRequirement.map((o, index) => {
-  //     return fetch(`https://anvil-fhir-vumc.uc.r.appspot.com/fhir/`)
-  //       .then((res) => res.json())
-  //       .then((d) => {
-  //         setData(d);
-  //       });
-  //   });
-
   const handleTitleClick = (array) => {
     setSelectedDictionaryReferences(array);
     setDictionaryTableDetails(true);
   };
 
-  return !dictionaryTableDetails ? (
+  return (
     <>
-      <div className="DD-title-list">
-        <h4>Available Data Dictionaries</h4>
-        <div>
-          {dataDictionary?.map((d, index) => {
-            return (
-              <>
-                <li
-                  key={index}
-                  onClick={() =>
-                    handleTitleClick(d.resource?.observationResultRequirement)
-                  }
-                >
-                  <b>{d.resource.title}</b>
-                </li>
-                {/* <div>
-                  {d.resource?.observationResultRequirement.map((r) => {
-                    return (
-                      <>
-                        <div>{r.reference}</div>
-                      </>
-                    );
-                  })}
-                </div> */}
-              </>
-            );
-          })}
+      <div className="DD-wrapper">
+        <div className="DD-container">
+          <div className="DD-title-list">
+            <div className="DD-title-container">
+              <div className="DD-header">
+                <h4>Available Data Dictionaries</h4>
+              </div>
+              <div className="DD-titles">
+                {dataDictionary?.map((d, index) => {
+                  return (
+                    <>
+                      <li
+                        key={index}
+                        onClick={() => {
+                          handleTitleClick(
+                            d.resource?.observationResultRequirement
+                          );
+                          setActive(index);
+                        }}
+                        style={{
+                          fontWeight: active === index ? "bold" : "",
+                          textDecoration:
+                            active === index ? "none" : "underline",
+                          cursor: active === index ? "default" : "pointer",
+                        }}
+                      >
+                        {d.resource.title}
+                      </li>
+                    </>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+          <div>
+            {dictionaryTableDetails ? (
+              <DataDictionaryTableDetails
+                selectedDictionaryReferences={selectedDictionaryReferences}
+                setDictionaryTableDetails={setDictionaryTableDetails}
+                dataDictionary={dataDictionary}
+              />
+            ) : (
+              ""
+            )}
+          </div>
         </div>
       </div>
     </>
-  ) : (
-    <DataDictionaryTableDetails
-      selectedDictionaryReferences={selectedDictionaryReferences}
-      setDictionaryTableDetails={setDictionaryTableDetails}
-      dataDictionary={dataDictionary}
-    />
   );
 };
-
-{
-  /* <table>
-  {dataDictionary.map((d, index) => {
-    return (
-      <>
-        <thead>
-          <tr key={index} className="table-head-row">
-            <th className="th-title">{d.resource.title}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td></td>
-          </tr>
-        </tbody>
-      </>
-    );
-  })}
-</table> */
-}
