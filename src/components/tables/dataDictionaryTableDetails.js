@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { myContext } from "../../App";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 import "./dataDictionaryTableDetails.css";
+import { Link } from "react-router-dom";
+import { CodeableConcept } from "./codeableConcept";
 
 export const DataDictionaryTableDetails = ({
   selectedDictionaryReferences,
@@ -9,6 +11,13 @@ export const DataDictionaryTableDetails = ({
 }) => {
   const [reference, setReference] = useState({});
   const { loading } = useContext(myContext);
+  const [codeableConceptReference, setCodeableConceptReference] = useState({});
+  const [codeableConcept, setCodeableconcept] = useState(false);
+
+  const handleCodeableConceptClick = (item) => {
+    setCodeableConceptReference(item);
+    setCodeableconcept(true);
+  };
 
   useEffect(() => {
     getData();
@@ -25,7 +34,6 @@ export const DataDictionaryTableDetails = ({
       )
       .then((res) => {
         setReference(res);
-        console.log("THERE: ", res);
       });
   };
 
@@ -57,8 +65,22 @@ export const DataDictionaryTableDetails = ({
                         <td className="variable-description">
                           {r?.code?.coding?.[0]?.display}
                         </td>
-
-                        <td className="data-type">{r?.permittedDataType[0]}</td>
+                        <td className="data-type">
+                          {r?.permittedDataType[0] === "CodeableConcept" ? (
+                            <div
+                              style={{ color: "blue", cursor: "pointer" }}
+                              onClick={() => {
+                                handleCodeableConceptClick(
+                                  r?.validCodedValueSet?.reference
+                                );
+                              }}
+                            >
+                              {r?.permittedDataType[0]}
+                            </div>
+                          ) : (
+                            r?.permittedDataType[0]
+                          )}
+                        </td>
                       </tr>
                     </>
                   );
@@ -70,6 +92,12 @@ export const DataDictionaryTableDetails = ({
           ""
         )
       }
+      {codeableConcept && (
+        <CodeableConcept
+          toggleModal={setCodeableconcept}
+          codeableConceptReference={codeableConceptReference}
+        />
+      )}
     </>
   );
 };
