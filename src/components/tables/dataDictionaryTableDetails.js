@@ -68,7 +68,10 @@ export const DataDictionaryTableDetails = ({
                         <td className="data-type">
                           {r?.permittedDataType[0] === "CodeableConcept" ? (
                             <div
-                              style={{ color: "blue", cursor: "pointer" }}
+                              style={{
+                                textDecoration: "underline",
+                                cursor: "pointer",
+                              }}
                               onClick={() => {
                                 handleCodeableConceptClick(
                                   r?.validCodedValueSet?.reference

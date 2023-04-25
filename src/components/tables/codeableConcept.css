@@ -13,8 +13,10 @@
   .modal-content {
     background-color: white;
     border-radius: 5px;
-    padding: 20px;
+    padding: 10px;
     position: relative;
+    max-height: 60vh;
+    overflow-y: auto;
   }
   
   .close {
@@ -23,13 +25,16 @@
     font-size: 28px;
     font-weight: bold;
     position: absolute;
-    top: 10px;
-    right: 15px;
+    top: 0px;
+    right: 0px;
+    /* border: 1px solid rgb(107, 113, 118);
+    border-radius: 50%; */
   }
   
   .close:hover,
   .close:focus {
-    color: black;
+    color: rgb(107, 113, 118);
     text-decoration: none;
     cursor: pointer;
+    
   }

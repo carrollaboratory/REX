@@ -7,8 +7,15 @@ export const DetailsNav = ({}) => {
   return (
     <>
       <div className="details-navbar">
-        <button onClick={() => setDetails(true)}>Details</button>
-        <button onClick={() => setDetails(false)}>Data Dictionary</button>
+        <button className="details-nav-button" onClick={() => setDetails(true)}>
+          Details
+        </button>
+        <button
+          className="details-nav-button"
+          onClick={() => setDetails(false)}
+        >
+          Data Dictionary
+        </button>
       </div>
     </>
   );

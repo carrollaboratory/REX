@@ -52,13 +52,11 @@ export const CodeableConcept = ({ toggleModal, codeableConceptReference }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>
-                      {modalData?.entry?.[0]?.resource?.concept?.map(
-                        (c) => c.display
-                      )}
-                    </td>
-                  </tr>
+                  {modalData?.entry?.[0]?.resource?.concept?.map((c) => (
+                    <tr>
+                      <td>{c.display}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
