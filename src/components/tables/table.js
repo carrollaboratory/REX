@@ -11,7 +11,6 @@ function Table() {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const { setSelectedObject, filterText, setFilterText } =
     useContext(myContext);
-  const { studyId } = useParams();
 
   const getFilteredItems = () =>
     data?.filter(

@@ -1,31 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
-import { myContext } from "../../App";
-import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
-import "./dataDictionaryTableDetails.css";
-import { Link } from "react-router-dom";
-import { CodeableConcept } from "./codeableConcept";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import "./dataDictionaryReferences.css";
 
-export const DataDictionaryTableDetails = ({
-  selectedDictionaryReferences,
-  setDictionaryTableDetails,
-}) => {
+function DataDictionaryReferences() {
   const [reference, setReference] = useState({});
-  const { loading } = useContext(myContext);
-  const [codeableConceptReference, setCodeableConceptReference] = useState({});
-  const [codeableConcept, setCodeableconcept] = useState(false);
-
-  const handleCodeableConceptClick = (item) => {
-    setCodeableConceptReference(item);
-    setCodeableconcept(true);
-  };
-
+  const location = useLocation();
+  const { selectedDictionaryReferences } = location.state;
+  const navigate = useNavigate();
   useEffect(() => {
     getData();
   }, [selectedDictionaryReferences]);
 
   const getData = async () => {
     Promise.all(
-      selectedDictionaryReferences.map((c) =>
+      selectedDictionaryReferences?.observationResultRequirement.map((c) =>
         fetch(`https://anvil-fhir-vumc.uc.r.appspot.com/fhir/${c.reference}`)
       )
     )
@@ -45,16 +33,21 @@ export const DataDictionaryTableDetails = ({
         //     <LoadingSpinner />
         //   ) :
         reference?.length > 0 ? (
-          <div className="table-wrapper">
-            <div>
-              <table>
+          <>
+            <div className="dd-table-wrapper">
+              <table className="dd-table">
                 <thead>
                   <tr>
-                    <th className="variable-name">Variable Name</th>
-                    <th className="variable-description">
+                    <th className="dd-header-title" colspan="3">
+                      {selectedDictionaryReferences?.title}
+                    </th>
+                  </tr>
+                  <tr>
+                    <th className="dd-variable-name">Variable Name</th>
+                    <th className="dd-variable-description">
                       Variable Description
                     </th>
-                    <th className="data-type">Permitted Data Type</th>
+                    <th className="dd-data-type">Permitted Data Type</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -62,24 +55,24 @@ export const DataDictionaryTableDetails = ({
                     return (
                       <>
                         <tr>
-                          <td className="variable-name">
+                          <td className="dd-variable-name">
                             {r?.code?.coding?.[0]?.code}
                           </td>
-                          <td className="variable-description">
+                          <td className="dd-variable-description">
                             {r?.code?.coding?.[0]?.display}
                           </td>
-                          <td className="data-type">
+                          <td className="dd-data-type">
                             {r?.permittedDataType[0] === "CodeableConcept" ? (
                               <div
                                 style={{
                                   textDecoration: "underline",
                                   cursor: "pointer",
                                 }}
-                                onClick={() => {
-                                  handleCodeableConceptClick(
-                                    r?.validCodedValueSet?.reference
-                                  );
-                                }}
+                                // onClick={() => {
+                                //   handleCodeableConceptClick(
+                                //     r?.validCodedValueSet?.reference
+                                //   );
+                                // }}
                               >
                                 {r?.permittedDataType[0]}
                               </div>
@@ -93,18 +86,28 @@ export const DataDictionaryTableDetails = ({
                   })}
                 </tbody>
               </table>
+              {/* <tr id="no-border" colspan="3"> */}
+              <button
+                className="dd-button"
+                onClick={() => navigate("/dataDictionary")}
+              >
+                Back to All Dictionaries
+              </button>
+              {/* </tr> */}
             </div>
-          </div>
+          </>
         ) : (
           ""
         )
       }
-      {codeableConcept && (
+      {/* {codeableConcept && (
         <CodeableConcept
           toggleModal={setCodeableconcept}
           codeableConceptReference={codeableConceptReference}
         />
-      )}
+      )} */}
     </>
   );
-};
+}
+
+export default DataDictionaryReferences;

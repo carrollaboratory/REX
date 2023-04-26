@@ -2,8 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import "./dataDictionary.css";
 import DataTable from "react-data-table-component";
 import { myContext } from "../../App";
+import { Link } from "react-router-dom";
 
-export const DataDictionary = () => {
+function DataDictionary() {
   const [titleData, setTitleData] = useState([]);
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
@@ -35,25 +36,24 @@ export const DataDictionary = () => {
 
   const columns = [
     {
-      name: "Title",
-      selector: (row) => row?.resource?.title,
+      name: "Data Dictionary",
+      selector: (row) => (
+        <Link
+          state={{
+            selectedDictionaryReferences: row?.resource,
+          }}
+          to={`/dataDictionary/${row?.resource?.title?.split(" ").pop()}`}
+        >
+          {row?.resource?.title}
+        </Link>
+      ),
       wrap: true,
     },
   ];
 
   useEffect(() => {
     fetchTableData();
-    getReferences();
   }, []);
-
-  console.log(
-    "THERE: " +
-      JSON.stringify(
-        titleData.map((d) =>
-          d.resource.observationResultRequirement.map((r) => r.reference)
-        )
-      )
-  );
 
   const fetchTableData = () => {
     setLoading(true);
@@ -69,51 +69,28 @@ export const DataDictionary = () => {
     setLoading(false);
   };
 
-  const getReferences = async () => {
-    Array.isArray(titleData)
-      ? Promise.all(
-          titleData?.map((d) =>
-            d.resource.observationResultRequirement.map((r) => {
-              return fetch(
-                `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/${r.reference}`,
-                {
-                  method: "GET",
-                }
-              );
-            })
-          )
-        )
-      : null
-          .then((responses) => {
-            Promise.all(responses.map((response) => response.json()));
-          })
-          .then((m) => {
-            setData(m);
-          });
-  };
-
-  console.log("HERE: " + JSON.stringify(data[0]?.code?.coding?.[0]?.code));
-  // .then((d) => {
-  //   console.log("CONSOLE: " + d);
-  //   d.map((m) =>
-  //     m?.resource?.observationResultRequirement.map((r) =>
-  //       fetch(
-  //         `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/${r.reference}`
+  // const getReferences = async () => {
+  //   Array.isArray(titleData)
+  //     ? Promise.all(
+  //         titleData?.map((d) =>
+  //           d.resource.observationResultRequirement.map((r) => {
+  //             return fetch(
+  //               `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/${r.reference}`,
+  //               {
+  //                 method: "GET",
+  //               }
+  //             );
+  //           })
+  //         )
   //       )
-  //     )
-  //   )
-  //     .then((responses) => responses.map((response) => response.json()))
-  //     .then((m) => setData(m));
-
-  // .then((responses) =>
-  //   Promise.all(
-  //   responses.map((response) => response.json())
-  // )
-  // // )
-  // .then((m) => {
-  //   setData(m);
-  // })
-  // });
+  //     : null
+  //         .then((responses) => {
+  //           Promise.all(responses.map((response) => response.json()));
+  //         })
+  //         .then((m) => {
+  //           setData(m);
+  //         });
+  // };
 
   return (
     <div className="table-wrapper">
@@ -134,12 +111,12 @@ export const DataDictionary = () => {
           data={getFilteredItems(titleData)}
           progressPending={loading}
           fixedHeader
-          // fixedHeaderScrollHeight="650px"
-          persistTableHead
           striped={true}
           customStyles={tableCustomStyles}
         />
       </div>
     </div>
   );
-};
+}
+
+export default DataDictionary;
