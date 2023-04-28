@@ -35,12 +35,11 @@ export const CodeableConcept = ({ toggleModal, codeableConceptReference }) => {
       });
   };
 
-  console.log("BOOBIES: " + modalData);
   return (
     <div className="modal">
-      <div className="modal-content">
-        {modalData ? (
-          <>
+      {modalData ? (
+        <>
+          <div className="modal-content">
             <span className="close" onClick={() => toggleModal(false)}>
               &times;
             </span>
@@ -52,19 +51,19 @@ export const CodeableConcept = ({ toggleModal, codeableConceptReference }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {modalData?.entry?.[0]?.resource?.concept?.map((c) => (
-                    <tr>
+                  {modalData?.entry?.[0]?.resource?.concept?.map((c, index) => (
+                    <tr key={index} className="item">
                       <td>{c.display}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-          </>
-        ) : (
-          <LoadingSpinner />
-        )}
-      </div>
+          </div>
+        </>
+      ) : (
+        <LoadingSpinner />
+      )}
     </div>
   );
 };

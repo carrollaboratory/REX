@@ -144,8 +144,8 @@ function Table() {
           progressPending={loading}
           pagination
           paginationComponentOptions={paginationComponentOptions}
-          fixedHeader
-          fixedHeaderScrollHeight="650px"
+          // fixedHeader
+          // fixedHeaderScrollHeight="650px"
           paginationResetDefaultPage={resetPaginationToggle}
           subHeader
           persistTableHead

@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./dataDictionaryReferences.css";
+import { CodeableConcept } from "../tables/codeableConcept";
 
 function DataDictionaryReferences() {
   const [reference, setReference] = useState({});
   const location = useLocation();
   const { selectedDictionaryReferences } = location.state;
+  const [codeableConceptReference, setCodeableConceptReference] = useState({});
+  const [codeableConcept, setCodeableconcept] = useState(false);
+
+  const handleCodeableConceptClick = (item) => {
+    setCodeableConceptReference(item);
+    setCodeableconcept(true);
+  };
   const navigate = useNavigate();
   useEffect(() => {
     getData();
@@ -38,7 +46,7 @@ function DataDictionaryReferences() {
               <table className="dd-table">
                 <thead>
                   <tr>
-                    <th className="dd-header-title" colspan="3">
+                    <th className="dd-header-title" colSpan="3">
                       {selectedDictionaryReferences?.title}
                     </th>
                   </tr>
@@ -51,10 +59,10 @@ function DataDictionaryReferences() {
                   </tr>
                 </thead>
                 <tbody>
-                  {reference?.map((r) => {
+                  {reference?.map((r, index) => {
                     return (
                       <>
-                        <tr>
+                        <tr key={index}>
                           <td className="dd-variable-name">
                             {r?.code?.coding?.[0]?.code}
                           </td>
@@ -68,11 +76,11 @@ function DataDictionaryReferences() {
                                   textDecoration: "underline",
                                   cursor: "pointer",
                                 }}
-                                // onClick={() => {
-                                //   handleCodeableConceptClick(
-                                //     r?.validCodedValueSet?.reference
-                                //   );
-                                // }}
+                                onClick={() => {
+                                  handleCodeableConceptClick(
+                                    r?.validCodedValueSet?.reference
+                                  );
+                                }}
                               >
                                 {r?.permittedDataType[0]}
                               </div>
@@ -86,7 +94,7 @@ function DataDictionaryReferences() {
                   })}
                 </tbody>
               </table>
-              {/* <tr id="no-border" colspan="3"> */}
+              {/* <tr id="no-border" colSpan="3"> */}
               <button
                 className="dd-button"
                 onClick={() => navigate("/dataDictionary")}
@@ -100,12 +108,12 @@ function DataDictionaryReferences() {
           ""
         )
       }
-      {/* {codeableConcept && (
+      {codeableConcept && (
         <CodeableConcept
           toggleModal={setCodeableconcept}
           codeableConceptReference={codeableConceptReference}
         />
-      )} */}
+      )}
     </>
   );
 }

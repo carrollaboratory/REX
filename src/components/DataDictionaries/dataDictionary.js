@@ -8,15 +8,49 @@ function DataDictionary() {
   const [titleData, setTitleData] = useState([]);
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const { filterText, setFilterText } = useContext(myContext);
+  const [searchResults, setSearchResults] = useState([]);
 
-  const getFilteredItems = () =>
-    titleData?.filter(
-      (item) =>
-        item?.resource?.title &&
-        item?.resource?.title.toLowerCase().includes(filterText.toLowerCase())
-    );
+  // const getFilteredItems = () => {
+  //   titleData.map((r) => r?.resource?.title);
+  // };
+  useEffect(() => {
+    getSearchResults();
+  }, []);
 
+  const getSearchResults = () => {
+    console.log("text: ", filterText);
+    let dataArray = [];
+    let finalArray = [];
+    filterText != ""
+      ? fetch(
+          `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ObservationDefinition?code:text=${filterText}&_revinclude=ActivityDefinition:result`,
+          {
+            method: "GET",
+          }
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then((c) => {
+            setTitleData(c.entry);
+          })
+      : fetch(
+          "https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ActivityDefinition",
+          {
+            method: "GET",
+          }
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then((c) => {
+            setTitleData(c.entry);
+          });
+  };
+
+  // console.log("FILTER: " + filterText);
   const tableCustomStyles = {
     headRow: {
       style: {
@@ -42,54 +76,27 @@ function DataDictionary() {
           state={{
             selectedDictionaryReferences: row?.resource,
           }}
-          to={`/dataDictionary/${row?.resource?.title?.split(" ").pop()}`}
+          to={`/dataDictionary/${row?.resource?.id}`}
         >
-          {row?.resource?.title}
+          {row?.resource?.title ? row?.resource?.title : ""}
         </Link>
       ),
       wrap: true,
     },
   ];
 
-  useEffect(() => {
-    fetchTableData();
-  }, []);
-
-  const fetchTableData = () => {
-    setLoading(true);
-    fetch("https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ActivityDefinition", {
-      method: "GET",
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((c) => {
-        setTitleData(c.entry);
-      });
-    setLoading(false);
-  };
-
-  // const getReferences = async () => {
-  //   Array.isArray(titleData)
-  //     ? Promise.all(
-  //         titleData?.map((d) =>
-  //           d.resource.observationResultRequirement.map((r) => {
-  //             return fetch(
-  //               `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/${r.reference}`,
-  //               {
-  //                 method: "GET",
-  //               }
-  //             );
-  //           })
-  //         )
-  //       )
-  //     : null
-  //         .then((responses) => {
-  //           Promise.all(responses.map((response) => response.json()));
-  //         })
-  //         .then((m) => {
-  //           setData(m);
-  //         });
+  // const fetchTableData = () => {
+  //   setLoading(true);
+  //   fetch("https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ActivityDefinition", {
+  //     method: "GET",
+  //   })
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((c) => {
+  //       setTitleData(c.entry);
+  //     });
+  //   setLoading(false);
   // };
 
   return (
@@ -101,14 +108,15 @@ function DataDictionary() {
         <div className="search-input-dd">
           <input
             type="text"
-            placeholder="Searcy by value..."
+            placeholder="Search by value..."
             value={filterText}
             onChange={(e) => setFilterText(e.target.value)}
           />
+          <button onClick={(e) => getSearchResults()}>Search</button>
         </div>
         <DataTable
           columns={columns}
-          data={getFilteredItems(titleData)}
+          data={titleData}
           progressPending={loading}
           fixedHeader
           striped={true}
