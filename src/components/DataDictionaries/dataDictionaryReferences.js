@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./dataDictionaryReferences.css";
 import { CodeableConcept } from "../tables/codeableConcept";
+import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
+import { myContext } from "../../App";
 
 function DataDictionaryReferences() {
   const [reference, setReference] = useState({});
@@ -9,6 +11,7 @@ function DataDictionaryReferences() {
   const { selectedDictionaryReferences } = location.state;
   const [codeableConceptReference, setCodeableConceptReference] = useState({});
   const [codeableConcept, setCodeableconcept] = useState(false);
+  const { loading, setLoading } = useContext(myContext);
 
   const handleCodeableConceptClick = (item) => {
     setCodeableConceptReference(item);
@@ -16,6 +19,7 @@ function DataDictionaryReferences() {
   };
   const navigate = useNavigate();
   useEffect(() => {
+    setLoading(true);
     getData();
   }, [selectedDictionaryReferences]);
 
@@ -30,84 +34,82 @@ function DataDictionaryReferences() {
       )
       .then((res) => {
         setReference(res);
+        setLoading(false);
       });
   };
 
   return (
     <>
       {/* <button onClick={() => setDictionaryTableDetails(false)}>Back</button> */}
-      {
-        //   loading ? (
-        //     <LoadingSpinner />
-        //   ) :
-        reference?.length > 0 ? (
-          <>
-            <div className="dd-table-wrapper">
-              <table className="dd-table">
-                <thead>
-                  <tr>
-                    <th className="dd-header-title" colSpan="3">
-                      {selectedDictionaryReferences?.title}
-                    </th>
-                  </tr>
-                  <tr>
-                    <th className="dd-variable-name">Variable Name</th>
-                    <th className="dd-variable-description">
-                      Variable Description
-                    </th>
-                    <th className="dd-data-type">Permitted Data Type</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {reference?.map((r, index) => {
-                    return (
-                      <>
-                        <tr key={index}>
-                          <td className="dd-variable-name">
-                            {r?.code?.coding?.[0]?.code}
-                          </td>
-                          <td className="dd-variable-description">
-                            {r?.code?.coding?.[0]?.display}
-                          </td>
-                          <td className="dd-data-type">
-                            {r?.permittedDataType[0] === "CodeableConcept" ? (
-                              <div
-                                style={{
-                                  textDecoration: "underline",
-                                  cursor: "pointer",
-                                }}
-                                onClick={() => {
-                                  handleCodeableConceptClick(
-                                    r?.validCodedValueSet?.reference
-                                  );
-                                }}
-                              >
-                                {r?.permittedDataType[0]}
-                              </div>
-                            ) : (
-                              r?.permittedDataType[0]
-                            )}
-                          </td>
-                        </tr>
-                      </>
-                    );
-                  })}
-                </tbody>
-              </table>
-              {/* <tr id="no-border" colSpan="3"> */}
-              <button
-                className="dd-button"
-                onClick={() => navigate("/dataDictionary")}
-              >
-                Back to All Dictionaries
-              </button>
-              {/* </tr> */}
-            </div>
-          </>
-        ) : (
-          ""
-        )
-      }
+      {loading ? (
+        <LoadingSpinner />
+      ) : reference?.length > 0 ? (
+        <>
+          <div className="dd-table-wrapper">
+            <table className="dd-table">
+              <thead>
+                <tr>
+                  <th className="dd-header-title" colSpan="3">
+                    {selectedDictionaryReferences?.title}
+                  </th>
+                </tr>
+                <tr>
+                  <th className="dd-variable-name">Variable Name</th>
+                  <th className="dd-variable-description">
+                    Variable Description
+                  </th>
+                  <th className="dd-data-type">Permitted Data Type</th>
+                </tr>
+              </thead>
+              <tbody>
+                {reference?.map((r, index) => {
+                  return (
+                    <>
+                      <tr key={index}>
+                        <td className="dd-variable-name">
+                          {r?.code?.coding?.[0]?.code}
+                        </td>
+                        <td className="dd-variable-description">
+                          {r?.code?.coding?.[0]?.display}
+                        </td>
+                        <td className="dd-data-type">
+                          {r?.permittedDataType[0] === "CodeableConcept" ? (
+                            <div
+                              style={{
+                                textDecoration: "underline",
+                                cursor: "pointer",
+                              }}
+                              onClick={() => {
+                                handleCodeableConceptClick(
+                                  r?.validCodedValueSet?.reference
+                                );
+                              }}
+                            >
+                              {r?.permittedDataType[0]}
+                            </div>
+                          ) : (
+                            r?.permittedDataType[0]
+                          )}
+                        </td>
+                      </tr>
+                    </>
+                  );
+                })}
+              </tbody>
+            </table>
+            {/* <tr id="no-border" colSpan="3"> */}
+            <button
+              className="dd-button"
+              onClick={() => navigate("/dataDictionary")}
+            >
+              Back to All Dictionaries
+            </button>
+            {/* </tr> */}
+          </div>
+        </>
+      ) : (
+        ""
+      )}
       {codeableConcept && (
         <CodeableConcept
           toggleModal={setCodeableconcept}

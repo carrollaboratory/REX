@@ -100,31 +100,97 @@ function DataDictionary() {
   // };
 
   return (
-    <div className="table-wrapper">
-      <div className="table">
-        <div className="table-title">
-          <h4>Data Dictionaries</h4>
-        </div>
-        <div className="search-input-dd">
-          <input
-            type="text"
-            placeholder="Search by value..."
-            value={filterText}
-            onChange={(e) => setFilterText(e.target.value)}
-          />
-          <button onClick={(e) => getSearchResults()}>Search</button>
-        </div>
-        <DataTable
-          columns={columns}
-          data={titleData}
-          progressPending={loading}
-          fixedHeader
-          striped={true}
-          customStyles={tableCustomStyles}
-        />
-      </div>
-    </div>
+    <>
+      {/* <button onClick={() => setDictionaryTableDetails(false)}>Back</button> */}
+      {
+        //   loading ? (
+        //     <LoadingSpinner />
+        //   ) :
+        titleData?.length > 0 ? (
+          <>
+            <div className="dd-table-wrapper">
+              <div className="table">
+                <div className="table-title">
+                  <h4>Data Dictionaries</h4>
+                </div>
+                <div id="search-input-dd">
+                  <input
+                    type="text"
+                    placeholder="Search by value..."
+                    value={filterText}
+                    onChange={(e) => setFilterText(e.target.value)}
+                  />
+                  <button onClick={(e) => getSearchResults()}>Search</button>
+                </div>
+                <table className="dd-table">
+                  <thead>
+                    {/* <tr>
+                      <th className="dd-header-title" colSpan="3">
+                        {selectedDictionaryReferences?.title}
+                      </th>
+                    </tr> */}
+                    <tr>
+                      <th className="dd-variable-name">Data Dictionary</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {titleData?.map((r, index) => {
+                      return (
+                        <>
+                          {r?.resource?.title ? (
+                            <tr key={index}>
+                              <td className="dd-variable-name">
+                                <Link
+                                  state={{
+                                    selectedDictionaryReferences: r?.resource,
+                                  }}
+                                  to={`/dataDictionary/${r?.resource?.id}`}
+                                >
+                                  {r?.resource?.title}
+                                </Link>
+                              </td>
+                            </tr>
+                          ) : (
+                            ""
+                          )}
+                        </>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </>
+        ) : (
+          ""
+        )
+      }
+    </>
   );
+  // <div className="table-wrapper">
+  //   <div className="table">
+  //     <div className="table-title">
+  //       <h4>Data Dictionaries</h4>
+  //     </div>
+  //     <div className="search-input-dd">
+  //       <input
+  //         type="text"
+  //         placeholder="Search by value..."
+  //         value={filterText}
+  //         onChange={(e) => setFilterText(e.target.value)}
+  //       />
+  //       <button onClick={(e) => getSearchResults()}>Search</button>
+  //     </div>
+  //     <DataTable
+  //       columns={columns}
+  //       data={titleData}
+  //       progressPending={loading}
+  //       fixedHeader
+  //       striped={true}
+  //       customStyles={tableCustomStyles}
+  //     />
+  //   </div>
+  // </div>;
 }
 
 export default DataDictionary;
