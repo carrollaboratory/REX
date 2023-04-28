@@ -1,15 +1,47 @@
 .table-wrapper {
     margin-bottom: 70px;
-
 }
 
 .dd-title{
-  margin: 39px 0 0 15px;
+  margin: 0px 0 0 15px;
 }
 
-#search-input-dd input {
-    width: 200px;
-    height: 20px;
+.search-input-dd {
     margin: 0 0 50px 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 
+  input {
+    width: 200px;
+    height: 21px;
+  }
+
+.search-button, .clear-button {
+  margin: 0 10px 0 0;
+  background-color: #4051a3;
+  color: white;
+  border: none;
+  padding: 5px 13px;
+  width: fit-content;
+}
+
+.search-button:hover, .clear-button:hover {
+  background-color: #7E8DC6;
+  color: white;
+  border-radius: 7px;
+}
+
+
+td, th {
+  padding: 15px;
+  border: 1px solid lightgray;
+  font-size: .8rem;
+  border-left: transparent 1px solid;
+  border-right: transparent 1px solid;
+}
+
+tr:nth-child(even) {
+  background-color: #E7EEF0;
+}

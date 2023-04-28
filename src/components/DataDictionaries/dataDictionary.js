@@ -15,14 +15,12 @@ function DataDictionary() {
   // const getFilteredItems = () => {
   //   titleData.map((r) => r?.resource?.title);
   // };
+
   useEffect(() => {
     getSearchResults();
   }, []);
 
   const getSearchResults = () => {
-    console.log("text: ", filterText);
-    let dataArray = [];
-    let finalArray = [];
     filterText != ""
       ? fetch(
           `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ObservationDefinition?code:text=${filterText}&_revinclude=ActivityDefinition:result`,
@@ -50,55 +48,6 @@ function DataDictionary() {
           });
   };
 
-  // console.log("FILTER: " + filterText);
-  const tableCustomStyles = {
-    headRow: {
-      style: {
-        backgroundColor: "#E7EEF0",
-      },
-    },
-    rows: {
-      style: {
-        backgroundColor: "#E7EEF0",
-      },
-      stripedStyle: {
-        color: "#000000",
-        backgroundColor: "#FFFFFF",
-      },
-    },
-  };
-
-  const columns = [
-    {
-      name: "Data Dictionary",
-      selector: (row) => (
-        <Link
-          state={{
-            selectedDictionaryReferences: row?.resource,
-          }}
-          to={`/dataDictionary/${row?.resource?.id}`}
-        >
-          {row?.resource?.title ? row?.resource?.title : ""}
-        </Link>
-      ),
-      wrap: true,
-    },
-  ];
-
-  // const fetchTableData = () => {
-  //   setLoading(true);
-  //   fetch("https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ActivityDefinition", {
-  //     method: "GET",
-  //   })
-  //     .then((res) => {
-  //       return res.json();
-  //     })
-  //     .then((c) => {
-  //       setTitleData(c.entry);
-  //     });
-  //   setLoading(false);
-  // };
-
   return (
     <>
       {/* <button onClick={() => setDictionaryTableDetails(false)}>Back</button> */}
@@ -110,17 +59,35 @@ function DataDictionary() {
           <>
             <div className="dd-table-wrapper">
               <div className="table">
-                <div className="table-title">
+                <div className="dd-title">
                   <h4>Data Dictionaries</h4>
                 </div>
-                <div id="search-input-dd">
+                <div className="search-input-dd">
                   <input
+                    id="inputText"
                     type="text"
                     placeholder="Search by value..."
                     value={filterText}
                     onChange={(e) => setFilterText(e.target.value)}
                   />
-                  <button onClick={(e) => getSearchResults()}>Search</button>
+
+                  <button
+                    className="search-button"
+                    onClick={(e) => getSearchResults()}
+                  >
+                    Search
+                  </button>
+
+                  <form>
+                    <button
+                      className="clear-button"
+                      onclick={
+                        "document.getElementById('inputText').value = '' "
+                      }
+                    >
+                      X
+                    </button>
+                  </form>
                 </div>
                 <table className="dd-table">
                   <thead>

@@ -50,12 +50,12 @@ function Table() {
 
   const columns = [
     {
-      name: "Title",
+      name: <b>Title</b>,
       selector: (row) => row?.resource?.title,
       wrap: true,
     },
     {
-      name: "Description",
+      name: <b>Description</b>,
       selector: (row) =>
         row?.resource?.description === "TBD"
           ? ""
@@ -64,7 +64,7 @@ function Table() {
       minWidth: "300px",
     },
     {
-      name: "Identifier - Value",
+      name: <b>Identifier - Value</b>,
       selector: (row) =>
         row?.resource?.identifier[0]?.value
           ? row?.resource?.identifier[0]?.value
@@ -72,7 +72,7 @@ function Table() {
       wrap: true,
     },
     {
-      name: "Part Of",
+      name: <b>Part Of</b>,
       selector: (row) =>
         row?.resource?.partOf
           ? row?.resource?.partOf[0]?.reference.split("/")[1]
@@ -81,7 +81,7 @@ function Table() {
       maxWidth: "fit-content",
     },
     {
-      name: "Related Artifact",
+      name: <b>Related Artifact</b>,
       selector: (row) =>
         row?.resource?.relatedArtifact ? (
           <a href={row?.resource?.relatedArtifact[0].url} target="_blank">
