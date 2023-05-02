@@ -17,6 +17,11 @@ function DataDictionaryReferences() {
     setCodeableConceptReference(item);
     setCodeableconcept(true);
   };
+
+  const capitalizeWord = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
+
   const navigate = useNavigate();
   useEffect(() => {
     setLoading(true);
@@ -50,7 +55,15 @@ function DataDictionaryReferences() {
               <thead>
                 <tr>
                   <th className="dd-header-title" colSpan="3">
-                    {selectedDictionaryReferences?.title}
+                    {
+                      selectedDictionaryReferences?.title
+                        .split(" ")[3]
+                        .split("_")[0]
+                    }
+                    &nbsp;
+                    {capitalizeWord(
+                      selectedDictionaryReferences?.title.split(".").pop()
+                    )}
                   </th>
                 </tr>
                 <tr>
@@ -102,7 +115,7 @@ function DataDictionaryReferences() {
               className="dd-button"
               onClick={() => navigate("/dataDictionary")}
             >
-              Back to All Dictionaries
+              Back to Search
             </button>
             {/* </tr> */}
           </div>

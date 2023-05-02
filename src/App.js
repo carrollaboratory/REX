@@ -1,5 +1,5 @@
-import { Outlet, Route, Routes } from "react-router-dom";
-import { createContext, useState } from "react";
+import { Outlet, Route, Routes, useLocation } from "react-router-dom";
+import { createContext, useState, useEffect } from "react";
 import Table from "./components/tables/table";
 import { NavBar } from "./components/nav/navBar";
 import DetailsView from "./components/tables/details";
@@ -8,10 +8,17 @@ import DataDictionaryReferences from "./components/DataDictionaries/dataDictiona
 
 export const myContext = createContext();
 export const App = () => {
+  const location = useLocation();
+
   const [selectedObject, setSelectedObject] = useState(null);
   const [filterText, setFilterText] = useState("");
   const [loading, setLoading] = useState(true);
   const [details, setDetails] = useState(true);
+  const [dDView, setDDView] = useState(true);
+
+  useEffect(() => {
+    location.pathname === "/variables" && setDDView(false);
+  }, [location]);
 
   return (
     <myContext.Provider
@@ -24,6 +31,8 @@ export const App = () => {
         setLoading,
         details,
         setDetails,
+        dDView,
+        setDDView,
       }}
     >
       <Routes>
@@ -42,7 +51,9 @@ export const App = () => {
           <Route
             path="/dataDictionary/:DDReference"
             element={<DataDictionaryReferences />}
+            s
           />
+          <Route path="/variables" element={<DataDictionary />} />
         </Route>
       </Routes>
     </myContext.Provider>

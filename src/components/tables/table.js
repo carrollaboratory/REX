@@ -128,7 +128,7 @@ function Table() {
     <div className="table-wrapper">
       <div className="table">
         <div className="table-title">
-          <h4>FHIR Research Data</h4>
+          <h4>AnVIL FHIR Research Study Data</h4>
         </div>
         <div className="search-input">
           <input

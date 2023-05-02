@@ -1,24 +1,24 @@
 import { useContext, useEffect, useState } from "react";
 import "./dataDictionary.css";
-import DataTable from "react-data-table-component";
 import { myContext } from "../../App";
 import { Link } from "react-router-dom";
+import { Variables } from "./variables";
 
 function DataDictionary() {
   const [titleData, setTitleData] = useState([]);
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const { filterText, setFilterText } = useContext(myContext);
-  const [searchResults, setSearchResults] = useState([]);
-
-  // const getFilteredItems = () => {
-  //   titleData.map((r) => r?.resource?.title);
-  // };
+  const { filterText, setFilterText, dDView, setDDView } =
+    useContext(myContext);
 
   useEffect(() => {
     getSearchResults();
   }, []);
+
+  const capitalizeWord = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
 
   const getSearchResults = () => {
     filterText != ""
@@ -50,54 +50,62 @@ function DataDictionary() {
 
   return (
     <>
-      {/* <button onClick={() => setDictionaryTableDetails(false)}>Back</button> */}
-      {
-        //   loading ? (
-        //     <LoadingSpinner />
-        //   ) :
-        titleData?.length > 0 ? (
-          <>
-            <div className="dd-table-wrapper">
-              <div className="table">
-                <div className="dd-title">
-                  <h4>Data Dictionaries</h4>
-                </div>
-                <div className="search-input-dd">
-                  <input
-                    id="inputText"
-                    type="text"
-                    placeholder="Search by value..."
-                    value={filterText}
-                    onChange={(e) => setFilterText(e.target.value)}
-                  />
+      <div className="dd-table-wrapper">
+        <div className="table">
+          <div className="dd-title">
+            <h4
+              className="dd-nav-header"
+              onClick={() => {
+                setDDView(true);
+                window.history.replaceState("", "", "/dataDictionary");
+              }}
+            >
+              Data Dictionaries
+            </h4>
+            <h4
+              className="dd-nav-header"
+              onClick={() => {
+                setDDView(false);
+                window.history.replaceState("", "", "/variables");
+              }}
+            >
+              Variables
+            </h4>
+          </div>
+          {dDView ? (
+            <>
+              <div className="search-input-dd">
+                <input
+                  id="inputText"
+                  type="text"
+                  placeholder="Search by value..."
+                  value={filterText}
+                  onChange={(e) => setFilterText(e.target.value)}
+                />
 
+                <button
+                  className="search-button"
+                  onClick={(e) => getSearchResults()}
+                >
+                  Search
+                </button>
+
+                <form>
                   <button
-                    className="search-button"
-                    onClick={(e) => getSearchResults()}
+                    className="clear-button"
+                    onClick={() => setFilterText("")}
                   >
-                    Search
+                    X
                   </button>
-
-                  <form>
-                    <button
-                      className="clear-button"
-                      onclick={
-                        "document.getElementById('inputText').value = '' "
-                      }
-                    >
-                      X
-                    </button>
-                  </form>
-                </div>
+                </form>
+              </div>
+              {titleData?.length > 0 ? (
                 <table className="dd-table">
                   <thead>
-                    {/* <tr>
-                      <th className="dd-header-title" colSpan="3">
-                        {selectedDictionaryReferences?.title}
-                      </th>
-                    </tr> */}
                     <tr>
-                      <th className="dd-variable-name">Data Dictionary</th>
+                      <th className="dd-name">Variables for Data Dictionary</th>
+                      <th className="dd-table-name">Table</th>
+                      <th className="dd-table-name"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -107,13 +115,21 @@ function DataDictionary() {
                           {r?.resource?.title ? (
                             <tr key={index}>
                               <td className="dd-variable-name">
+                                {r?.resource?.title.split(" ")[3].split("_")[0]}
+                              </td>
+                              <td className="dd-variable-name">
+                                {capitalizeWord(
+                                  r?.resource?.title.split(".").pop()
+                                )}
+                              </td>
+                              <td className="dd-variable-name">
                                 <Link
                                   state={{
                                     selectedDictionaryReferences: r?.resource,
                                   }}
                                   to={`/dataDictionary/${r?.resource?.id}`}
                                 >
-                                  {r?.resource?.title}
+                                  Inspect
                                 </Link>
                               </td>
                             </tr>
@@ -125,39 +141,17 @@ function DataDictionary() {
                     })}
                   </tbody>
                 </table>
-              </div>
-            </div>
-          </>
-        ) : (
-          ""
-        )
-      }
+              ) : (
+                <div className="no-results">No results found.</div>
+              )}{" "}
+            </>
+          ) : (
+            <Variables />
+          )}
+        </div>
+      </div>
     </>
   );
-  // <div className="table-wrapper">
-  //   <div className="table">
-  //     <div className="table-title">
-  //       <h4>Data Dictionaries</h4>
-  //     </div>
-  //     <div className="search-input-dd">
-  //       <input
-  //         type="text"
-  //         placeholder="Search by value..."
-  //         value={filterText}
-  //         onChange={(e) => setFilterText(e.target.value)}
-  //       />
-  //       <button onClick={(e) => getSearchResults()}>Search</button>
-  //     </div>
-  //     <DataTable
-  //       columns={columns}
-  //       data={titleData}
-  //       progressPending={loading}
-  //       fixedHeader
-  //       striped={true}
-  //       customStyles={tableCustomStyles}
-  //     />
-  //   </div>
-  // </div>;
 }
 
 export default DataDictionary;

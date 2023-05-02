@@ -59,7 +59,7 @@ export const DetailsDataDictionary = ({ propData }) => {
           <div className="DD-title-list">
             <div className="DD-title-container">
               <div className="DD-header">
-                <h4>Available Data Dictionaries</h4>
+                <h4>Available Data Dictionary Tables</h4>
               </div>
               <div className="DD-titles">
                 {dataDictionary?.map((d, index) => {

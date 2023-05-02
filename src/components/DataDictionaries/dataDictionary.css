@@ -4,6 +4,15 @@
 
 .dd-title{
   margin: 0px 0 0 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 230px;
+}
+
+.dd-nav-header {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .search-input-dd {
@@ -18,8 +27,8 @@
     height: 21px;
   }
 
-.search-button, .clear-button {
-  margin: 0 10px 0 0;
+.search-button {
+  margin: 0 6px 0 0;
   background-color: #4051a3;
   color: white;
   border: none;
@@ -27,10 +36,24 @@
   width: fit-content;
 }
 
-.search-button:hover, .clear-button:hover {
+.clear-button {
+  margin: 0 6px 0 0;
+  background-color: #308dc7;
+  color: white;
+  border: none;
+  padding: 5px 13px;
+  width: fit-content;
+  font-weight: bold;
+}
+
+.search-button:hover {
   background-color: #7E8DC6;
   color: white;
-  border-radius: 7px;
+}
+
+.clear-button:hover {
+  background-color: #62a8d4;
+  color: white;
 }
 
 
@@ -44,4 +67,8 @@ td, th {
 
 tr:nth-child(even) {
   background-color: #E7EEF0;
+}
+
+.no-results {
+  text-align: center;
 }
