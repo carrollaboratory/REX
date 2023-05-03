@@ -133,7 +133,7 @@ function Table() {
         <div className="search-input">
           <input
             type="text"
-            placeholder="Searcy by Title..."
+            placeholder="Searcy by title..."
             value={filterText}
             onChange={(e) => setFilterText(e.target.value)}
           />
