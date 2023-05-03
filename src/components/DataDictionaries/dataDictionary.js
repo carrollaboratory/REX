@@ -146,7 +146,7 @@ function DataDictionary() {
               )}{" "}
             </>
           ) : (
-            <Variables titleData={titleData} />
+            <Variables capitalizeWord={capitalizeWord} />
           )}
         </div>
       </div>

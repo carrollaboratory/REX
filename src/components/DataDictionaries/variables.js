@@ -2,8 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { myContext } from "../../App";
 import { CodeableConcept } from "../tables/codeableConcept";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
+import { Link } from "react-router-dom";
 
-export const Variables = () => {
+export const Variables = ({ capitalizeWord }) => {
   const { filterText, setFilterText, loading, setLoading } =
     useContext(myContext);
   const [observationData, setObservationData] = useState([]);
@@ -52,13 +53,33 @@ export const Variables = () => {
     for (let activity of activityData) {
       for (const r of activity?.resource?.observationResultRequirement) {
         if (r.reference == observation?.fullUrl?.slice(46)) {
-          return activity?.resource?.title;
+          return (
+            <>
+              <Link
+                state={{
+                  selectedDictionaryReferences: activity?.resource,
+                }}
+                to={`/dataDictionary/${activity?.resource?.id}`}
+              >
+                {activity?.resource?.title.split(" ")[3].split("_")[0]} &nbsp;
+                {capitalizeWord(activity?.resource?.title.split(".").pop())}
+              </Link>
+            </>
+          );
         }
       }
     }
-    // console.log("DICK: ", observation?.fullUrl?.slice(46));
-    // console.log("boobs: ", activity?.resource?.observationResultRequirement);
   };
+
+  // {
+  //   selectedDictionaryReferences?.title
+  //     .split(" ")[3]
+  //     .split("_")[0]
+  // }
+  // &nbsp;
+  // {capitalizeWord(
+  //   selectedDictionaryReferences?.title.split(".").pop()
+  // )}
 
   useEffect(() => {
     setLoading(true);
@@ -157,14 +178,7 @@ export const Variables = () => {
                     )}
                   </td>
 
-                  <td>
-                    {getObservationMatch(r)}
-                    {/* {r?.resource?.observationResultRequirement.filter(
-                      (c) => c.reference == r.fullUrl.slice(46)
-                    )
-                      ? r.resource.title
-                      : ""} */}
-                  </td>
+                  <td>{getObservationMatch(r)}</td>
                 </tr>
               </>
             ))}
