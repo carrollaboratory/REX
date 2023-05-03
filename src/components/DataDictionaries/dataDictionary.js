@@ -13,14 +13,14 @@ function DataDictionary() {
     useContext(myContext);
 
   useEffect(() => {
-    getSearchResults();
+    getTableData();
   }, []);
 
   const capitalizeWord = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   };
 
-  const getSearchResults = () => {
+  const getTableData = () => {
     filterText != ""
       ? fetch(
           `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ObservationDefinition?code:text=${filterText}&_revinclude=ActivityDefinition:result`,
@@ -85,7 +85,7 @@ function DataDictionary() {
 
                 <button
                   className="search-button"
-                  onClick={(e) => getSearchResults()}
+                  onClick={(e) => getTableData()}
                 >
                   Search
                 </button>

@@ -39,16 +39,6 @@ export const Variables = ({ capitalizeWord }) => {
     });
   };
 
-  //forEach activityDefinition
-  //return arrayOfActivityDefinition.observationResultRequirement.contains(observationDefinition.fullUrl.slice(46))
-  /*
-  for (activityDefinition of arrayOfActivityDefinition){
-    if(ActivityDefinition.observationResultRequirement.Includes(observationDefinitionUrl()))
-    return ActivityDefinition.title
-    })
-    
-    
-    */
   const getObservationMatch = (observation) => {
     for (let activity of activityData) {
       for (const r of activity?.resource?.observationResultRequirement) {
@@ -70,16 +60,6 @@ export const Variables = ({ capitalizeWord }) => {
       }
     }
   };
-
-  // {
-  //   selectedDictionaryReferences?.title
-  //     .split(" ")[3]
-  //     .split("_")[0]
-  // }
-  // &nbsp;
-  // {capitalizeWord(
-  //   selectedDictionaryReferences?.title.split(".").pop()
-  // )}
 
   useEffect(() => {
     setLoading(true);
@@ -137,6 +117,12 @@ export const Variables = ({ capitalizeWord }) => {
           value={filterText}
           onChange={(e) => setFilterText(e.target.value)}
         />
+        <form>
+          {" "}
+          <button className="clear-button" onClick={() => setFilterText("")}>
+            X
+          </button>
+        </form>
       </div>
       {loading ? (
         <LoadingSpinner />
@@ -194,5 +180,3 @@ export const Variables = ({ capitalizeWord }) => {
     </>
   );
 };
-
-//if resource.resourceType === "ObservationDefinition"
