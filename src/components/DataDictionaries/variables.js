@@ -1,10 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { myContext } from "../../App";
 import { CodeableConcept } from "../tables/codeableConcept";
+import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 
 export const Variables = () => {
-  const { filterText, setFilterText } = useContext(myContext);
+  const { filterText, setFilterText, loading, setLoading } =
+    useContext(myContext);
   const [observationData, setObservationData] = useState([]);
+  const [activityData, setActivityData] = useState([]);
   const [codeableConceptReference, setCodeableConceptReference] = useState({});
   const [codeableConcept, setCodeableconcept] = useState(false);
 
@@ -27,36 +30,80 @@ export const Variables = () => {
     }
   };
 
+  const observationDefinitionUrl = () => {
+    getFilteredItems().map((r) => {
+      if (r.resource.resourceType === "ObservationDefinition") {
+        return r.fullUrl.slice(46);
+      }
+    });
+  };
+
+  //forEach activityDefinition
+  //return arrayOfActivityDefinition.observationResultRequirement.contains(observationDefinition.fullUrl.slice(46))
+  /*
+  for (activityDefinition of arrayOfActivityDefinition){
+    if(ActivityDefinition.observationResultRequirement.Includes(observationDefinitionUrl()))
+    return ActivityDefinition.title
+    })
+    
+    
+    */
+  const getObservationMatch = (observation) => {
+    for (let activity of activityData) {
+      for (const r of activity?.resource?.observationResultRequirement) {
+        if (r.reference == observation?.fullUrl?.slice(46)) {
+          return activity?.resource?.title;
+        }
+      }
+    }
+    // console.log("DICK: ", observation?.fullUrl?.slice(46));
+    // console.log("boobs: ", activity?.resource?.observationResultRequirement);
+  };
+
   useEffect(() => {
+    setLoading(true);
     fetchObservationDefinitions();
   }, []);
 
   const fetchObservationDefinitions = () => {
-    filterText != ""
-      ? fetch(
-          `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ObservationDefinition?code:text=${filterText}`,
-          {
-            method: "GET",
+    // filterText != ""
+    //   ? fetch(
+    //       `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ObservationDefinition?code:text=${filterText}`,
+    //       {
+    //         method: "GET",
+    //       }
+    //     )
+    //       .then((res) => {
+    //         return res.json();
+    //       })
+    //       .then((c) => {
+    //         setObservationData(c.entry);
+    //         setLoading(false);
+    //       })
+    //   :
+    let observationArray = [];
+    let activityArray = [];
+    fetch(
+      "https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ActivityDefinition?_include=ActivityDefinition:result",
+      {
+        method: "GET",
+      }
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((c) => {
+        c.entry.forEach((r) => {
+          if (r?.resource?.resourceType === "ObservationDefinition") {
+            observationArray.push(r);
+            setObservationData(observationArray);
+          } else {
+            activityArray.push(r);
+            setActivityData(activityArray);
           }
-        )
-          .then((res) => {
-            return res.json();
-          })
-          .then((c) => {
-            setObservationData(c.entry);
-          })
-      : fetch(
-          "https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ActivityDefinition?_include=ActivityDefinition:result",
-          {
-            method: "GET",
-          }
-        )
-          .then((res) => {
-            return res.json();
-          })
-          .then((c) => {
-            setObservationData(c.entry);
-          });
+        });
+        setLoading(false);
+      });
   };
 
   return (
@@ -70,53 +117,59 @@ export const Variables = () => {
           onChange={(e) => setFilterText(e.target.value)}
         />
       </div>
-
-      {getFilteredItems().length > 0 ? (
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
         <table>
           <thead>
             <tr>
               <th className="dd-variable-name">Variable Name</th>
               <th className="dd-variable-description">Variable Description</th>
               <th className="dd-data-type">Permitted Data Type</th>
+              <th className="dd-associated-dd">Associated Table</th>
             </tr>
           </thead>
           <tbody>
-            {getFilteredItems()?.map((r, index) =>
-              r.resource.resourceType === "ObservationDefinition" ? (
-                <>
-                  <tr key={index}>
-                    <td key={index}>{r?.resource?.code?.coding?.[0]?.code}</td>
-                    <td>{r?.resource?.code?.coding?.[0]?.display}</td>
-                    <td>
-                      {r?.resource?.permittedDataType[0] ===
-                      "CodeableConcept" ? (
-                        <div
-                          style={{
-                            textDecoration: "underline",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => {
-                            handleCodeableConceptClick(
-                              r?.resource?.validCodedValueSet?.reference
-                            );
-                          }}
-                        >
-                          {r?.resource?.permittedDataType[0]}
-                        </div>
-                      ) : (
-                        r?.resource?.permittedDataType[0]
-                      )}
-                    </td>
-                  </tr>
-                </>
-              ) : (
-                ""
-              )
-            )}
+            {getFilteredItems()?.map((r, index) => (
+              <>
+                <tr key={index}>
+                  <td>{r?.resource?.code?.coding?.[0]?.code}</td>
+
+                  <td>{r?.resource?.code?.coding?.[0]?.display}</td>
+
+                  <td>
+                    {r?.resource?.permittedDataType[0] === "CodeableConcept" ? (
+                      <div
+                        style={{
+                          textDecoration: "underline",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => {
+                          handleCodeableConceptClick(
+                            r?.resource?.validCodedValueSet?.reference
+                          );
+                        }}
+                      >
+                        {r?.resource?.permittedDataType[0]}
+                      </div>
+                    ) : (
+                      r?.resource?.permittedDataType[0]
+                    )}
+                  </td>
+
+                  <td>
+                    {getObservationMatch(r)}
+                    {/* {r?.resource?.observationResultRequirement.filter(
+                      (c) => c.reference == r.fullUrl.slice(46)
+                    )
+                      ? r.resource.title
+                      : ""} */}
+                  </td>
+                </tr>
+              </>
+            ))}
           </tbody>
         </table>
-      ) : (
-        "No results found"
       )}
       {codeableConcept && (
         <CodeableConcept
@@ -127,3 +180,5 @@ export const Variables = () => {
     </>
   );
 };
+
+//if resource.resourceType === "ObservationDefinition"

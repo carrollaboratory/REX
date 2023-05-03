@@ -146,7 +146,7 @@ function DataDictionary() {
               )}{" "}
             </>
           ) : (
-            <Variables />
+            <Variables titleData={titleData} />
           )}
         </div>
       </div>
