@@ -5,8 +5,8 @@ import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 import { Link } from "react-router-dom";
 
 export const Variables = ({ capitalizeWord }) => {
-  const { filterText, setFilterText, loading, setLoading } =
-    useContext(myContext);
+  const { loading, setLoading } = useContext(myContext);
+  const [searchTerm, setSearchTerm] = useState("");
   const [observationData, setObservationData] = useState([]);
   const [activityData, setActivityData] = useState([]);
   const [codeableConceptReference, setCodeableConceptReference] = useState({});
@@ -18,13 +18,13 @@ export const Variables = ({ capitalizeWord }) => {
   };
 
   const getFilteredItems = () => {
-    if (!!filterText) {
+    if (!!searchTerm) {
       return observationData?.filter(
         (item) =>
           item?.resource?.code?.text &&
           item?.resource?.code?.text
             .toLowerCase()
-            .includes(filterText.toLowerCase())
+            .includes(searchTerm.toLowerCase())
       );
     } else {
       return observationData;
@@ -62,49 +62,57 @@ export const Variables = ({ capitalizeWord }) => {
   };
 
   useEffect(() => {
-    setLoading(true);
     fetchObservationDefinitions();
   }, []);
 
-  const fetchObservationDefinitions = () => {
-    // filterText != ""
-    //   ? fetch(
-    //       `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ObservationDefinition?code:text=${filterText}`,
-    //       {
-    //         method: "GET",
-    //       }
-    //     )
-    //       .then((res) => {
-    //         return res.json();
-    //       })
-    //       .then((c) => {
-    //         setObservationData(c.entry);
-    //         setLoading(false);
-    //       })
-    //   :
+  const fetchObservationDefinitions = async () => {
     let observationArray = [];
     let activityArray = [];
-    fetch(
-      "https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ActivityDefinition?_include=ActivityDefinition:result",
-      {
-        method: "GET",
-      }
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((c) => {
-        c.entry.forEach((r) => {
-          if (r?.resource?.resourceType === "ObservationDefinition") {
-            observationArray.push(r);
-            setObservationData(observationArray);
-          } else {
-            activityArray.push(r);
-            setActivityData(activityArray);
+    setLoading(true);
+    setObservationData([]);
+    searchTerm != ""
+      ? fetch(
+          `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ObservationDefinition?code:text=${searchTerm}&_revinclude=ActivityDefinition:result`,
+          {
+            method: "GET",
           }
-        });
-        setLoading(false);
-      });
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then((c) => {
+            c.entry?.forEach((r) => {
+              if (r?.resource?.resourceType === "ObservationDefinition") {
+                observationArray.push(r);
+                setObservationData(observationArray);
+              } else {
+                activityArray.push(r);
+                setActivityData(activityArray);
+              }
+            });
+            setLoading(false);
+          })
+      : fetch(
+          "https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ActivityDefinition?_include=ActivityDefinition:result",
+          {
+            method: "GET",
+          }
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then((c) => {
+            c.entry.forEach((r) => {
+              if (r?.resource?.resourceType === "ObservationDefinition") {
+                observationArray.push(r);
+                setObservationData(observationArray);
+              } else {
+                activityArray.push(r);
+                setActivityData(activityArray);
+              }
+            });
+            setLoading(false);
+          });
   };
 
   return (
@@ -114,19 +122,28 @@ export const Variables = ({ capitalizeWord }) => {
           id="inputText"
           type="text"
           placeholder="Search by value..."
-          value={filterText}
-          onChange={(e) => setFilterText(e.target.value)}
+          value={searchTerm}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+          }}
         />
+
+        <button
+          className="search-button"
+          onClick={(e) => fetchObservationDefinitions()}
+        >
+          Search
+        </button>
+
         <form>
-          {" "}
-          <button className="clear-button" onClick={() => setFilterText("")}>
+          <button className="clear-button" onClick={() => setSearchTerm("")}>
             X
           </button>
         </form>
       </div>
       {loading ? (
         <LoadingSpinner />
-      ) : (
+      ) : observationData.length > 0 ? (
         <table>
           <thead>
             <tr>
@@ -137,7 +154,7 @@ export const Variables = ({ capitalizeWord }) => {
             </tr>
           </thead>
           <tbody>
-            {getFilteredItems()?.map((r, index) => (
+            {observationData.map((r, index) => (
               <>
                 <tr key={index}>
                   <td>{r?.resource?.code?.coding?.[0]?.code}</td>
@@ -170,6 +187,8 @@ export const Variables = ({ capitalizeWord }) => {
             ))}
           </tbody>
         </table>
+      ) : (
+        <div className="no-results">No results found.</div>
       )}
       {codeableConcept && (
         <CodeableConcept
