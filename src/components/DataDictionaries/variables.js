@@ -11,6 +11,7 @@ export const Variables = ({ capitalizeWord }) => {
   const [activityData, setActivityData] = useState([]);
   const [codeableConceptReference, setCodeableConceptReference] = useState({});
   const [codeableConcept, setCodeableconcept] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleCodeableConceptClick = (item) => {
     setCodeableConceptReference(item);
@@ -29,14 +30,6 @@ export const Variables = ({ capitalizeWord }) => {
     } else {
       return observationData;
     }
-  };
-
-  const observationDefinitionUrl = () => {
-    getFilteredItems().map((r) => {
-      if (r.resource.resourceType === "ObservationDefinition") {
-        return r.fullUrl.slice(46);
-      }
-    });
   };
 
   const getObservationMatch = (observation) => {
@@ -63,6 +56,11 @@ export const Variables = ({ capitalizeWord }) => {
 
   useEffect(() => {
     fetchObservationDefinitions();
+  }, []);
+
+  useEffect(() => {
+    const setFromEvent = (e) => setPosition({ x: e.clientX, y: e.clientY });
+    window.addEventListener("mousemove", setFromEvent);
   }, []);
 
   const fetchObservationDefinitions = async () => {
@@ -163,19 +161,37 @@ export const Variables = ({ capitalizeWord }) => {
 
                   <td>
                     {r?.resource?.permittedDataType[0] === "CodeableConcept" ? (
-                      <div
-                        style={{
-                          textDecoration: "underline",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => {
-                          handleCodeableConceptClick(
-                            r?.resource?.validCodedValueSet?.reference
-                          );
-                        }}
-                      >
-                        {r?.resource?.permittedDataType[0]}
-                      </div>
+                      <>
+                        <div
+                          style={{
+                            textDecoration: "underline",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {
+                            handleCodeableConceptClick(
+                              r?.resource?.validCodedValueSet?.reference
+                            );
+                          }}
+                        >
+                          {r?.resource?.permittedDataType[0]}
+                        </div>
+                        <div>
+                          <CodeableConcept
+                            className={
+                              r?.validCodedValueSet?.reference ===
+                              codeableConceptReference
+                                ? "codeableConcept"
+                                : "codeableConcept--closed"
+                            }
+                            isOpen={
+                              r?.validCodedValueSet?.reference ===
+                              codeableConceptReference
+                            }
+                            toggleModal={setCodeableConceptReference}
+                            codeableConceptReference={codeableConceptReference}
+                          />
+                        </div>
+                      </>
                     ) : (
                       r?.resource?.permittedDataType[0]
                     )}
@@ -190,12 +206,12 @@ export const Variables = ({ capitalizeWord }) => {
       ) : (
         <div className="no-results">No results found.</div>
       )}
-      {codeableConcept && (
+      {/* {codeableConcept && (
         <CodeableConcept
           toggleModal={setCodeableconcept}
           codeableConceptReference={codeableConceptReference}
         />
-      )}
+      )} */}
     </>
   );
 };

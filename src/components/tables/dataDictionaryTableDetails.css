@@ -39,3 +39,7 @@ td{
     min-width: 180px;
     max-width: 180px;
 }
+
+.codeableConcept--closed{
+display: none;
+}

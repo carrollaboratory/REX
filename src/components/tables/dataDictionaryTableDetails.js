@@ -11,7 +11,8 @@ export const DataDictionaryTableDetails = ({
 }) => {
   const [reference, setReference] = useState({});
   const { loading } = useContext(myContext);
-  const [codeableConceptReference, setCodeableConceptReference] = useState({});
+  const [codeableConceptReference, setCodeableConceptReference] =
+    useState(null);
   const [codeableConcept, setCodeableconcept] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const width = window.innerWidth;
@@ -43,22 +44,6 @@ export const DataDictionaryTableDetails = ({
         setReference(res);
       });
   };
-
-  // let modal = document.querySelector(".modal");
-  // let items = document.querySelectorAll(".item");
-
-  // var mousePos = {};
-
-  // function fe(item, index){
-  //   item.addEventListener("click", function(e){
-  //     var rect = e.target.getBoundingClientRect(); // get some poition, scale,... properties of the item
-  //     mousePos.x = e.clientX - rect.left; // get the mouse position relative to the element
-  //     mousePos.y = e.clientY - rect.top;
-  //     item.querySelector('.modal').classList.toggle('show');
-  //     item.querySelector('.modal').style.left = mousePos.x + "px"; // set the modal position to the last stored position
-  //     item.querySelector('.modal').style.top = mousePos.y + "px";
-  //   });
-  // }
 
   return (
     <>
@@ -93,19 +78,39 @@ export const DataDictionaryTableDetails = ({
                           </td>
                           <td className="data-type">
                             {r?.permittedDataType[0] === "CodeableConcept" ? (
-                              <div
-                                style={{
-                                  textDecoration: "underline",
-                                  cursor: "pointer",
-                                }}
-                                onClick={() => {
-                                  handleCodeableConceptClick(
-                                    r?.validCodedValueSet?.reference
-                                  );
-                                }}
-                              >
-                                {r?.permittedDataType[0]}
-                              </div>
+                              <>
+                                <div
+                                  style={{
+                                    textDecoration: "underline",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={() => {
+                                    handleCodeableConceptClick(
+                                      r?.validCodedValueSet?.reference
+                                    );
+                                  }}
+                                >
+                                  {r?.permittedDataType[0]}
+                                </div>
+                                <div>
+                                  <CodeableConcept
+                                    className={
+                                      r?.validCodedValueSet?.reference ===
+                                      codeableConceptReference
+                                        ? "codeableConcept"
+                                        : "codeableConcept--closed"
+                                    }
+                                    isOpen={
+                                      r?.validCodedValueSet?.reference ===
+                                      codeableConceptReference
+                                    }
+                                    toggleModal={setCodeableConceptReference}
+                                    codeableConceptReference={
+                                      codeableConceptReference
+                                    }
+                                  />
+                                </div>
+                              </>
                             ) : (
                               r?.permittedDataType[0]
                             )}
@@ -122,13 +127,6 @@ export const DataDictionaryTableDetails = ({
           ""
         )
       }
-      {codeableConcept && (
-        <CodeableConcept
-          modal={codeableConcept}
-          toggleModal={setCodeableconcept}
-          codeableConceptReference={codeableConceptReference}
-        />
-      )}
     </>
   );
 };

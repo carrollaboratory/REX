@@ -1,14 +1,23 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./codeableConcept.css";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
+import { myContext } from "../../App";
 
-export const CodeableConcept = ({ toggleModal, codeableConceptReference }) => {
+export const CodeableConcept = ({
+  toggleModal,
+  codeableConceptReference,
+  isOpen,
+  ...props
+}) => {
   const [modalData, setModalData] = useState({});
+  const { loading, setLoading } = useContext(myContext);
 
   useEffect(() => {
-    getData();
-  }, []);
-
+    if (isOpen) {
+      setLoading(true);
+      getData();
+    }
+  }, [codeableConceptReference]);
   const getData = () => {
     fetch(
       `https:/anvil-fhir-vumc.uc.r.appspot.com/fhir/${codeableConceptReference}`,
@@ -31,16 +40,19 @@ export const CodeableConcept = ({ toggleModal, codeableConceptReference }) => {
           })
           .then((m) => {
             setModalData(m);
+            setLoading(false);
           });
       });
   };
 
   return (
-    <div className="modal">
-      {modalData ? (
-        <>
-          <div className="modal-content">
-            <span className="close" onClick={() => toggleModal(false)}>
+    <div className="modal" {...props}>
+      <div className="modal-content">
+        {loading ? (
+          <LoadingSpinner className="modalSpinner" />
+        ) : (
+          <>
+            <span className="close" onClick={() => toggleModal(null)}>
               &times;
             </span>
             <div>
@@ -59,11 +71,9 @@ export const CodeableConcept = ({ toggleModal, codeableConceptReference }) => {
                 </tbody>
               </table>
             </div>
-          </div>
-        </>
-      ) : (
-        <LoadingSpinner />
-      )}
+          </>
+        )}
+      </div>
     </div>
   );
 };
