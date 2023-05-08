@@ -97,6 +97,7 @@ export const Variables = ({ capitalizeWord }) => {
           }
         )
           .then((res) => {
+            console.log("response from variables fetch #2 ", res);
             return res.json();
           })
           .then((c) => {

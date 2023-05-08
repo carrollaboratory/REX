@@ -19,8 +19,11 @@ export const CodeableConcept = ({
     }
   }, [codeableConceptReference]);
   const getData = () => {
+    const codeableConceptEndpoint = `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/${codeableConceptReference}`;
+
     fetch(
-      `https:/anvil-fhir-vumc.uc.r.appspot.com/fhir/${codeableConceptReference}`,
+      codeableConceptEndpoint,
+      // `https:/anvil-fhir-vumc.uc.r.appspot.com/fhir/${codeableConceptReference}`,
       {
         method: "GET",
       }
@@ -29,8 +32,13 @@ export const CodeableConcept = ({
         return res.json();
       })
       .then((d) => {
+        const codeSystemEndpoint =
+          "https://anvil-fhir-vumc.uc.r.appspot.com/fhir/CodeSystem?url=" +
+          d?.compose?.include[0]?.system;
+
         fetch(
-          `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/CodeSystem?url=${d?.compose?.include[0]?.system}`,
+          codeSystemEndpoint,
+          // `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/CodeSystem?url=${d?.compose?.include[0]?.system}`,
           {
             method: "GET",
           }

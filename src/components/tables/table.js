@@ -109,6 +109,7 @@ function Table() {
 
   const fetchTableData = async () => {
     setLoading(true);
+
     await fetch(
       "https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ResearchStudy?_count=500",
       {
