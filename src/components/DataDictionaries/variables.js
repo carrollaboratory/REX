@@ -149,7 +149,7 @@ export const Variables = ({ capitalizeWord }) => {
             </tr>
           </thead>
           <tbody>
-            {observationData.map((r, index) => {
+            {observationData?.map((r, index) => {
               console.log(
                 "OPEN: ",
                 r?.resource?.validCodedValueSet?.reference ===

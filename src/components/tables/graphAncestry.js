@@ -29,7 +29,7 @@ export const GraphAncestry = ({ focusData }) => {
 
   const getData = () => {
     let graphData = [["Ancestry", "Value", { role: "style" }]];
-    focusData?.entry?.[1]?.resource?.component.map((c, index) => {
+    focusData?.entry?.[1]?.resource?.component?.map((c, index) => {
       if (c.valueInteger !== 0) {
         graphData.push([
           c.code.coding[0].display,
@@ -70,7 +70,7 @@ export const GraphAncestry = ({ focusData }) => {
   };
 
   let sum = 0;
-  focusData?.entry?.[1]?.resource?.component.forEach(
+  focusData?.entry?.[1]?.resource?.component?.forEach(
     (d) => (sum += d.valueInteger)
   );
 
@@ -104,7 +104,7 @@ export const GraphAncestry = ({ focusData }) => {
                 }}
               >
                 {focusData?.entry?.[1]?.resource?.component
-                  ? focusData?.entry?.[1]?.resource?.component.map(
+                  ? focusData?.entry?.[1]?.resource?.component?.map(
                       (c, index) => {
                         if (c.valueInteger !== 0) {
                           return (

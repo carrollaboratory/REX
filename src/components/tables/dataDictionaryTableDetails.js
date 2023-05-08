@@ -28,17 +28,16 @@ export const DataDictionaryTableDetails = ({
 
   useEffect(() => {
     const setFromEvent = (e) => setPosition({ x: e.clientX, y: e.clientY });
-    window.addEventListener("mousemove", setFromEvent);
   }, []);
 
   const getData = async () => {
     Promise.all(
-      selectedDictionaryReferences.map((c) =>
+      selectedDictionaryReferences?.map((c) =>
         fetch(`https://anvil-fhir-vumc.uc.r.appspot.com/fhir/${c.reference}`)
       )
     )
       .then((responses) =>
-        Promise.all(responses.map((response) => response.json()))
+        Promise.all(responses?.map((response) => response.json()))
       )
       .then((res) => {
         setReference(res);

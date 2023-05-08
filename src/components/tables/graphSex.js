@@ -14,7 +14,7 @@ export const GraphSex = ({ focusData }) => {
 
   const getData = () => {
     let graphData = [["Sex", "Value"]];
-    focusData?.entry?.[0]?.resource?.component.map((c, index) => {
+    focusData?.entry?.[0]?.resource?.component?.map((c, index) => {
       if (c.valueInteger !== 0) {
         graphData.push([c.code.coding[0].display, c.valueInteger]);
         setShow(true);
@@ -30,10 +30,11 @@ export const GraphSex = ({ focusData }) => {
     Unknown: "FFBB28",
     "Missing Data": "ADB5BD",
   };
+  const color = ["FF8F8F", "3895D3", "8DCC68", "FFBB28", "ADB5BD"];
 
   const customColors = () => {
     let graphColor = [];
-    focusData?.entry?.[0]?.resource?.component.forEach((c, index) => {
+    focusData?.entry?.[0]?.resource?.component?.forEach((c, index) => {
       if (c.valueInteger !== 0) {
         graphColor.push(colors[c.code.coding[0].display]);
       }
@@ -42,7 +43,6 @@ export const GraphSex = ({ focusData }) => {
   };
   const options = {
     legend: "bottom",
-    colors: customColors(),
     pieStartAngle: 180,
   };
 
@@ -58,7 +58,7 @@ export const GraphSex = ({ focusData }) => {
         <Chart
           chartType="PieChart"
           data={data}
-          options={options}
+          options={{ colors: color, ...options }}
           width={"99%"}
           height={"250px"}
         />
@@ -67,7 +67,7 @@ export const GraphSex = ({ focusData }) => {
   };
 
   let sum = 0;
-  focusData?.entry?.[0]?.resource?.component.forEach(
+  focusData?.entry?.[0]?.resource?.component?.forEach(
     (d) => (sum += d.valueInteger)
   );
 
@@ -105,7 +105,7 @@ export const GraphSex = ({ focusData }) => {
           }}
         >
           {focusData?.entry?.[0]?.resource?.component
-            ? focusData?.entry?.[0]?.resource?.component.map((c, index) => {
+            ? focusData?.entry?.[0]?.resource?.component?.map((c, index) => {
                 if (c.valueInteger !== 0) {
                   return (
                     <>
