@@ -10,7 +10,7 @@ export const CodeableConcept = ({
   ...props
 }) => {
   const [modalData, setModalData] = useState({});
-  const { loading, setLoading } = useContext(myContext);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (isOpen) {
