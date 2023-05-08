@@ -9,7 +9,8 @@ export const Variables = ({ capitalizeWord }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [observationData, setObservationData] = useState([]);
   const [activityData, setActivityData] = useState([]);
-  const [codeableConceptReference, setCodeableConceptReference] = useState({});
+  const [codeableConceptReference, setCodeableConceptReference] =
+    useState(null);
   const [codeableConcept, setCodeableconcept] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
@@ -56,11 +57,6 @@ export const Variables = ({ capitalizeWord }) => {
 
   useEffect(() => {
     fetchObservationDefinitions();
-  }, []);
-
-  useEffect(() => {
-    const setFromEvent = (e) => setPosition({ x: e.clientX, y: e.clientY });
-    window.addEventListener("mousemove", setFromEvent);
   }, []);
 
   const fetchObservationDefinitions = async () => {
@@ -153,55 +149,65 @@ export const Variables = ({ capitalizeWord }) => {
             </tr>
           </thead>
           <tbody>
-            {observationData.map((r, index) => (
-              <>
-                <tr key={index}>
-                  <td>{r?.resource?.code?.coding?.[0]?.code}</td>
+            {observationData.map((r, index) => {
+              console.log(
+                "OPEN: ",
+                r?.resource?.validCodedValueSet?.reference ===
+                  codeableConceptReference
+              );
+              return (
+                <>
+                  <tr key={index}>
+                    <td>{r?.resource?.code?.coding?.[0]?.code}</td>
 
-                  <td>{r?.resource?.code?.coding?.[0]?.display}</td>
+                    <td>{r?.resource?.code?.coding?.[0]?.display}</td>
 
-                  <td>
-                    {r?.resource?.permittedDataType[0] === "CodeableConcept" ? (
-                      <>
-                        <div
-                          style={{
-                            textDecoration: "underline",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => {
-                            handleCodeableConceptClick(
-                              r?.resource?.validCodedValueSet?.reference
-                            );
-                          }}
-                        >
-                          {r?.resource?.permittedDataType[0]}
-                        </div>
-                        <div>
-                          <CodeableConcept
-                            className={
-                              r?.validCodedValueSet?.reference ===
-                              codeableConceptReference
-                                ? "codeableConcept"
-                                : "codeableConcept--closed"
-                            }
-                            isOpen={
-                              r?.validCodedValueSet?.reference ===
-                              codeableConceptReference
-                            }
-                            toggleModal={setCodeableConceptReference}
-                            codeableConceptReference={codeableConceptReference}
-                          />
-                        </div>
-                      </>
-                    ) : (
-                      r?.resource?.permittedDataType[0]
-                    )}
-                  </td>
+                    <td>
+                      {r?.resource?.permittedDataType[0] ===
+                      "CodeableConcept" ? (
+                        <>
+                          <div
+                            style={{
+                              textDecoration: "underline",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => {
+                              handleCodeableConceptClick(
+                                r?.resource?.validCodedValueSet?.reference
+                              );
+                            }}
+                          >
+                            {r?.resource?.permittedDataType[0]}
+                          </div>
+                          <div>
+                            <CodeableConcept
+                              className={
+                                r?.resource?.validCodedValueSet?.reference ===
+                                codeableConceptReference
+                                  ? "codeableConcept"
+                                  : "codeableConcept--closed"
+                              }
+                              isOpen={
+                                r?.resource?.validCodedValueSet?.reference ===
+                                codeableConceptReference
+                              }
+                              toggleModal={setCodeableConceptReference}
+                              codeableConceptReference={
+                                codeableConceptReference
+                              }
+                            />
+                          </div>
+                        </>
+                      ) : (
+                        r?.resource?.permittedDataType[0]
+                      )}
+                    </td>
 
-                  <td>{getObservationMatch(r)}</td>
-                </tr>
-              </>
-            ))}
+                    <td>{getObservationMatch(r)}</td>
+                  </tr>
+                </>
+              );
+            })}
           </tbody>
         </table>
       ) : (
