@@ -23,7 +23,7 @@ export const CodeableConcept = ({
 
     fetch(
       codeableConceptEndpoint,
-      // `https:/anvil-fhir-vumc.uc.r.appspot.com/fhir/${codeableConceptReference}`,
+      // `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/${codeableConceptReference}`,
       {
         method: "GET",
       }
