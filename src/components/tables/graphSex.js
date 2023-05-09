@@ -14,33 +14,32 @@ export const GraphSex = ({ focusData }) => {
 
   const getData = () => {
     let graphData = [["Sex", "Value"]];
-    focusData?.entry?.[0]?.resource?.component?.map((c, index) => {
-      if (c.valueInteger !== 0) {
-        graphData.push([c.code.coding[0].display, c.valueInteger]);
-        setShow(true);
+    focusData?.entry?.map((c) => {
+      if (c?.resource?.valueCodeableConcept?.coding?.[0]?.code === "sex") {
+        c?.resource?.component?.map((r, index) => {
+          if (r?.valueInteger !== 0) {
+            graphData.push([r?.code?.coding?.[0]?.display, r?.valueInteger]);
+            setShow(true);
+          }
+        });
       }
     });
+
     setData(graphData);
   };
 
-  const colors = {
-    Female: "FF8F8F",
-    Male: "3895D3",
-    Intersex: "8DCC68",
-    Unknown: "FFBB28",
-    "Missing Data": "ADB5BD",
-  };
   const color = ["FF8F8F", "3895D3", "8DCC68", "FFBB28", "ADB5BD"];
 
-  const customColors = () => {
-    let graphColor = [];
-    focusData?.entry?.[0]?.resource?.component?.forEach((c, index) => {
-      if (c.valueInteger !== 0) {
-        graphColor.push(colors[c.code.coding[0].display]);
-      }
-    });
-    return graphColor;
-  };
+  // const customColors = () => {
+  //   let graphColor = [];
+  //   focusData?.entry?.[0]?.resource?.component?.forEach((c, index) => {
+  //     if (c.valueInteger !== 0) {
+  //       graphColor.push(colors[c.code.coding[0].display]);
+  //     }
+  //   });
+  //   return graphColor;
+  // };
+
   const options = {
     legend: "bottom",
     pieStartAngle: 180,
@@ -67,9 +66,11 @@ export const GraphSex = ({ focusData }) => {
   };
 
   let sum = 0;
-  focusData?.entry?.[0]?.resource?.component?.forEach(
-    (d) => (sum += d.valueInteger)
-  );
+  focusData?.entry?.map((c) => {
+    if (c?.resource?.valueCodeableConcept?.coding?.[0]?.code === "sex") {
+      c?.resource?.component?.forEach((d) => (sum += d?.valueInteger));
+    }
+  });
 
   return (
     <>
@@ -86,45 +87,58 @@ export const GraphSex = ({ focusData }) => {
           padding: "12px 0",
         }}
       >
-        <b>Sex Distribution</b>
-        {focusData?.entry?.[1]?.resource?.component ? (
-          <div>Total: {sum}</div>
-        ) : (
-          ""
-        )}
-        <div
-          className="container"
-          style={{
-            display: "flex",
-            flexFlow: "row wrap",
-            justifyContent: "space-evenly",
-            padding: "5px",
-            fontSize: ".8rem",
-            margin: "9px",
-            overflowWrap: "break-word",
-          }}
-        >
-          {focusData?.entry?.[0]?.resource?.component
-            ? focusData?.entry?.[0]?.resource?.component?.map((c, index) => {
-                if (c.valueInteger !== 0) {
-                  return (
-                    <>
-                      <div
-                        key={index}
-                        style={{ display: "flex", flexDirection: "column" }}
-                      >
-                        <div>{}</div>
-                        <div className="display">
-                          {c.code?.coding[0]?.display}
-                        </div>
-                        <div className="value-integer">{c.valueInteger}</div>
-                      </div>
-                    </>
-                  );
-                }
-              })
-            : ""}
-        </div>
+        {focusData?.entry?.map((c) => {
+          if (c?.resource?.valueCodeableConcept?.coding?.[0]?.code === "sex") {
+            return (
+              <>
+                <div>
+                  <b>
+                    {c?.resource?.valueCodeableConcept?.coding?.[0]?.display}
+                  </b>
+                </div>
+                <div>Total: {sum}</div>
+                <div
+                  className="container"
+                  style={{
+                    display: "flex",
+                    flexFlow: "row wrap",
+                    justifyContent: "space-evenly",
+                    padding: "5px",
+                    fontSize: ".8rem",
+                    margin: "9px",
+                    overflowWrap: "break-word",
+                  }}
+                >
+                  {c?.resource?.component
+                    ? c?.resource?.component?.map((c, index) => {
+                        if (c.valueInteger !== 0) {
+                          return (
+                            <>
+                              <div
+                                key={index}
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                }}
+                              >
+                                <div>{}</div>
+                                <div className="display">
+                                  {c.code?.coding[0]?.display}
+                                </div>
+                                <div className="value-integer">
+                                  {c.valueInteger}
+                                </div>
+                              </div>
+                            </>
+                          );
+                        }
+                      })
+                    : ""}
+                </div>
+              </>
+            );
+          }
+        })}
 
         {loading ? (
           <LoadingSpinner />
