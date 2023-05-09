@@ -93,7 +93,6 @@ export const Variables = ({ capitalizeWord }) => {
           }
         )
           .then((res) => {
-            console.log("response from variables fetch #2 ", res);
             return res.json();
           })
           .then((c) => {
@@ -150,11 +149,6 @@ export const Variables = ({ capitalizeWord }) => {
           </thead>
           <tbody>
             {observationData?.map((r, index) => {
-              console.log(
-                "OPEN: ",
-                r?.resource?.validCodedValueSet?.reference ===
-                  codeableConceptReference
-              );
               return (
                 <>
                   <tr key={index}>
