@@ -4,8 +4,8 @@ import { myContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 
-export const GraphAncestry = ({ focusData, loading }) => {
-  const { selectedObject, setSelectedObject } = useContext(myContext);
+export const GraphAncestry = ({ focusData }) => {
+  const { loading } = useContext(myContext);
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
 
@@ -29,14 +29,18 @@ export const GraphAncestry = ({ focusData, loading }) => {
 
   const getData = () => {
     let graphData = [["Ancestry", "Value", { role: "style" }]];
-    focusData?.entry?.[1]?.resource?.component.map((c, index) => {
-      if (c.valueInteger !== 0) {
-        graphData.push([
-          c.code.coding[0].display,
-          c.valueInteger,
-          colors[index % colors.length],
-        ]);
-        setShow(true); /*Show is set to true if there is data available*/
+    focusData?.entry?.map((c) => {
+      if (c?.resource?.valueCodeableConcept?.coding?.[0]?.code === "ancestry") {
+        c?.resource?.component?.map((r, index) => {
+          if (r?.valueInteger !== 0) {
+            graphData.push([
+              r?.code?.coding?.[0]?.display,
+              r?.valueInteger,
+              colors[index % colors.length],
+            ]);
+            setShow(true);
+          }
+        });
       }
     });
     setData(graphData);
@@ -70,9 +74,11 @@ export const GraphAncestry = ({ focusData, loading }) => {
   };
 
   let sum = 0;
-  focusData?.entry?.[1]?.resource?.component.forEach(
-    (d) => (sum += d.valueInteger)
-  );
+  focusData?.entry?.map((c) => {
+    if (c?.resource?.valueCodeableConcept?.coding?.[0]?.code === "ancestry") {
+      c?.resource?.component?.forEach((d) => (sum += d?.valueInteger));
+    }
+  });
 
   return (
     <>
@@ -88,73 +94,81 @@ export const GraphAncestry = ({ focusData, loading }) => {
             padding: "12px 0",
           }}
         >
-          <b>Ancestry Distribution</b>
-          {focusData?.entry?.[1]?.resource?.component ? (
-            <>
-              <div>Total: {sum}</div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
-                  padding: "0 5px",
-                  fontSize: ".8rem",
-                  margin: "9px",
-                  height: "98px",
-                }}
-              >
-                {focusData?.entry?.[1]?.resource?.component
-                  ? focusData?.entry?.[1]?.resource?.component.map(
-                      (c, index) => {
-                        if (c.valueInteger !== 0) {
-                          return (
-                            <>
-                              <div
-                                key={index}
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  alignItems: "center",
-                                  justifyContent: "space-between",
-                                }}
-                              >
-                                <div className="display-wrapper">
-                                  <div
-                                    className="display"
-                                    style={{
-                                      display: "flex",
-                                      flexFlow: "column wrap",
-                                      width: "60px",
-                                    }}
-                                  >
-                                    {c.code?.coding[0]?.display}
-                                  </div>
-                                  <div className="value-integer">
-                                    {c.valueInteger}
-                                  </div>
-                                </div>
-                                {/*Legend for graph*/}
+          {focusData?.entry?.map((c) => {
+            if (
+              c?.resource?.valueCodeableConcept?.coding?.[0]?.code ===
+              "ancestry"
+            ) {
+              return (
+                <>
+                  <div>
+                    <b>
+                      {c?.resource?.valueCodeableConcept?.coding?.[0]?.display}
+                    </b>
+                  </div>
+                  <div>Total: {sum}</div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-evenly",
+                      padding: "0 5px",
+                      fontSize: ".8rem",
+                      margin: "9px",
+                      height: "98px",
+                    }}
+                  >
+                    {c?.resource?.component
+                      ? c?.resource?.component?.map((c, index) => {
+                          if (c.valueInteger !== 0) {
+                            return (
+                              <>
                                 <div
-                                  className="legend"
+                                  key={index}
                                   style={{
-                                    width: "12px",
-                                    height: "12px",
-                                    border: "1px solid darkgray",
-                                    background: colors[index % colors.length],
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
                                   }}
-                                ></div>
-                              </div>
-                            </>
-                          );
-                        }
-                      }
-                    )
-                  : ""}
-              </div>{" "}
-            </>
-          ) : (
-            ""
-          )}
+                                >
+                                  <div className="display-wrapper">
+                                    <div
+                                      className="display"
+                                      style={{
+                                        display: "flex",
+                                        flexFlow: "column wrap",
+                                        width: "60px",
+                                      }}
+                                    >
+                                      {c?.code?.coding[0]?.display}
+                                    </div>
+                                    <div className="value-integer">
+                                      {c?.valueInteger}
+                                    </div>
+                                  </div>
+                                  {/*Legend for graph*/}
+                                  <div
+                                    className="legend"
+                                    style={{
+                                      width: "12px",
+                                      height: "12px",
+                                      border: "1px solid darkgray",
+                                      background: colors[index % colors.length],
+                                    }}
+                                  ></div>
+                                </div>
+                              </>
+                            );
+                          }
+                        })
+                      : ""}
+                  </div>
+                </>
+              );
+            }
+          })}
           {/*Bar graph is rendered if there is data available*/}
           {loading ? (
             <LoadingSpinner />
@@ -179,3 +193,42 @@ export const GraphAncestry = ({ focusData, loading }) => {
     </>
   );
 };
+
+// {<>
+//                                       <div
+//                                         key={index}
+//                                         style={{
+//                                           display: "flex",
+//                                           flexDirection: "column",
+//                                           alignItems: "center",
+//                                           justifyContent: "space-between",
+//                                         }}
+//                                       >
+//                                         <div className="display-wrapper">
+//                                           <div
+//                                             className="display"
+//                                             style={{
+//                                               display: "flex",
+//                                               flexFlow: "column wrap",
+//                                               width: "60px",
+//                                             }}
+//                                           >
+//                                             {c.code?.coding[0]?.display}
+//                                           </div>
+//                                           <div className="value-integer">
+//                                             {c.valueInteger}
+//                                           </div>
+//                                         </div>
+//                                         {/*Legend for graph*/}
+//                                         <div
+//                                           className="legend"
+//                                           style={{
+//                                             width: "12px",
+//                                             height: "12px",
+//                                             border: "1px solid darkgray",
+//                                             background:
+//                                               colors[index % colors.length],
+//                                           }}
+//                                         ></div>
+//                                       </div>
+//                                     </> */}

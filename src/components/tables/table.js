@@ -11,7 +11,6 @@ function Table() {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const { setSelectedObject, filterText, setFilterText } =
     useContext(myContext);
-  const { studyId } = useParams();
 
   const getFilteredItems = () =>
     data?.filter(
@@ -51,12 +50,12 @@ function Table() {
 
   const columns = [
     {
-      name: "Title",
+      name: <b>Title</b>,
       selector: (row) => row?.resource?.title,
       wrap: true,
     },
     {
-      name: "Description",
+      name: <b>Description</b>,
       selector: (row) =>
         row?.resource?.description === "TBD"
           ? ""
@@ -65,7 +64,7 @@ function Table() {
       minWidth: "300px",
     },
     {
-      name: "Identifier - Value",
+      name: <b>Identifier - Value</b>,
       selector: (row) =>
         row?.resource?.identifier[0]?.value
           ? row?.resource?.identifier[0]?.value
@@ -73,7 +72,7 @@ function Table() {
       wrap: true,
     },
     {
-      name: "Part Of",
+      name: <b>Part Of</b>,
       selector: (row) =>
         row?.resource?.partOf
           ? row?.resource?.partOf[0]?.reference.split("/")[1]
@@ -82,7 +81,7 @@ function Table() {
       maxWidth: "fit-content",
     },
     {
-      name: "Related Artifact",
+      name: <b>Related Artifact</b>,
       selector: (row) =>
         row?.resource?.relatedArtifact ? (
           <a href={row?.resource?.relatedArtifact[0].url} target="_blank">
@@ -96,13 +95,7 @@ function Table() {
     {
       name: "",
       selector: (row) => (
-        <Link
-          state={{ propData: row }}
-          // onClick={() => {
-          //   setSelectedObject(row);
-          // }}
-          to={`/details/${row?.resource?.id}`}
-        >
+        <Link state={{ propData: row }} to={`/details/${row?.resource?.id}`}>
           Details
         </Link>
       ),
@@ -116,6 +109,7 @@ function Table() {
 
   const fetchTableData = async () => {
     setLoading(true);
+
     await fetch(
       "https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ResearchStudy?_count=500",
       {
@@ -135,12 +129,12 @@ function Table() {
     <div className="table-wrapper">
       <div className="table">
         <div className="table-title">
-          <h4>FHIR Research Data</h4>
+          <h4>AnVIL FHIR Research Study Data</h4>
         </div>
         <div className="search-input">
           <input
             type="text"
-            placeholder="Searcy by Title..."
+            placeholder="Searcy by title..."
             value={filterText}
             onChange={(e) => setFilterText(e.target.value)}
           />
@@ -151,8 +145,8 @@ function Table() {
           progressPending={loading}
           pagination
           paginationComponentOptions={paginationComponentOptions}
-          fixedHeader
-          fixedHeaderScrollHeight="650px"
+          // fixedHeader
+          // fixedHeaderScrollHeight="650px"
           paginationResetDefaultPage={resetPaginationToggle}
           subHeader
           persistTableHead

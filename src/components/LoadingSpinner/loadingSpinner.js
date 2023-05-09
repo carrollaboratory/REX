@@ -1,8 +1,9 @@
 import "./loadingSpinner.css";
 
-const LoadingSpinner = () => {
+const LoadingSpinner = (props) => {
   return (
     <div
+      {...props}
       className="spinner-container"
       style={{ display: "flex", justifyContent: "center" }}
     >
