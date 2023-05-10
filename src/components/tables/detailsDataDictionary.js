@@ -54,53 +54,57 @@ export const DetailsDataDictionary = ({ propData }) => {
 
   return (
     <>
-      <div className="DD-wrapper">
-        <div className="DD-container">
-          <div className="DD-title-list">
-            <div className="DD-title-container">
-              <div className="DD-header">
-                <h4>Available Data Dictionary Tables</h4>
-              </div>
-              <div className="DD-titles">
-                {dataDictionary?.map((d, index) => {
-                  return (
-                    <>
-                      <li
-                        key={index}
-                        onClick={() => {
-                          handleTitleClick(
-                            d.resource?.observationResultRequirement
-                          );
-                          setActive(index);
-                        }}
-                        style={{
-                          fontWeight: active === index ? "bold" : "",
-                          textDecoration:
-                            active === index ? "none" : "underline",
-                          cursor: active === index ? "default" : "pointer",
-                        }}
-                      >
-                        {d.resource.title}
-                      </li>
-                    </>
-                  );
-                })}
+      {dataDictionary ? (
+        <div className="DD-wrapper">
+          <div className="DD-container">
+            <div className="DD-title-list">
+              <div className="DD-title-container">
+                <div className="DD-header">
+                  <h4>Available Data Dictionary Tables</h4>
+                </div>
+                <div className="DD-titles">
+                  {dataDictionary?.map((d, index) => {
+                    return (
+                      <>
+                        <li
+                          key={index}
+                          onClick={() => {
+                            handleTitleClick(
+                              d.resource?.observationResultRequirement
+                            );
+                            setActive(index);
+                          }}
+                          style={{
+                            fontWeight: active === index ? "bold" : "",
+                            textDecoration:
+                              active === index ? "none" : "underline",
+                            cursor: active === index ? "default" : "pointer",
+                          }}
+                        >
+                          {d.resource.title}
+                        </li>
+                      </>
+                    );
+                  })}
+                </div>
               </div>
             </div>
-          </div>
-          <div>
-            {dictionaryTableDetails ? (
-              <DataDictionaryTableDetails
-                selectedDictionaryReferences={selectedDictionaryReferences}
-                setDictionaryTableDetails={setDictionaryTableDetails}
-                dataDictionary={dataDictionary}
-              />
-            ) : (
-              ""
-            )}
+            <div>
+              {dictionaryTableDetails ? (
+                <DataDictionaryTableDetails
+                  selectedDictionaryReferences={selectedDictionaryReferences}
+                  setDictionaryTableDetails={setDictionaryTableDetails}
+                  dataDictionary={dataDictionary}
+                />
+              ) : (
+                ""
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="no-dictionaries">No data dictionaries available</div>
+      )}
     </>
   );
 };

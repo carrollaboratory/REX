@@ -10,7 +10,7 @@ export const DataDictionaryTableDetails = ({
   setDictionaryTableDetails,
 }) => {
   const [reference, setReference] = useState({});
-  const { loading } = useContext(myContext);
+  const [loading, setLoading] = useState(true);
   const [codeableConceptReference, setCodeableConceptReference] =
     useState(null);
   const [codeableConcept, setCodeableconcept] = useState(false);
@@ -31,6 +31,7 @@ export const DataDictionaryTableDetails = ({
   }, []);
 
   const getData = async () => {
+    setLoading(true);
     Promise.all(
       selectedDictionaryReferences?.map((c) =>
         fetch(`https://anvil-fhir-vumc.uc.r.appspot.com/fhir/${c.reference}`)
@@ -42,33 +43,30 @@ export const DataDictionaryTableDetails = ({
       .then((res) => {
         setReference(res);
       });
+    setLoading(false);
   };
 
   return (
     <>
-      {/* <button onClick={() => setDictionaryTableDetails(false)}>Back</button> */}
-      {
-        //   loading ? (
-        //     <LoadingSpinner />
-        //   ) :
-        reference?.length > 0 ? (
-          <div className="table-wrapper">
-            <div>
-              <table>
-                <thead>
-                  <tr>
-                    <th className="variable-name">Variable Name</th>
-                    <th className="variable-description">
-                      Variable Description
-                    </th>
-                    <th className="data-type">Permitted Data Type</th>
-                  </tr>
-                </thead>
+      {reference?.length > 0 ? (
+        <div className="table-wrapper">
+          <div>
+            <table>
+              <thead>
+                <tr>
+                  <th className="variable-name">Variable Name</th>
+                  <th className="variable-description">Variable Description</th>
+                  <th className="data-type">Permitted Data Type</th>
+                </tr>
+              </thead>
+              {loading ? (
+                <LoadingSpinner />
+              ) : (
                 <tbody>
-                  {reference?.map((r) => {
+                  {reference?.map((r, index) => {
                     return (
                       <>
-                        <tr>
+                        <tr key={index}>
                           <td className="variable-name">
                             {r?.code?.coding?.[0]?.code}
                           </td>
@@ -119,13 +117,13 @@ export const DataDictionaryTableDetails = ({
                     );
                   })}
                 </tbody>
-              </table>
-            </div>
+              )}
+            </table>
           </div>
-        ) : (
-          ""
-        )
-      }
+        </div>
+      ) : (
+        ""
+      )}
     </>
   );
 };
