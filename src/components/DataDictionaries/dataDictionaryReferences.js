@@ -74,11 +74,15 @@ function DataDictionaryReferences() {
                     </th>
                   </tr>
                   <tr>
-                    <th className="dd-variable-name">Variable Name</th>
-                    <th className="dd-variable-description">
+                    <th className="dd-variable-name table-head-DDR">
+                      Variable Name
+                    </th>
+                    <th className="dd-variable-description table-head-DDR">
                       Variable Description
                     </th>
-                    <th className="dd-data-type">Permitted Data Type</th>
+                    <th className="dd-data-type table-head-DDR">
+                      Permitted Data Type
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -86,13 +90,13 @@ function DataDictionaryReferences() {
                     return (
                       <>
                         <tr key={index}>
-                          <td className="dd-variable-name">
+                          <td className="dd-variable-name table-cell-DDR">
                             {r?.code?.coding?.[0]?.code}
                           </td>
-                          <td className="dd-variable-description">
+                          <td className="dd-variable-description table-cell-DDR">
                             {r?.code?.coding?.[0]?.display}
                           </td>
-                          <td className="dd-data-type">
+                          <td className="dd-data-type table-cell-DDR">
                             {r?.permittedDataType[0] === "CodeableConcept" ? (
                               <>
                                 {" "}

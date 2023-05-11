@@ -103,9 +103,11 @@ function DataDictionary() {
                 <table className="dd-table">
                   <thead>
                     <tr>
-                      <th className="dd-name">Variables for Data Dictionary</th>
-                      <th className="dd-table-name">Table</th>
-                      <th className="dd-table-name"></th>
+                      <th className="dd-name table-head-DD">
+                        Variables for Data Dictionary
+                      </th>
+                      <th className="dd-table-name table-head-DD">Table</th>
+                      <th className="dd-table-name table-head-DD"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -114,15 +116,15 @@ function DataDictionary() {
                         <>
                           {r?.resource?.title ? (
                             <tr key={index}>
-                              <td className="dd-variable-name">
+                              <td className="dd-variable-name table-cell-DD">
                                 {r?.resource?.title.split(" ")[3].split("_")[0]}
                               </td>
-                              <td className="dd-variable-name">
+                              <td className="dd-variable-name table-cell-DD">
                                 {capitalizeWord(
                                   r?.resource?.title.split(".").pop()
                                 )}
                               </td>
-                              <td className="dd-variable-name">
+                              <td className="dd-variable-name table-cell-DD">
                                 <Link
                                   state={{
                                     selectedDictionaryReferences: r?.resource,

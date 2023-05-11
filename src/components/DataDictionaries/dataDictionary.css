@@ -57,7 +57,8 @@
 }
 
 
-td, th {
+
+.table-head-DD, .table-cell-DD {
   padding: 15px;
   border: 1px solid lightgray;
   font-size: .8rem;
