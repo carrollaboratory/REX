@@ -32,6 +32,8 @@ table{
     border-right: transparent 1px solid;
 }
 
+
+
 .variable-name {
     min-width: 140px;
     max-width: 140px;
@@ -57,9 +59,9 @@ display: none;
     max-width: 70px;
 }
 
-.variable-summary-u {
-    text-decoration: underline;
+.variable-summary-arrow {
     cursor: pointer;
+    text-align: center;
 }
 
 .sub-row--closed{
@@ -73,9 +75,13 @@ display: none;
 
 .down-arrow {
     width: 15px;
-    transform: rotate(3.142rad);
+    rotate: 3.142rad;
+    transition-duration: 330ms;
 }
 
 .up-arrow {
     width: 15px;
+    transition: rotate 330ms ease-in-out;
 }
+
+

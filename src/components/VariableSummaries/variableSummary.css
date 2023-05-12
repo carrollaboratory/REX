@@ -7,14 +7,14 @@ justify-content: center;
 
 .variable-summary-head{
     padding: 10px 150px 10px 10px;
-    background-color: #F0E9E7;
+    background-color: #EAF0E7;
     border: none;
     font-size: .8rem;
-
 }
+
 .variable-summary-table {
     border: 1px transparent solid;
-    width: 60.5vw;
+    width: 54vw;
 }
 
 .variable-summary-cell {
@@ -28,6 +28,6 @@ justify-content: center;
 .no-data {
     padding: 10px 0;
     background-color: #F0E9E7;
-    width: 60.5vw;
+    width: 54vw;
     text-align: center;
 }

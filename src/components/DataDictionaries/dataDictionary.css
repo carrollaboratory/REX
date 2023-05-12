@@ -3,6 +3,7 @@
 }
 
 .dd-title{
+  
   margin: 0px 0 0 15px;
   display: flex;
   flex-direction: row;
@@ -56,9 +57,7 @@
   color: white;
 }
 
-
-
-.table-head-DD, .table-cell-DD {
+.table-head-DD, .table-cell-DD{
   padding: 15px;
   border: 1px solid lightgray;
   font-size: .8rem;

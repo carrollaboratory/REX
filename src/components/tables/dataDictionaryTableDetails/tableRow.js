@@ -19,7 +19,7 @@ export const TableRow = ({ r, index, deps }) => {
 
   return (
     <>
-      <tr key={index}>
+      <tr key={r?.id}>
         <td className="variable-name table-cell-DTD">
           {r?.code?.coding?.[0]?.code}
         </td>
@@ -62,16 +62,16 @@ export const TableRow = ({ r, index, deps }) => {
           )}
         </td>
         <td className="table-cell-DTD">
-          <u
-            className="variable-summary-u table-cell-DTD"
+          <div
+            className="variable-summary-arrow"
             onClick={() => setOpen(!open)}
           >
             <img className={open ? "down-arrow" : "up-arrow"} src={DownArrow} />
-          </u>
+          </div>
         </td>
       </tr>
       <tr className={open ? "sub-row--open" : "sub-row--closed"}>
-        <td colSpan="4">
+        <td colSpan="3">
           <VariableSummary obsDefinition={r} />
         </td>
       </tr>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LoadingSpinner from "../../LoadingSpinner/loadingSpinner";
 import "./dataDictionaryTableDetails.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { TableRow } from "./tableRow";
 
 export const DataDictionaryTableDetails = ({
@@ -90,7 +90,6 @@ export const DataDictionaryTableDetails = ({
               )}
             </table>
           </div>
-          ,
         </div>
       ) : (
         ""
