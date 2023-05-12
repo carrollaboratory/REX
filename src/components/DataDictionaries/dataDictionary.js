@@ -101,7 +101,7 @@ function DataDictionary() {
               </div>
               {titleData?.length > 0 ? (
                 <table className="dd-table">
-                  <thead>
+                  <thead className="data-dictionary-table-head">
                     <tr>
                       <th className="dd-name table-head-DD">
                         Variables for Data Dictionary

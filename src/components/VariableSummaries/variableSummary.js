@@ -10,6 +10,7 @@ export const VariableSummary = ({ obsDefinition }) => {
     getVariableData();
   }, [obsDefinition]);
 
+  console.log("here: ", studyId);
   const getVariableData = async () => {
     await fetch(
       `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/Observation?value-concept=${obsDefinition?.code?.coding?.[0]?.system}|${obsDefinition?.code?.coding?.[0]?.code}&focus=ResearchStudy/${studyId} `,

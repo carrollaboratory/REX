@@ -67,13 +67,13 @@ export const CodeableConcept = ({
               <table>
                 <thead>
                   <tr>
-                    <th>Code</th>
+                    <th className="codeable-concept-head">Code</th>
                   </tr>
                 </thead>
                 <tbody>
                   {modalData?.entry?.[0]?.resource?.concept?.map((c, index) => (
-                    <tr key={index} className="item">
-                      <td>{c.display}</td>
+                    <tr key={index} className="item-codeable-concept">
+                      <td className="codeable-concept-cell">{c.display}</td>
                     </tr>
                   ))}
                 </tbody>

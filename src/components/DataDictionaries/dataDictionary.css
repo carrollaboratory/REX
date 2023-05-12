@@ -3,7 +3,6 @@
 }
 
 .dd-title{
-  
   margin: 0px 0 0 15px;
   display: flex;
   flex-direction: row;
@@ -55,6 +54,10 @@
 .clear-button:hover {
   background-color: #62a8d4;
   color: white;
+}
+
+.data-dictionary-table-head {
+  background-color: #E7EEF0;
 }
 
 .table-head-DD, .table-cell-DD{
