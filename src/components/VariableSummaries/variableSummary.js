@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./variableSummary.css";
+import { VariableSummaryString } from "./variableSummaryString";
 
 export const VariableSummary = ({ obsDefinition, height }) => {
   const { studyId } = useParams();
@@ -28,30 +29,7 @@ export const VariableSummary = ({ obsDefinition, height }) => {
   return (
     <div className={"variable-summary-wrapper"} style={height}>
       {obsDefinition?.permittedDataType?.[0] === "string" ? (
-        variableData ? (
-          <>
-            <table className="variable-summary-table">
-              <thead>
-                <tr>
-                  {variableData?.[0]?.resource?.component?.map((c, index) => (
-                    <th key={index} className="variable-summary-head">
-                      {c?.code?.coding?.[0]?.display}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  {variableData?.[0]?.resource?.component?.map((c) => (
-                    <td className="variable-summary-cell">{c?.valueInteger}</td>
-                  ))}
-                </tr>
-              </tbody>
-            </table>
-          </>
-        ) : (
-          <div className="no-data">No data found</div>
-        )
+        <VariableSummaryString variableData={variableData} />
       ) : (
         ""
       )}

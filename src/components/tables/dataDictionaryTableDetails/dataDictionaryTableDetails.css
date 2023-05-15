@@ -83,3 +83,7 @@ table {
   width: 15px;
   transition: rotate 330ms ease-in-out;
 }
+
+/* .colored-row:nth-child(3n) {
+  background-color: #e7eef0;
+} */

@@ -1,8 +1,8 @@
 .table-wrapper {
-    margin-bottom: 70px;
+  margin-bottom: 70px;
 }
 
-.dd-title{
+.dd-title {
   margin: 0px 0 0 15px;
   display: flex;
   flex-direction: row;
@@ -16,16 +16,16 @@
 }
 
 .search-input-dd {
-    margin: 0 0 50px 15px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
+  margin: 0 0 50px 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 
-  input {
-    width: 200px;
-    height: 21px;
-  }
+input {
+  width: 200px;
+  height: 21px;
+}
 
 .search-button {
   margin: 0 6px 0 0;
@@ -47,7 +47,7 @@
 }
 
 .search-button:hover {
-  background-color: #7E8DC6;
+  background-color: #7e8dc6;
   color: white;
 }
 
@@ -57,19 +57,20 @@
 }
 
 .data-dictionary-table-head {
-  background-color: #E7EEF0;
+  background-color: #e7eef0;
 }
 
-.table-head-DD, .table-cell-DD{
+.table-head-DD,
+.table-cell-DD {
   padding: 15px;
   border: 1px solid lightgray;
-  font-size: .8rem;
+  font-size: 0.8rem;
   border-left: transparent 1px solid;
   border-right: transparent 1px solid;
 }
 
-tr:nth-child(even) {
-  background-color: #E7EEF0;
+.DD-colored-row:nth-child(even) {
+  background-color: #e7eef0;
 }
 
 .no-results {

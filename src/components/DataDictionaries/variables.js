@@ -158,7 +158,7 @@ export const Variables = ({ capitalizeWord }) => {
             {observationData?.map((r, index) => {
               return (
                 <>
-                  <tr key={index}>
+                  <tr key={index} className="DD-colored-row">
                     <td className="table-cell-DD">
                       {r?.resource?.code?.coding?.[0]?.code}
                     </td>

@@ -25,14 +25,14 @@ export const TableRow = ({ r, index, deps }) => {
 
   return (
     <>
-      <tr key={r?.id}>
+      <tr key={r?.id} className="colored-row">
         <td className="variable-name table-cell-DTD">
           {r?.code?.coding?.[0]?.code}
         </td>
         <td className="variable-description table-cell-DTD">
           {r?.code?.coding?.[0]?.display}
         </td>
-        <td className="data-type table-cell-DTD">
+        <td className="data-type table-cell-DTD codeable-concept-style">
           {r?.permittedDataType[0] === "CodeableConcept" ? (
             <>
               <div

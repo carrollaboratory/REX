@@ -89,7 +89,7 @@ function DataDictionaryReferences() {
                   {reference?.map((r, index) => {
                     return (
                       <>
-                        <tr key={index}>
+                        <tr key={index} className="DDR-colored-row">
                           <td className="dd-variable-name table-cell-DDR">
                             {r?.code?.coding?.[0]?.code}
                           </td>

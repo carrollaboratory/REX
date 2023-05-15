@@ -115,7 +115,7 @@ function DataDictionary() {
                       return (
                         <>
                           {r?.resource?.title ? (
-                            <tr key={index}>
+                            <tr key={index} className="DD-colored-row">
                               <td className="dd-variable-name table-cell-DD">
                                 {r?.resource?.title.split(" ")[3].split("_")[0]}
                               </td>
