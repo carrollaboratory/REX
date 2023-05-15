@@ -23,7 +23,6 @@ export const VariableSummaryString = ({ variableData }) => {
               </tr>
             </tbody>
           </table>
-          ;
         </>
       ) : (
         <div className="no-data">No data found</div>

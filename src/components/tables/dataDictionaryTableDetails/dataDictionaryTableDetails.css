@@ -65,23 +65,22 @@ table {
 .sub-row--closed {
   max-height: 0px;
   opacity: 0;
-  transition: opacity 330ms;
+  display: none;
 }
 
 .sub-row--open {
   opacity: 1;
-  transition: opacity 330ms;
 }
 
 .down-arrow {
   width: 15px;
   rotate: 3.142rad;
-  transition-duration: 330ms;
+  transition-duration: 100ms;
 }
 
 .up-arrow {
   width: 15px;
-  transition: rotate 330ms ease-in-out;
+  transition: rotate 100ms ease-in-out;
 }
 
 /* .colored-row:nth-child(3n) {

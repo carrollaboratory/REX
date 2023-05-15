@@ -36,6 +36,7 @@ export const TableRow = ({ r, index, deps }) => {
           {r?.permittedDataType[0] === "CodeableConcept" ? (
             <>
               <div
+                className="codeableConceptLink"
                 style={{
                   textDecoration: "underline",
                   cursor: "pointer",
