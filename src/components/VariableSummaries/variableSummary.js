@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./variableSummary.css";
 
-export const VariableSummary = ({ obsDefinition }) => {
+export const VariableSummary = ({ obsDefinition, height }) => {
   const { studyId } = useParams();
   const [variableData, setVariableData] = useState({});
 
@@ -10,7 +10,6 @@ export const VariableSummary = ({ obsDefinition }) => {
     getVariableData();
   }, [obsDefinition]);
 
-  console.log("here: ", studyId);
   const getVariableData = async () => {
     await fetch(
       `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/Observation?value-concept=${obsDefinition?.code?.coding?.[0]?.system}|${obsDefinition?.code?.coding?.[0]?.code}&focus=ResearchStudy/${studyId} `,
@@ -27,7 +26,7 @@ export const VariableSummary = ({ obsDefinition }) => {
   };
 
   return (
-    <div className="variable-summary-wrapper">
+    <div className={"variable-summary-wrapper"} style={height}>
       {obsDefinition?.permittedDataType?.[0] === "string" ? (
         variableData ? (
           <>

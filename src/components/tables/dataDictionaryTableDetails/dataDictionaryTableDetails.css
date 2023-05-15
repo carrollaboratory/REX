@@ -6,82 +6,80 @@ table,
 th,
 td {
   text-align: left;
-  font-size: .85rem;
+  font-size: 0.85rem;
 }
 
-table{
-    border-collapse: collapse;
+table {
+  border-collapse: collapse;
 }
 
 .table-header-DTD {
-    padding: 1rem;
-    background-color: #E7EEF0;
-    border: 1px solid lightgray;
-    font-size: .8rem;
-    border-left: transparent 1px solid;
-    border-right: transparent 1px solid;
-  }
-
-.table-cell-DTD{
-    vertical-align: text-top;
-    padding: .5rem;
-    /* padding: 15px; */
-    border: 1px solid lightgray;
-    font-size: .8rem;
-    border-left: transparent 1px solid;
-    border-right: transparent 1px solid;
+  padding: 1rem;
+  background-color: #e7eef0;
+  border: 1px solid lightgray;
+  font-size: 0.8rem;
+  border-left: transparent 1px solid;
+  border-right: transparent 1px solid;
 }
 
-
+.table-cell-DTD {
+  vertical-align: text-top;
+  padding: 0.5rem;
+  /* padding: 15px; */
+  border: 1px solid lightgray;
+  font-size: 0.8rem;
+  border-left: transparent 1px solid;
+  border-right: transparent 1px solid;
+}
 
 .variable-name {
-    min-width: 140px;
-    max-width: 140px;
-    overflow-wrap: break-word;
+  min-width: 140px;
+  max-width: 140px;
+  overflow-wrap: break-word;
 }
 
 .variable-description {
-    min-width: 450px;
-    max-width: 450px;
+  min-width: 450px;
+  max-width: 450px;
 }
 
 .data-type {
-    min-width: 140px;
-    max-width: 140px;
+  min-width: 140px;
+  max-width: 140px;
 }
 
-.codeableConcept--closed{
-display: none;
+.codeableConcept--closed {
+  display: none;
 }
 
 .variable-summary {
-    min-width: 70px;
-    max-width: 70px;
+  min-width: 70px;
+  max-width: 70px;
 }
 
 .variable-summary-arrow {
-    cursor: pointer;
-    text-align: center;
+  cursor: pointer;
+  text-align: center;
 }
 
-.sub-row--closed{
-    display: none;
+.sub-row--closed {
+  max-height: 0px;
+  opacity: 0;
+  transition: opacity 330ms;
 }
 
 .sub-row--open {
-    border-left: 1px transparent solid;
-    border-right: 1px transparent solid;
+  opacity: 1;
+  transition: opacity 330ms;
 }
 
 .down-arrow {
-    width: 15px;
-    rotate: 3.142rad;
-    transition-duration: 330ms;
+  width: 15px;
+  rotate: 3.142rad;
+  transition-duration: 330ms;
 }
 
 .up-arrow {
-    width: 15px;
-    transition: rotate 330ms ease-in-out;
+  width: 15px;
+  transition: rotate 330ms ease-in-out;
 }
-
-

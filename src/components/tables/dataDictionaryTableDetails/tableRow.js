@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { VariableSummary } from "../../VariableSummaries/variableSummary";
 import "./dataDictionaryTableDetails.css";
 import { CodeableConcept } from "../codeableConcept";
@@ -11,6 +11,12 @@ export const TableRow = ({ r, index, deps }) => {
     setCodeableconcept,
   } = deps;
   const [open, setOpen] = useState(false);
+  const [height, setHeight] = useState(null);
+  const subRowRef = useRef(null);
+
+  useEffect(() => {
+    setHeight(subRowRef?.current?.clientHeight);
+  });
 
   const handleCodeableConceptClick = (item) => {
     setCodeableConceptReference(item);
@@ -70,9 +76,14 @@ export const TableRow = ({ r, index, deps }) => {
           </div>
         </td>
       </tr>
-      <tr className={open ? "sub-row--open" : "sub-row--closed"}>
+      <tr>
         <td colSpan="3">
-          <VariableSummary obsDefinition={r} />
+          <div
+            className={open ? "sub-row--open" : "sub-row--closed"}
+            ref={subRowRef}
+          >
+            <VariableSummary obsDefinition={r} />
+          </div>
         </td>
       </tr>
     </>

@@ -59,7 +59,7 @@ function DataDictionaryReferences() {
           <>
             <div className="dd-table-wrapper">
               <table className="dd-table">
-                <thead>
+                <thead className="table-head-DD">
                   <tr>
                     <th className="dd-header-title" colSpan="3">
                       {

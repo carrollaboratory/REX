@@ -1,33 +1,33 @@
 .variable-summary-wrapper {
-background-color: white;
-display: flex;
-flex-direction: row;
-justify-content: center;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
-.variable-summary-head{
-    padding: 10px 150px 10px 10px;
-    background-color: #EAF0E7;
-    border: none;
-    font-size: .8rem;
+.variable-summary-head {
+  padding: 10px 150px 10px 10px;
+  background-color: #eaf0e7;
+  border: none;
+  font-size: 0.8rem;
 }
 
 .variable-summary-table {
-    border: 1px transparent solid;
-    width: 54vw;
+  border: 1px transparent solid;
+  width: 54vw;
 }
 
 .variable-summary-cell {
-    font-size: .85rem;
-    padding: 10px 0 10px 10px;
-    background-color: #FFFFFF;
-    border: 1px transparent solid;
-    border-bottom: 2px #F0E9E7 solid;
+  font-size: 0.85rem;
+  padding: 10px 0 10px 10px;
+  background-color: #ffffff;
+  border: 1px transparent solid;
+  border-bottom: 2px #f0e9e7 solid;
 }
 
 .no-data {
-    padding: 10px 0;
-    background-color: #F0E9E7;
-    width: 54vw;
-    text-align: center;
+  padding: 10px 0;
+  background-color: #f0e9e7;
+  width: 54vw;
+  text-align: center;
 }
