@@ -1,0 +1,88 @@
+/* .table-wrapper {
+    margin: 57px 0 0 0; 
+} */
+
+table,
+th,
+td {
+  text-align: left;
+  font-size: 0.85rem;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+.table-header-DTD {
+  padding: 1rem;
+  background-color: #e7eef0;
+  border: 1px solid lightgray;
+  font-size: 0.8rem;
+  border-left: transparent 1px solid;
+  border-right: transparent 1px solid;
+}
+
+.table-cell-DTD {
+  vertical-align: text-top;
+  padding: 0.5rem;
+  /* padding: 15px; */
+  border: 1px solid lightgray;
+  font-size: 0.8rem;
+  border-left: transparent 1px solid;
+  border-right: transparent 1px solid;
+}
+
+.variable-name {
+  min-width: 140px;
+  max-width: 140px;
+  overflow-wrap: break-word;
+}
+
+.variable-description {
+  min-width: 450px;
+  max-width: 450px;
+}
+
+.data-type {
+  min-width: 140px;
+  max-width: 140px;
+}
+
+.codeableConcept--closed {
+  display: none;
+}
+
+.variable-summary {
+  min-width: 70px;
+  max-width: 70px;
+}
+
+.variable-summary-arrow {
+  cursor: pointer;
+  text-align: center;
+}
+
+.sub-row--closed {
+  max-height: 0px;
+  opacity: 0;
+  display: none;
+}
+
+.sub-row--open {
+  opacity: 1;
+}
+
+.down-arrow {
+  width: 15px;
+  rotate: 3.142rad;
+  transition-duration: 100ms;
+}
+
+.up-arrow {
+  width: 15px;
+  transition: rotate 100ms ease-in-out;
+}
+
+/* .colored-row:nth-child(3n) {
+  background-color: #e7eef0;
+} */

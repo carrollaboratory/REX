@@ -101,11 +101,13 @@ function DataDictionary() {
               </div>
               {titleData?.length > 0 ? (
                 <table className="dd-table">
-                  <thead>
+                  <thead className="data-dictionary-table-head">
                     <tr>
-                      <th className="dd-name">Variables for Data Dictionary</th>
-                      <th className="dd-table-name">Table</th>
-                      <th className="dd-table-name"></th>
+                      <th className="dd-name table-head-DD">
+                        Variables for Data Dictionary
+                      </th>
+                      <th className="dd-table-name table-head-DD">Table</th>
+                      <th className="dd-table-name table-head-DD"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -113,16 +115,16 @@ function DataDictionary() {
                       return (
                         <>
                           {r?.resource?.title ? (
-                            <tr key={index}>
-                              <td className="dd-variable-name">
+                            <tr key={index} className="DD-colored-row">
+                              <td className="dd-variable-name table-cell-DD">
                                 {r?.resource?.title.split(" ")[3].split("_")[0]}
                               </td>
-                              <td className="dd-variable-name">
+                              <td className="dd-variable-name table-cell-DD">
                                 {capitalizeWord(
                                   r?.resource?.title.split(".").pop()
                                 )}
                               </td>
-                              <td className="dd-variable-name">
+                              <td className="dd-variable-name table-cell-DD">
                                 <Link
                                   state={{
                                     selectedDictionaryReferences: r?.resource,

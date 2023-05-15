@@ -5,6 +5,7 @@ import { NavBar } from "./components/nav/navBar";
 import DetailsView from "./components/tables/details";
 import DataDictionary from "./components/DataDictionaries/dataDictionary";
 import DataDictionaryReferences from "./components/DataDictionaries/dataDictionaryReferences";
+import { VariableSummary } from "./components/VariableSummaries/variableSummary";
 
 export const myContext = createContext();
 export const App = () => {
@@ -54,6 +55,10 @@ export const App = () => {
             s
           />
           <Route path="/variables" element={<DataDictionary />} />
+          <Route
+            path="/variable-summary/:studyId"
+            element={<VariableSummary />}
+          />
         </Route>
       </Routes>
     </myContext.Provider>

@@ -1,51 +1,71 @@
 .dd-table-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 30px 0 70px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 30px 0 70px 0;
 }
 
 .dd-button {
-    margin: .5vw 12.5vw 0  0;
-    display: flex;
-    flex-direction: row;
-    background-color: #4051a3;
-    color: white;
-    border: none;
-    padding: 5px 13px;
-    width: fit-content;
-    align-self: flex-end;
+  margin: 0.5vw 12.5vw 0 0;
+  display: flex;
+  flex-direction: row;
+  background-color: #4051a3;
+  color: white;
+  border: none;
+  padding: 5px 13px;
+  width: fit-content;
+  align-self: flex-end;
 }
 
 .dd-button:hover {
-    background-color: #7E8DC6;
-    color: white;
-  }
+  background-color: #7e8dc6;
+  color: white;
+}
 
 #no-border {
-    border: 1px transparent solid;
+  border: 1px transparent solid;
 }
 
 .dd-table {
-    width: 75vw;
+  width: 75vw;
 }
 
+.table-head-DDR,
+.table-cell-DDR {
+  padding: 15px;
+  border: 1px solid lightgray;
+  font-size: 0.8rem;
+  border-left: transparent 1px solid;
+  border-right: transparent 1px solid;
+}
 .dd-header-title {
-    text-align: center;
+  text-align: center;
+  padding: 15px;
+  border: 1px lightgray solid;
+  border-left: 1px transparent solid;
+  border-right: 1px transparent solid;
 }
 
 .dd-variable-name {
-    min-width: 180px;
-    max-width: 180px;
-    overflow-wrap: break-word;
+  min-width: 180px;
+  max-width: 180px;
+  overflow-wrap: break-word;
 }
 
 .dd-variable-description {
-    min-width: 500px;
-    max-width: 500px;
+  min-width: 500px;
+  max-width: 500px;
 }
 
 .dd-data-type {
-    min-width: 180px;
-    max-width: 180px;
+  min-width: 180px;
+  max-width: 180px;
+}
+
+.table-head-DD {
+  background-color: #e7eef0;
+}
+
+.DDR-colored-row:nth-child(even) {
+  background-color: #e7eef0;
 }

@@ -44,6 +44,14 @@
   .close:focus {
     color: rgb(107, 113, 118);
     text-decoration: none;
-    cursor: pointer;
-    
+    cursor: pointer; 
+  }
+
+  .codeable-concept-head {
+    padding: 10px 15px;
+    background-color: #E7EEF0;
+  }
+
+  .codeable-concept-cell {
+    padding: 10px;
   }
