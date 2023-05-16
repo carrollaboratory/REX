@@ -14,6 +14,7 @@ export const GraphSex = ({ focusData }) => {
 
   const getData = () => {
     let graphData = [["Sex", "Value"]];
+
     focusData?.entry?.map((c) => {
       if (c?.resource?.valueCodeableConcept?.coding?.[0]?.code === "sex") {
         c?.resource?.component?.map((r, index) => {
@@ -24,7 +25,6 @@ export const GraphSex = ({ focusData }) => {
         });
       }
     });
-
     setData(graphData);
   };
 
