@@ -101,7 +101,7 @@ export const GraphAncestry = ({ focusData }) => {
             ) {
               return (
                 <>
-                  <div>
+                  <div key={c?.resource?.id}>
                     <b>
                       {c?.resource?.valueCodeableConcept?.coding?.[0]?.display}
                     </b>
@@ -193,42 +193,3 @@ export const GraphAncestry = ({ focusData }) => {
     </>
   );
 };
-
-// {<>
-//                                       <div
-//                                         key={index}
-//                                         style={{
-//                                           display: "flex",
-//                                           flexDirection: "column",
-//                                           alignItems: "center",
-//                                           justifyContent: "space-between",
-//                                         }}
-//                                       >
-//                                         <div className="display-wrapper">
-//                                           <div
-//                                             className="display"
-//                                             style={{
-//                                               display: "flex",
-//                                               flexFlow: "column wrap",
-//                                               width: "60px",
-//                                             }}
-//                                           >
-//                                             {c.code?.coding[0]?.display}
-//                                           </div>
-//                                           <div className="value-integer">
-//                                             {c.valueInteger}
-//                                           </div>
-//                                         </div>
-//                                         {/*Legend for graph*/}
-//                                         <div
-//                                           className="legend"
-//                                           style={{
-//                                             width: "12px",
-//                                             height: "12px",
-//                                             border: "1px solid darkgray",
-//                                             background:
-//                                               colors[index % colors.length],
-//                                           }}
-//                                         ></div>
-//                                       </div>
-//                                     </> */}

@@ -12,6 +12,13 @@
   font-size: 0.8rem;
 }
 
+.variable-summary-head-q {
+  padding: 10px 110px 10px 10px;
+  background-color: #eaf0e7;
+  border: none;
+  font-size: 0.8rem;
+}
+
 .variable-summary-table {
   border: 1px transparent solid;
   width: 54vw;
