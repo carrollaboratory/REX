@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import "./variableSummary.css";
 import { VariableSummaryString } from "./variableSummaryString";
 import { VariableSummaryQuantity } from "./variableSummaryQuantity";
+import { VariableSummaryCodeableConcept } from "./variableSummaryCodeableConcept";
 
 export const VariableSummary = ({ obsDefinition, height }) => {
   const { studyId } = useParams();
@@ -33,8 +34,10 @@ export const VariableSummary = ({ obsDefinition, height }) => {
         <VariableSummaryString variableData={variableData} />
       ) : obsDefinition?.permittedDataType?.[0] === "Quantity" ? (
         <VariableSummaryQuantity variableData={variableData} />
+      ) : obsDefinition?.permittedDataType?.[0] === "CodeableConcept" ? (
+        <VariableSummaryCodeableConcept variableData={variableData} />
       ) : (
-        ""
+        <div className="no-data">No data found</div>
       )}
     </div>
   );
