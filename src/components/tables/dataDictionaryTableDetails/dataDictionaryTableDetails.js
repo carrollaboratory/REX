@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import LoadingSpinner from "../../LoadingSpinner/loadingSpinner";
 import "./dataDictionaryTableDetails.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { TableRow } from "./tableRow";
+import { myContext } from "../../../App";
 
 export const DataDictionaryTableDetails = ({
   selectedDictionaryReferences,
@@ -16,6 +17,7 @@ export const DataDictionaryTableDetails = ({
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [system, setSystem] = useState({});
   const { studyId } = useParams();
+  const { URL } = useContext(myContext);
 
   const handleSummaryClick = (e) => {
     setSystem(e);
@@ -33,9 +35,7 @@ export const DataDictionaryTableDetails = ({
   const getData = async () => {
     setLoading(true);
     Promise.all(
-      selectedDictionaryReferences?.map((c) =>
-        fetch(`https://anvil-fhir-vumc.uc.r.appspot.com/fhir/${c.reference}`)
-      )
+      selectedDictionaryReferences?.map((c) => fetch(`${URL}/${c.reference}`))
     )
       .then((responses) =>
         Promise.all(responses?.map((response) => response.json()))

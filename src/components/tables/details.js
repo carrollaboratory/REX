@@ -15,7 +15,8 @@ import { DetailsDataDictionary } from "./detailsDataDictionary";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 
 function DetailsView() {
-  const { setDetails, loading, setLoading, details } = useContext(myContext);
+  const { setDetails, loading, setLoading, details, URL } =
+    useContext(myContext);
   const location = useLocation();
   const [focusData, setFocusData] = useState();
   const [propData, setPropData] = useState(location?.state?.propData);
@@ -47,12 +48,9 @@ function DetailsView() {
   };
 
   const getSingleStudyData = () => {
-    return fetch(
-      `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ResearchStudy?_id=${studyId}`,
-      {
-        method: "GET",
-      }
-    )
+    return fetch(`${URL}/ResearchStudy?_id=${studyId}`, {
+      method: "GET",
+    })
       .then((res) => {
         return res.json();
       })
@@ -63,12 +61,9 @@ function DetailsView() {
   };
 
   const getGraphData = () => {
-    fetch(
-      `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/Observation?focus=ResearchStudy/${studyId}`,
-      {
-        method: "GET",
-      }
-    )
+    fetch(`${URL}/Observation?focus=ResearchStudy/${studyId}`, {
+      method: "GET",
+    })
       .then((res) => {
         return res.json();
       })

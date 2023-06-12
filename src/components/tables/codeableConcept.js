@@ -11,6 +11,7 @@ export const CodeableConcept = ({
 }) => {
   const [modalData, setModalData] = useState({});
   const [loading, setLoading] = useState(true);
+  const { URL } = useContext(myContext);
 
   useEffect(() => {
     if (isOpen) {
@@ -19,30 +20,21 @@ export const CodeableConcept = ({
     }
   }, [codeableConceptReference]);
   const getData = () => {
-    const codeableConceptEndpoint = `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/${codeableConceptReference}`;
+    const codeableConceptEndpoint = `${URL}/${codeableConceptReference}`;
 
-    fetch(
-      codeableConceptEndpoint,
-      // `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/${codeableConceptReference}`,
-      {
-        method: "GET",
-      }
-    )
+    fetch(codeableConceptEndpoint, {
+      method: "GET",
+    })
       .then((res) => {
         return res.json();
       })
       .then((d) => {
         const codeSystemEndpoint =
-          "https://anvil-fhir-vumc.uc.r.appspot.com/fhir/CodeSystem?url=" +
-          d?.compose?.include[0]?.system;
+          `${URL}/CodeSystem?url=` + d?.compose?.include[0]?.system;
 
-        fetch(
-          codeSystemEndpoint,
-          // `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/CodeSystem?url=${d?.compose?.include[0]?.system}`,
-          {
-            method: "GET",
-          }
-        )
+        fetch(codeSystemEndpoint, {
+          method: "GET",
+        })
           .then((res) => {
             return res.json();
           })

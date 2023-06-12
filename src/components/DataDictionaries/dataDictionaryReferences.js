@@ -12,7 +12,7 @@ function DataDictionaryReferences() {
   const [codeableConceptReference, setCodeableConceptReference] = useState({});
   const [codeableConcept, setCodeableconcept] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const { loading, setLoading } = useContext(myContext);
+  const { loading, setLoading, URL } = useContext(myContext);
 
   const handleCodeableConceptClick = (item) => {
     setCodeableConceptReference(item);
@@ -36,7 +36,7 @@ function DataDictionaryReferences() {
   const getData = async () => {
     Promise.all(
       selectedDictionaryReferences?.observationResultRequirement.map((c) =>
-        fetch(`https://anvil-fhir-vumc.uc.r.appspot.com/fhir/${c.reference}`)
+        fetch(`${URL}/${c.reference}`)
       )
     )
       .then((responses) =>

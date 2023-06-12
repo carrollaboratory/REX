@@ -9,7 +9,7 @@ function Table() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-  const { setSelectedObject, filterText, setFilterText } =
+  const { setSelectedObject, filterText, setFilterText, URL } =
     useContext(myContext);
 
   const getFilteredItems = () =>
@@ -110,12 +110,9 @@ function Table() {
   const fetchTableData = async () => {
     setLoading(true);
 
-    await fetch(
-      "https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ResearchStudy?_count=500",
-      {
-        method: "GET",
-      }
-    )
+    await fetch(`${URL}/ResearchStudy?_count=500`, {
+      method: "GET",
+    })
       .then((res) => {
         return res.json();
       })

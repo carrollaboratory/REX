@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./variableSummary.css";
 import { VariableSummaryString } from "./variableSummaryString";
 import { VariableSummaryQuantity } from "./variableSummaryQuantity";
 import { VariableSummaryCodeableConcept } from "./variableSummaryCodeableConcept";
+import { myContext } from "../../App";
 
 export const VariableSummary = ({ obsDefinition, height }) => {
   const { studyId } = useParams();
   const [variableData, setVariableData] = useState({});
+  const { URL } = useContext(myContext);
 
   useEffect(() => {
     getVariableData();
@@ -15,7 +17,7 @@ export const VariableSummary = ({ obsDefinition, height }) => {
 
   const getVariableData = async () => {
     await fetch(
-      `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/Observation?value-concept=${obsDefinition?.code?.coding?.[0]?.system}|${obsDefinition?.code?.coding?.[0]?.code}&focus=ResearchStudy/${studyId} `,
+      `${URL}/Observation?value-concept=${obsDefinition?.code?.coding?.[0]?.system}|${obsDefinition?.code?.coding?.[0]?.code}&focus=ResearchStudy/${studyId} `,
       {
         method: "GET",
       }

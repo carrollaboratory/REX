@@ -9,7 +9,7 @@ function DataDictionary() {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const { filterText, setFilterText, dDView, setDDView } =
+  const { filterText, setFilterText, dDView, setDDView, URL } =
     useContext(myContext);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function DataDictionary() {
   const getTableData = () => {
     filterText != ""
       ? fetch(
-          `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ObservationDefinition?code:text=${filterText}&_revinclude=ActivityDefinition:result`,
+          `${URL}/ObservationDefinition?code:text=${filterText}&_revinclude=ActivityDefinition:result`,
           {
             method: "GET",
           }
@@ -34,12 +34,9 @@ function DataDictionary() {
           .then((c) => {
             setTitleData(c.entry);
           })
-      : fetch(
-          "https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ActivityDefinition",
-          {
-            method: "GET",
-          }
-        )
+      : fetch(`${URL}/ActivityDefinition`, {
+          method: "GET",
+        })
           .then((res) => {
             return res.json();
           })
