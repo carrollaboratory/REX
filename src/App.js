@@ -17,6 +17,8 @@ export const App = () => {
   const [details, setDetails] = useState(true);
   const [dDView, setDDView] = useState(true);
 
+  const URL = process.env.REACT_APP_API_ENDPOINT;
+
   useEffect(() => {
     location.pathname === "/variables" && setDDView(false);
   }, [location]);
@@ -34,6 +36,7 @@ export const App = () => {
         setDetails,
         dDView,
         setDDView,
+        URL,
       }}
     >
       <Routes>

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import "./dataDictionary.css";
 
 export const Variables = ({ capitalizeWord }) => {
-  const { loading, setLoading } = useContext(myContext);
+  const { loading, setLoading, URL } = useContext(myContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [observationData, setObservationData] = useState([]);
   const [activityData, setActivityData] = useState([]);
@@ -67,7 +67,7 @@ export const Variables = ({ capitalizeWord }) => {
     setObservationData([]);
     searchTerm != ""
       ? fetch(
-          `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ObservationDefinition?code:text=${searchTerm}&_revinclude=ActivityDefinition:result`,
+          `${URL}/ObservationDefinition?code:text=${searchTerm}&_revinclude=ActivityDefinition:result`,
           {
             method: "GET",
           }
@@ -87,12 +87,9 @@ export const Variables = ({ capitalizeWord }) => {
             });
             setLoading(false);
           })
-      : fetch(
-          "https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ActivityDefinition?_include=ActivityDefinition:result",
-          {
-            method: "GET",
-          }
-        )
+      : fetch(`${URL}/ActivityDefinition?_include=ActivityDefinition:result`, {
+          method: "GET",
+        })
           .then((res) => {
             return res.json();
           })

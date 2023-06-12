@@ -5,7 +5,7 @@ import { DataDictionaryTableDetails } from "./dataDictionaryTableDetails/dataDic
 import { useNavigate } from "react-router-dom";
 
 export const DetailsDataDictionary = ({ propData }) => {
-  const { loading, setLoading } = useContext(myContext);
+  const { loading, setLoading, URL } = useContext(myContext);
   const [dataDictionary, setDataDictionary] = useState([]);
   const [selectedDictionaryReferences, setSelectedDictionaryReferences] =
     useState([]);
@@ -32,18 +32,12 @@ export const DetailsDataDictionary = ({ propData }) => {
 
   const getData = async () => {
     await (valueSplit > 2
-      ? fetch(
-          `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ActivityDefinition?_tag=${secondValue}_DD`,
-          {
-            method: "GET",
-          }
-        )
-      : fetch(
-          `https://anvil-fhir-vumc.uc.r.appspot.com/fhir/ActivityDefinition?_tag=${firstValue}_DD`,
-          {
-            method: "GET",
-          }
-        )
+      ? fetch(`${URL}/ActivityDefinition?_tag=${secondValue}_DD`, {
+          method: "GET",
+        })
+      : fetch(`${URL}/ActivityDefinition?_tag=${firstValue}_DD`, {
+          method: "GET",
+        })
     )
       .then((res) => {
         return res.json();
