@@ -4,10 +4,10 @@ import "./dataDictionaryTableDetails.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { TableRow } from "./tableRow";
 import { myContext } from "../../../App";
+import DownArrow from "../../../images/down_arrow.png";
 
 export const DataDictionaryTableDetails = ({
   selectedDictionaryReferences,
-  setDictionaryTableDetails,
 }) => {
   const [reference, setReference] = useState({});
   const [loading, setLoading] = useState(true);
@@ -16,13 +16,30 @@ export const DataDictionaryTableDetails = ({
   const [codeableConcept, setCodeableconcept] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [system, setSystem] = useState({});
+  const [parentOpen, setParentOpen] = useState(false);
+
   const { studyId } = useParams();
   const { URL } = useContext(myContext);
 
-  const handleSummaryClick = (e) => {
-    setSystem(e);
-    window.open(`/variable-summary/${studyId}`, "_blank");
+  const handleOpen = (open, set) => {
+    set(open);
   };
+
+  const toggleAll = () => {
+    setParentOpen(!parentOpen);
+  };
+
+  // const closeAll = () => {
+  //   setOpen(false);
+  // };
+
+  // const handleOpen = (index) => {
+  //   setOpen((prevOpen) => {
+  //     const newState = [...prevOpen];
+  //     newState[index] = !newState[index];
+  //     return newState;
+  //   });
+  // };
 
   useEffect(() => {
     getData();
@@ -64,7 +81,16 @@ export const DataDictionaryTableDetails = ({
                     Permitted Data Type
                   </th>
                   <th className="variable-summary table-header-DTD">
-                    Variable Summary
+                    <div className="variable-summary-all">
+                      <div>Variable Summary</div>
+                      <div>
+                        <img
+                          onClick={() => toggleAll()}
+                          className={parentOpen ? "down-arrow" : "up-arrow"}
+                          src={DownArrow}
+                        />
+                      </div>
+                    </div>
                   </th>
                 </tr>
               </thead>
@@ -82,6 +108,8 @@ export const DataDictionaryTableDetails = ({
                           setCodeableConceptReference,
                           codeableConcept,
                           setCodeableconcept,
+                          handleOpen,
+                          parentOpen,
                         }}
                       />
                     );

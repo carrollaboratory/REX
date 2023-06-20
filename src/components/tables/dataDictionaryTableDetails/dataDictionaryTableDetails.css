@@ -53,13 +53,18 @@ table {
 }
 
 .variable-summary {
-  min-width: 70px;
-  max-width: 70px;
+  min-width: 80px;
+  max-width: 80px;
 }
 
 .variable-summary-arrow {
-  cursor: pointer;
   text-align: center;
+}
+
+.variable-summary-all {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .sub-row--closed {
@@ -76,9 +81,11 @@ table {
   width: 15px;
   rotate: 3.142rad;
   transition-duration: 100ms;
+  cursor: pointer;
 }
 
 .up-arrow {
   width: 15px;
   transition: rotate 100ms ease-in-out;
+  cursor: pointer;
 }
