@@ -9,14 +9,20 @@ export const TableRow = ({ r, index, deps }) => {
     codeableConceptReference,
     setCodeableConceptReference,
     setCodeableconcept,
+    handleOpen,
+    parentOpen,
   } = deps;
-  const [open, setOpen] = useState(false);
   const [height, setHeight] = useState(null);
+  const [open, setSingleOpen] = useState(false);
   const subRowRef = useRef(null);
 
   useEffect(() => {
     setHeight(subRowRef?.current?.clientHeight);
   });
+
+  useEffect(() => {
+    setSingleOpen(parentOpen);
+  }, [parentOpen]);
 
   const handleCodeableConceptClick = (item) => {
     setCodeableConceptReference(item);
@@ -71,7 +77,7 @@ export const TableRow = ({ r, index, deps }) => {
         <td className="table-cell-DTD">
           <div
             className="variable-summary-arrow"
-            onClick={() => setOpen(!open)}
+            onClick={() => handleOpen(!open, setSingleOpen)}
           >
             <img className={open ? "down-arrow" : "up-arrow"} src={DownArrow} />
           </div>

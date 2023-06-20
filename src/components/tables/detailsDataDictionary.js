@@ -109,8 +109,6 @@ export const DetailsDataDictionary = ({ propData }) => {
               {dictionaryTableDetails ? (
                 <DataDictionaryTableDetails
                   selectedDictionaryReferences={selectedDictionaryReferences}
-                  setDictionaryTableDetails={setDictionaryTableDetails}
-                  dataDictionary={dataDictionary}
                 />
               ) : (
                 ""
