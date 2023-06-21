@@ -8,6 +8,7 @@ import DownArrow from "../../../images/down_arrow.png";
 
 export const DataDictionaryTableDetails = ({
   selectedDictionaryReferences,
+  active,
 }) => {
   const [reference, setReference] = useState({});
   const [loading, setLoading] = useState(true);
@@ -110,6 +111,7 @@ export const DataDictionaryTableDetails = ({
                           setCodeableconcept,
                           handleOpen,
                           parentOpen,
+                          active,
                         }}
                       />
                     );
