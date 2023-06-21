@@ -11,6 +11,7 @@ export const TableRow = ({ r, index, deps }) => {
     setCodeableconcept,
     handleOpen,
     parentOpen,
+    setParentOpen,
     active,
   } = deps;
   const [height, setHeight] = useState(null);
@@ -23,6 +24,7 @@ export const TableRow = ({ r, index, deps }) => {
 
   useEffect(() => {
     setSingleOpen(false);
+    setParentOpen(false);
   }, [active]);
 
   useEffect(() => {

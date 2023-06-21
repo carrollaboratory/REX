@@ -110,6 +110,7 @@ export const DataDictionaryTableDetails = ({
                           codeableConcept,
                           setCodeableconcept,
                           handleOpen,
+                          setParentOpen,
                           parentOpen,
                           active,
                         }}
