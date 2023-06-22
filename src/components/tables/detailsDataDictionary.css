@@ -1,58 +1,59 @@
 .DD-container {
-    display: flex;
-    flex-direction: row;
-    margin: 40px 0 40px 60px;
+  display: flex;
+  flex-direction: row;
+  margin: 40px 0 40px 60px;
 }
 
 .DD-title-list {
-    width: 26vw;
-    display: flex;
-    flex-flow: column wrap;
+  width: 26vw;
+  display: flex;
+  flex-flow: column wrap;
 }
 
 .DD-title-container {
-    width: 21vw;
+  width: 21vw;
+  margin-right: 50px;
 }
 
 .DD-title-box {
-    border: 1px solid darkgray;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
+  border: 1px solid darkgray;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
 }
 .DD-titles {
-    font-size: .9rem;
-    line-height: 1.8rem;
-    padding: 10px;
+  font-size: 0.9rem;
+  line-height: 1.8rem;
+  padding: 10px;
+  overflow-wrap: break-word;
 }
 
 .DD-header {
-    height: 50px;
-    font-size: .9rem;
-    cursor: default;
-    background-color: #E7EEF0;
-    border-bottom: 1px solid darkgray;
-    padding-left: 10px;
+  height: fit-content;
+  font-size: 0.9rem;
+  cursor: default;
+  background-color: #e7eef0;
+  border-bottom: 1px solid darkgray;
+  padding-left: 10px;
+  overflow-wrap: break-word;
 }
 
 .no-dictionaries {
-    text-align: center;
-    margin: 50px 0 0 0;
+  text-align: center;
+  margin: 50px 0 0 0;
 }
 
 .button-details-DD {
-    float: left;
-    background-color: #4051a3;
-    color: white;
-    border: none;
-    width: fit-content;
-    padding: 5px 13px;
-    margin-top: 5px;
+  float: left;
+  background-color: #4051a3;
+  color: white;
+  border: none;
+  width: fit-content;
+  padding: 5px 13px;
+  margin-top: 5px;
 }
 
 .button-details-DD:hover {
-    background-color: #7E8DC6;
-    color: white;
-  }
-
-
+  background-color: #7e8dc6;
+  color: white;
+}
