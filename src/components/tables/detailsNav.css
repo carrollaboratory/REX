@@ -1,25 +1,24 @@
-.details-nav{
-    display: flex;
-    flex-direction: row;
-    width: 75vw;
-    margin: 3px 0;
+.details-nav {
+  display: flex;
+  flex-direction: row;
+  width: 75vw;
+  margin: 3px 0;
 }
 
 .details-nav-button {
-    background-color: transparent;
-    border: none;
-    border-right: 1px solid darkgray;
-    padding: 12px 15px;
+  background-color: transparent;
+  border: none;
+  border-right: 1px solid darkgray;
+  padding: 12px 15px;
 }
 
-.details-nav-button:hover:focus{
-    background-color: rgb(199, 206, 215);
+.details-nav-button:hover {
+  background-color: #e7eef0;
 }
 
 .details-nav-button {
-    cursor: pointer;
-
+  cursor: pointer;
 }
-.details-navbar{
-    margin: 30px 0 0 50px;
+.details-navbar {
+  margin: 30px 0 0 50px;
 }
