@@ -30,18 +30,6 @@ export const DataDictionaryTableDetails = ({
     setParentOpen(!parentOpen);
   };
 
-  // const closeAll = () => {
-  //   setOpen(false);
-  // };
-
-  // const handleOpen = (index) => {
-  //   setOpen((prevOpen) => {
-  //     const newState = [...prevOpen];
-  //     newState[index] = !newState[index];
-  //     return newState;
-  //   });
-  // };
-
   useEffect(() => {
     getData();
   }, [selectedDictionaryReferences]);
