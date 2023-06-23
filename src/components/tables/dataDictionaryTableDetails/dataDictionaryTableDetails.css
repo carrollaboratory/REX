@@ -75,6 +75,7 @@ table {
 
 .sub-row--open {
   opacity: 1;
+  background-color: #e7eef0;
 }
 
 .down-arrow {
