@@ -170,15 +170,18 @@ export const GraphAncestry = ({ focusData }) => {
             }
           })}
           {/*Bar graph is rendered if there is data available*/}
-          {loading ? (
-            <LoadingSpinner />
-          ) : show ? (
-            renderBar()
-          ) : (
-            <>
-              <div style={{ marginTop: "28px" }}>No available data</div>
-            </>
-          )}
+          {
+            // loading ? (
+            //   <LoadingSpinner />
+            // ) :
+            show ? (
+              renderBar()
+            ) : (
+              <>
+                <div style={{ marginTop: "28px" }}>No available data</div>
+              </>
+            )
+          }
         </div>
         <button
           className="button"

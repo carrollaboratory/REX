@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from "react";
-import { myContext } from "../../App";
+import { authContext, myContext } from "../../App";
 import "./detailsDataDictionary.css";
 import { DataDictionaryTableDetails } from "./dataDictionaryTableDetails/dataDictionaryTableDetails";
 import { useNavigate } from "react-router-dom";
 
 export const DetailsDataDictionary = ({ propData }) => {
   const { loading, setLoading, URL } = useContext(myContext);
-  const [dataDictionary, setDataDictionary] = useState([]);
+  const { getDetailsDD, dataDictionary } = useContext(authContext);
+  // const [dataDictionary, setDataDictionary] = useState([]);
   const [selectedDictionaryReferences, setSelectedDictionaryReferences] =
     useState([]);
   const [dictionaryTableDetails, setDictionaryTableDetails] = useState(false);
@@ -25,28 +26,33 @@ export const DetailsDataDictionary = ({ propData }) => {
 
   const firstValue = propData?.resource.identifier?.[0]?.value.split("_")[0];
 
-  useEffect(() => {
-    setLoading(true);
-    getData();
-  }, [selectedDictionaryReferences]);
+  useEffect(
+    () => {
+      // setLoading(true);
+      getDetailsDD();
+    },
+    [
+      /*selectedDictionaryReferences*/
+    ]
+  );
 
-  const getData = async () => {
-    await (valueSplit > 2
-      ? fetch(`${URL}/ActivityDefinition?_tag=${secondValue}_DD`, {
-          method: "GET",
-        })
-      : fetch(`${URL}/ActivityDefinition?_tag=${firstValue}_DD`, {
-          method: "GET",
-        })
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((d) => {
-        setDataDictionary(d.entry);
-      });
-    setLoading(false);
-  };
+  // const getData = async () => {
+  //   await (valueSplit > 2
+  //     ? fetch(`${URL}/ActivityDefinition?_tag=${secondValue}_DD`, {
+  //         method: "GET",
+  //       })
+  //     : fetch(`${URL}/ActivityDefinition?_tag=${firstValue}_DD`, {
+  //         method: "GET",
+  //       })
+  //   )
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((d) => {
+  //       setDataDictionary(d.entry);
+  //     });
+  //   setLoading(false);
+  // };
 
   const handleTitleClick = (array) => {
     setSelectedDictionaryReferences(array);

@@ -3,14 +3,14 @@ import LoadingSpinner from "../../LoadingSpinner/loadingSpinner";
 import "./dataDictionaryTableDetails.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { TableRow } from "./tableRow";
-import { myContext } from "../../../App";
+import { authContext, myContext } from "../../../App";
 import DownArrow from "../../../images/down_arrow.png";
 
 export const DataDictionaryTableDetails = ({
   selectedDictionaryReferences,
   active,
 }) => {
-  const [reference, setReference] = useState({});
+  // const [reference, setReference] = useState({});
   const [loading, setLoading] = useState(true);
   const [codeableConceptReference, setCodeableConceptReference] =
     useState(null);
@@ -21,6 +21,7 @@ export const DataDictionaryTableDetails = ({
 
   const { studyId } = useParams();
   const { URL } = useContext(myContext);
+  const { getDDTableDetails, reference } = useContext(authContext);
 
   const handleOpen = (open, set) => {
     set(open);
@@ -31,7 +32,7 @@ export const DataDictionaryTableDetails = ({
   };
 
   useEffect(() => {
-    getData();
+    getDDTableDetails(selectedDictionaryReferences);
   }, [selectedDictionaryReferences]);
 
   useEffect(() => {
@@ -39,17 +40,17 @@ export const DataDictionaryTableDetails = ({
   }, []);
 
   const getData = async () => {
-    setLoading(true);
-    Promise.all(
-      selectedDictionaryReferences?.map((c) => fetch(`${URL}/${c.reference}`))
-    )
-      .then((responses) =>
-        Promise.all(responses?.map((response) => response.json()))
-      )
-      .then((res) => {
-        setReference(res);
-      });
-    setLoading(false);
+    // setLoading(true);
+    // Promise.all(
+    //   selectedDictionaryReferences?.map((c) => fetch(`${URL}/${c.reference}`))
+    // )
+    //   .then((responses) =>
+    //     Promise.all(responses?.map((response) => response.json()))
+    //   )
+    //   .then((res) => {
+    //     setReference(res);
+    //   });
+    // setLoading(false);
   };
 
   return (
@@ -83,9 +84,10 @@ export const DataDictionaryTableDetails = ({
                   </th>
                 </tr>
               </thead>
-              {loading ? (
-                <LoadingSpinner />
-              ) : (
+              {
+                // loading ? (
+                //   <LoadingSpinner />
+                // ) :
                 <tbody>
                   {reference?.map((r, index) => {
                     return (
@@ -106,7 +108,7 @@ export const DataDictionaryTableDetails = ({
                     );
                   })}
                 </tbody>
-              )}
+              }
             </table>
           </div>
         </div>

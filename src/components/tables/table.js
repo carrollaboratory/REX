@@ -2,7 +2,7 @@ import DataTable from "react-data-table-component";
 import { useState, useEffect, useContext } from "react";
 import "./table.css";
 import HtmlReactParser from "html-react-parser";
-import { myContext } from "../../App";
+import { authContext, myContext } from "../../App";
 import { Link, useParams } from "react-router-dom";
 
 function Table() {
@@ -11,9 +11,10 @@ function Table() {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const { setSelectedObject, filterText, setFilterText, URL } =
     useContext(myContext);
+  const { getTable, tableData } = useContext(authContext);
 
   const getFilteredItems = () =>
-    data?.filter(
+    tableData?.filter(
       (item) =>
         item?.resource?.title &&
         item?.resource?.title.toLowerCase().includes(filterText.toLowerCase())
@@ -104,23 +105,25 @@ function Table() {
   ];
 
   useEffect(() => {
-    fetchTableData();
+    setLoading(true);
+    getTable();
+    setLoading(false);
   }, []);
 
-  const fetchTableData = async () => {
-    setLoading(true);
+  // const fetchTableData = async () => {
+  //   setLoading(true);
 
-    await fetch(`${URL}/ResearchStudy?_count=500`, {
-      method: "GET",
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setData(data.entry);
-      });
-    setLoading(false);
-  };
+  //   await fetch(`${URL}/ResearchStudy?_count=500`, {
+  //     method: "GET",
+  //   })
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       setData(data.entry);
+  //     });
+  //   setLoading(false);
+  // };
 
   return (
     <div className="table-wrapper">
@@ -138,7 +141,7 @@ function Table() {
         </div>
         <DataTable
           columns={columns}
-          data={getFilteredItems(data)}
+          data={getFilteredItems(tableData)}
           progressPending={loading}
           pagination
           paginationComponentOptions={paginationComponentOptions}

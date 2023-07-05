@@ -1,51 +1,81 @@
 .navbar-wrapper {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
-
 .navbar {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    font-size: medium;
-    width: 90%;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  font-size: medium;
+  width: 90%;
 }
 
 .nav-items-wrapper {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .nav-items {
-    border-right: 1px solid darkgray;
-    padding: 15px 18px;
+  border-right: 1px solid darkgray;
+  padding: 15px 18px;
 }
 
-
 .nav-logo-image {
-    width: 80px;
-    margin-right: 25px;
+  width: 80px;
+  margin-right: 25px;
 }
 
 li {
-    list-style-type: none;
-    text-decoration: none;
+  list-style-type: none;
+  text-decoration: none;
 }
 
 .nav-link {
-    text-decoration: none;
-    color: rgb(17, 18, 19)
+  text-decoration: none;
+  color: rgb(17, 18, 19);
 }
 
 .nav-link:hover {
-    background-color: #E7EEF0;
-    cursor: pointer;
+  background-color: #e7eef0;
+  cursor: pointer;
 }
 
 .nav-link:active {
-    background-color: rgb(199, 206, 215);
+  background-color: rgb(199, 206, 215);
 }
 
+.nav-user-wrapper {
+  margin-left: auto;
+  margin-right: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 
+.nav-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.8rem;
+}
 
+.nav-user-picture {
+  width: 30px;
+  height: 30px;
+}
+
+.sign-out-button {
+  margin: 0 0 0 15px;
+  height: 30px;
+  background-color: #4051a3;
+  color: white;
+  border: none;
+  padding: 5px 13px;
+  width: fit-content;
+}
+
+.sign-out-button:hover {
+  background-color: #7e8dc6;
+  color: white;
+}

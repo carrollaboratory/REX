@@ -4,33 +4,34 @@ import "./variableSummary.css";
 import { VariableSummaryString } from "./variableSummaryString";
 import { VariableSummaryQuantity } from "./variableSummaryQuantity";
 import { VariableSummaryCodeableConcept } from "./variableSummaryCodeableConcept";
-import { myContext } from "../../App";
+import { authContext, myContext } from "../../App";
 
 export const VariableSummary = ({ obsDefinition, height }) => {
   const { studyId } = useParams();
-  const [variableData, setVariableData] = useState({});
+  // const [variableData, setVariableData] = useState({});
   const { URL } = useContext(myContext);
+  const { getVariableSummary, variableData } = useContext(authContext);
 
   useEffect(() => {
-    getVariableData();
+    getVariableSummary(obsDefinition);
   }, [obsDefinition]);
 
-  const getVariableData = async () => {
-    await fetch(
-      `${URL}/Observation?value-concept=${obsDefinition?.code?.coding?.[0]?.system}|${obsDefinition?.code?.coding?.[0]?.code}&focus=ResearchStudy/${studyId} `,
-      {
-        method: "GET",
-      }
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setVariableData(data.entry);
-      });
-  };
+  // const getVariableData = async () => {
+  //   await fetch(
+  //     `${URL}/Observation?value-concept=${obsDefinition?.code?.coding?.[0]?.system}|${obsDefinition?.code?.coding?.[0]?.code}&focus=ResearchStudy/${studyId} `,
+  //     {
+  //       method: "GET",
+  //     }
+  //   )
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       setVariableData(data.entry);
+  //     });
+  // };
 
-  return (
+  return obsDefinition ? (
     <div className={"variable-summary-wrapper"} style={height}>
       {obsDefinition?.permittedDataType?.[0] === "string" ? (
         <VariableSummaryString variableData={variableData} />
@@ -42,5 +43,7 @@ export const VariableSummary = ({ obsDefinition, height }) => {
         <div className="no-data">No data found</div>
       )}
     </div>
+  ) : (
+    ""
   );
 };
