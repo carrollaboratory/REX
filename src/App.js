@@ -36,6 +36,7 @@ export const App = () => {
   const [dataDictionary, setDataDictionary] = useState([]);
   const [reference, setReference] = useState({});
   const [variableData, setVariableData] = useState({});
+  const [modalData, setModalData] = useState({});
   const [redirect, setRedirect] = useState(false);
 
   const { studyId } = useParams();
@@ -57,7 +58,7 @@ export const App = () => {
       token: accessToken,
       url: URL,
     });
-    worker?.postMessage({ type: "report" });
+    // worker?.postMessage({ type: "report" });
   };
   // console.log("REPORT");
   // worker?.postMessage({ type: "report" });
@@ -95,11 +96,18 @@ export const App = () => {
     });
   };
 
-  const getVariableSummary = (obsProp) => {
+  const getVariableSummary = (obsProp, studyId) => {
     worker?.postMessage({
       type: "variableSummaryRequest",
       obsDefinition: obsProp,
       studyParam: studyId,
+    });
+  };
+
+  const getCodeableConcept = (referenceObj) => {
+    worker?.postMessage({
+      type: "codeableConceptRequest",
+      codeableConceptReference: referenceObj,
     });
   };
 
@@ -121,11 +129,14 @@ export const App = () => {
       } else if (type === "detailsDD") {
         setDataDictionary(data.entry);
       } else if (type === "DDTableDetails") {
+        console.log("DATAS!!! ", data.details);
         setReference(data);
       } else if (type === "variableSummary") {
         setVariableData(data.entry);
+      } else if (type === "codeableConcept") {
+        setModalData(data);
       } else if (type === "report") {
-        // console.log("TOKEN!!!!! ", data);
+        console.log("REPORT!!!!! ", data);
       }
     });
 
@@ -155,6 +166,8 @@ export const App = () => {
         reference,
         getVariableSummary,
         variableData,
+        getCodeableConcept,
+        modalData,
       }}
     >
       <myContext.Provider

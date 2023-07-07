@@ -46,7 +46,7 @@ export const TableRow = ({ r, index, deps }) => {
           {r?.code?.coding?.[0]?.display}
         </td>
         <td className="data-type table-cell-DTD codeable-concept-style">
-          {r?.permittedDataType[0] === "CodeableConcept" ? (
+          {r?.permittedDataType?.[0] === "CodeableConcept" ? (
             <>
               <div
                 className="codeableConceptLink"
@@ -58,7 +58,7 @@ export const TableRow = ({ r, index, deps }) => {
                   handleCodeableConceptClick(r?.validCodedValueSet?.reference);
                 }}
               >
-                {r?.permittedDataType[0]}
+                {r?.permittedDataType?.[0]}
               </div>
               <div>
                 <CodeableConcept
@@ -78,7 +78,7 @@ export const TableRow = ({ r, index, deps }) => {
               </div>
             </>
           ) : (
-            r?.permittedDataType[0]
+            r?.permittedDataType?.[0]
           )}
         </td>
         <td className="table-cell-DTD">

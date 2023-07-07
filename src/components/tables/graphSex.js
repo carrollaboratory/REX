@@ -87,7 +87,7 @@ export const GraphSex = ({ focusData }) => {
           padding: "12px 0",
         }}
       >
-        {focusData?.entry?.map((c) => {
+        {focusData?.entry?.map((c, index) => {
           if (c?.resource?.valueCodeableConcept?.coding?.[0]?.code === "sex") {
             return (
               <>

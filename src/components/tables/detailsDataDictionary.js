@@ -67,7 +67,7 @@ export const DetailsDataDictionary = ({ propData }) => {
             <div className="DD-title-list">
               <div className="DD-title-container">
                 <div className="DD-title-box">
-                  <div className="DD-header">
+                  <div key={0} className="DD-header">
                     <h4>Variables for Data Dictionary Tables</h4>
                   </div>
                   <div className="DD-titles">

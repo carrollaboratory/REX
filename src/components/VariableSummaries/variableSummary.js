@@ -13,7 +13,7 @@ export const VariableSummary = ({ obsDefinition, height }) => {
   const { getVariableSummary, variableData } = useContext(authContext);
 
   useEffect(() => {
-    getVariableSummary(obsDefinition);
+    getVariableSummary(obsDefinition, studyId);
   }, [obsDefinition]);
 
   // const getVariableData = async () => {

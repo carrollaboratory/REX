@@ -12,6 +12,7 @@
       passedProp,
       selectedDictionaryReferences,
       obsDefinition,
+      codeableConceptReference,
     } = event.data;
 
     if (type === "storeToken") {
@@ -112,12 +113,31 @@
           })
         )
       ).then((responses) =>
-        Promise.all(responses?.map((response) => response.json())).then(
-          (data) => postMessage({ type: "DDTableDetails", data })
-        )
+        Promise.all(responses?.map((response) => response.json()))
+          .then((data) => {
+            return data.map((d) => {
+              fetch(
+                urlEndpoint +
+                  "/Observation?value-concept=" +
+                  d?.code?.coding?.[0]?.system +
+                  "|" +
+                  d?.code?.coding?.[0]?.code +
+                  "&focus=ResearchStudy/" +
+                  studyId,
+                {
+                  method: "GET",
+                  headers: {
+                    "Content-Type": "application/fhir+json; fhirVersion=4.0",
+                    Authorization: `Bearer ${accessToken}`,
+                  },
+                }
+              );
+              return { ...d, detail: "Piggies" };
+            });
+          })
+          .then((data) => postMessage({ type: "DDTableDetails", data }))
       );
     } else if (type === "variableSummaryRequest") {
-      studyId = studyParam;
       fetch(
         urlEndpoint +
           "/Observation?value-concept=" +
@@ -136,6 +156,29 @@
       )
         .then((res) => res.json())
         .then((data) => postMessage({ type: "variableSummary", data }));
+    } else if (type === "codeableConceptRequest") {
+      fetch(urlEndpoint + "/" + codeableConceptReference, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/fhir+json; fhirVersion=4.0",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((d) =>
+          fetch(
+            urlEndpoint + "/CodeSystem?url=" + d?.compose?.include[0]?.system,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/fhir+json; fhirVersion=4.0",
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          )
+        )
+        .then((res) => res.json())
+        .then((data) => postMessage({ type: "codeableConcept", data }));
     }
   };
 }

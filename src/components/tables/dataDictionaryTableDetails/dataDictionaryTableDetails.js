@@ -94,6 +94,7 @@ export const DataDictionaryTableDetails = ({
                       <TableRow
                         r={r}
                         index={index}
+                        key={index}
                         deps={{
                           codeableConceptReference,
                           setCodeableConceptReference,

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import "./codeableConcept.css";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
-import { myContext } from "../../App";
+import { authContext, myContext } from "../../App";
 
 export const CodeableConcept = ({
   toggleModal,
@@ -9,48 +9,52 @@ export const CodeableConcept = ({
   isOpen,
   ...props
 }) => {
-  const [modalData, setModalData] = useState({});
+  // const [modalData, setModalData] = useState({});
   const [loading, setLoading] = useState(true);
   const { URL } = useContext(myContext);
+  const { getCodeableConcept, modalData } = useContext(authContext);
 
   useEffect(() => {
     if (isOpen) {
-      setLoading(true);
-      getData();
+      // setLoading(true);
+      getCodeableConcept(codeableConceptReference);
     }
   }, [codeableConceptReference]);
-  const getData = () => {
-    const codeableConceptEndpoint = `${URL}/${codeableConceptReference}`;
 
-    fetch(codeableConceptEndpoint, {
-      method: "GET",
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((d) => {
-        const codeSystemEndpoint =
-          `${URL}/CodeSystem?url=` + d?.compose?.include[0]?.system;
+  // const getData = () => {
+  //   const codeableConceptEndpoint = `${URL}/${codeableConceptReference}`;
 
-        fetch(codeSystemEndpoint, {
-          method: "GET",
-        })
-          .then((res) => {
-            return res.json();
-          })
-          .then((m) => {
-            setModalData(m);
-            setLoading(false);
-          });
-      });
-  };
+  //   fetch(codeableConceptEndpoint, {
+  //     method: "GET",
+  //   })
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((d) => {
+  //       const codeSystemEndpoint =
+  //         `${URL}/CodeSystem?url=` + d?.compose?.include[0]?.system;
+
+  //       fetch(codeSystemEndpoint, {
+  //         method: "GET",
+  //       })
+  //         .then((res) => {
+  //           return res.json();
+  //         })
+  //         .then((m) => {
+  //           setModalData(m);
+  //           setLoading(false);
+  //         });
+  //     });
+  // };
 
   return (
     <div className="modal" {...props}>
       <div className="modal-content">
-        {loading ? (
-          <LoadingSpinner className="modalSpinner" />
-        ) : (
+        {
+          // loading ? (
+          //   <LoadingSpinner className="modalSpinner" />
+          // )
+          // :
           <>
             <span className="close" onClick={() => toggleModal(null)}>
               &times;
@@ -72,7 +76,7 @@ export const CodeableConcept = ({
               </table>
             </div>
           </>
-        )}
+        }
       </div>
     </div>
   );

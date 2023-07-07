@@ -38,7 +38,7 @@ export const VariableSummaryQuantity = ({ variableData }) => {
       ) : (
         <div className="no-data-div">
           <table className="no-data-table">
-            <tr>
+            <tr key={0}>
               <td className="empty-column"></td>
               <td className="no-data-cell">
                 <div>

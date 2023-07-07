@@ -29,7 +29,7 @@ function DetailsView() {
   useEffect(() => {
     // setLoading(true);
     loadCriticalData();
-  }, [propData]);
+  }, []);
 
   useEffect(() => {
     if (redirect) {
@@ -42,11 +42,8 @@ function DetailsView() {
   });
 
   const loadCriticalData = async () => {
-    if (propData === undefined) {
-      getDetails(studyId);
-    } else {
-      getGraph();
-    }
+    getDetails(studyId);
+    getGraph();
   };
 
   // const getSingleStudyData = () => {
