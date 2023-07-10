@@ -129,7 +129,6 @@ export const App = () => {
       } else if (type === "detailsDD") {
         setDataDictionary(data.entry);
       } else if (type === "DDTableDetails") {
-        console.log("DATAS!!! ", data.details);
         setReference(data);
       } else if (type === "variableSummary") {
         setVariableData(data.entry);

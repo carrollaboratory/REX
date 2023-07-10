@@ -102,6 +102,7 @@
         .then((res) => res.json())
         .then((data) => postMessage({ type: "detailsDD", data }));
     } else if (type === "DDTableDetailsRequest") {
+      let arr = [];
       Promise.all(
         selectedDictionaryReferences?.map((c) =>
           fetch(urlEndpoint + "/" + c.reference, {
@@ -112,10 +113,13 @@
             },
           })
         )
-      ).then((responses) =>
-        Promise.all(responses?.map((response) => response.json()))
-          .then((data) => {
-            return data.map((d) => {
+      )
+        .then((responses) =>
+          Promise.all(responses?.map((response) => response.json()))
+        )
+        .then(async (data) => {
+          await Promise.all(
+            data.map((d) =>
               fetch(
                 urlEndpoint +
                   "/Observation?value-concept=" +
@@ -131,12 +135,14 @@
                     Authorization: `Bearer ${accessToken}`,
                   },
                 }
-              );
-              return { ...d, detail: "Piggies" };
-            });
-          })
-          .then((data) => postMessage({ type: "DDTableDetails", data }))
-      );
+              )
+                .then((response) => response.json())
+                .then((detail) => arr.push({ ...d, detail }))
+            )
+          );
+          return data;
+        })
+        .then((data) => postMessage({ type: "DDTableDetails", data: arr }));
     } else if (type === "variableSummaryRequest") {
       fetch(
         urlEndpoint +

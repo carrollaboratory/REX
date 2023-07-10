@@ -8,28 +8,8 @@ import { authContext, myContext } from "../../App";
 
 export const VariableSummary = ({ obsDefinition, height }) => {
   const { studyId } = useParams();
-  // const [variableData, setVariableData] = useState({});
+  const [variableData, setVariableData] = useState(obsDefinition.detail.entry);
   const { URL } = useContext(myContext);
-  const { getVariableSummary, variableData } = useContext(authContext);
-
-  useEffect(() => {
-    getVariableSummary(obsDefinition, studyId);
-  }, [obsDefinition]);
-
-  // const getVariableData = async () => {
-  //   await fetch(
-  //     `${URL}/Observation?value-concept=${obsDefinition?.code?.coding?.[0]?.system}|${obsDefinition?.code?.coding?.[0]?.code}&focus=ResearchStudy/${studyId} `,
-  //     {
-  //       method: "GET",
-  //     }
-  //   )
-  //     .then((res) => {
-  //       return res.json();
-  //     })
-  //     .then((data) => {
-  //       setVariableData(data.entry);
-  //     });
-  // };
 
   return obsDefinition ? (
     <div className={"variable-summary-wrapper"} style={height}>
