@@ -5,8 +5,9 @@ import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 import { Link } from "react-router-dom";
 import "./dataDictionary.css";
 import { SearchBar } from "./searchBar";
+import { capitalizeWord } from "./utilities";
 
-export const Variables = ({ capitalizeWord }) => {
+export const Variables = () => {
   const { loading, setLoading, URL } = useContext(myContext);
   const { observationData, activityData, getVariables } =
     useContext(authContext);
@@ -41,7 +42,7 @@ export const Variables = ({ capitalizeWord }) => {
   const getObservationMatch = (observation) => {
     for (let activity of activityData) {
       for (const r of activity?.resource?.observationResultRequirement) {
-        if (r.reference == observation?.fullUrl?.slice(46)) {
+        if (r.reference == observation?.fullUrl?.slice(-58)) {
           return (
             <>
               <Link

@@ -31,12 +31,12 @@ export const NavBar = () => {
               <Link
                 to="/"
                 className="nav-link"
-                onClick={() => {
-                  setActive(0);
-                }}
-                style={{
-                  backgroundColor: active === 0 ? "#E7EEF0" : "",
-                }}
+                // onClick={() => {
+                //   setActive(0);
+                // }}
+                // style={{
+                //   backgroundColor: active === 0 ? "#E7EEF0" : "",
+                // }}
               >
                 <li className="nav-items">All Studies</li>
               </Link>
@@ -44,12 +44,12 @@ export const NavBar = () => {
               <Link
                 to="/dataDictionary"
                 className="nav-link"
-                onClick={() => {
-                  setActive(1);
-                }}
-                style={{
-                  backgroundColor: active === 1 ? "#E7EEF0" : "",
-                }}
+                // onClick={() => {
+                //   setActive(1);
+                // }}
+                // style={{
+                //   backgroundColor: active === 1 ? "#E7EEF0" : "",
+                // }}
               >
                 <li className="nav-items">Data Dictionaries</li>
               </Link>

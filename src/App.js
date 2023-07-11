@@ -162,7 +162,6 @@ export const App = () => {
       } else if (type === "DDReferences") {
         setReference(data);
       } else if (type === "variables") {
-        console.log("STINKY!", data);
         setObservationData(data[0]);
         setActivityData(data[1]);
       } else if (type === "report") {
