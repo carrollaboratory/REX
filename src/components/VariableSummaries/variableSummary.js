@@ -8,7 +8,7 @@ import { authContext, myContext } from "../../App";
 
 export const VariableSummary = ({ obsDefinition, height }) => {
   const { studyId } = useParams();
-  const [variableData, setVariableData] = useState(obsDefinition.detail.entry);
+  const variableData = obsDefinition.detail.entry;
   const { URL } = useContext(myContext);
 
   return obsDefinition ? (

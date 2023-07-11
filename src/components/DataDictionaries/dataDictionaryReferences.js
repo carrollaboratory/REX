@@ -3,16 +3,17 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./dataDictionaryReferences.css";
 import { CodeableConcept } from "../tables/codeableConcept";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
-import { myContext } from "../../App";
+import { authContext, myContext } from "../../App";
 
 function DataDictionaryReferences() {
-  const [reference, setReference] = useState({});
+  // const [reference, setReference] = useState({});
   const location = useLocation();
   const { selectedDictionaryReferences } = location.state;
   const [codeableConceptReference, setCodeableConceptReference] = useState({});
   const [codeableConcept, setCodeableconcept] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const { loading, setLoading, URL } = useContext(myContext);
+  const { getDataDictionaryReferences, reference } = useContext(authContext);
 
   const handleCodeableConceptClick = (item) => {
     setCodeableConceptReference(item);
@@ -26,27 +27,27 @@ function DataDictionaryReferences() {
   const navigate = useNavigate();
   useEffect(() => {
     // setLoading(true);
-    getData();
+    getDataDictionaryReferences(selectedDictionaryReferences);
   }, [selectedDictionaryReferences]);
 
   useEffect(() => {
     const setFromEvent = (e) => setPosition({ x: e.clientX, y: e.clientY });
   }, []);
 
-  const getData = async () => {
-    Promise.all(
-      selectedDictionaryReferences?.observationResultRequirement.map((c) =>
-        fetch(`${URL}/${c.reference}`)
-      )
-    )
-      .then((responses) =>
-        Promise.all(responses.map((response) => response.json()))
-      )
-      .then((res) => {
-        setReference(res);
-        // setLoading(false);
-      });
-  };
+  // const getData = async () => {
+  //   Promise.all(
+  //     selectedDictionaryReferences?.observationResultRequirement.map((c) =>
+  //       fetch(`${URL}/${c.reference}`)
+  //     )
+  //   )
+  //     .then((responses) =>
+  //       Promise.all(responses.map((response) => response.json()))
+  //     )
+  //     .then((res) => {
+  //       setReference(res);
+  //       // setLoading(false);
+  //     });
+  // };
 
   return (
     <>

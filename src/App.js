@@ -15,6 +15,7 @@ import DataDictionaryReferences from "./components/DataDictionaries/dataDictiona
 import { VariableSummary } from "./components/VariableSummaries/variableSummary";
 import { Home } from "./components/home";
 import { Login } from "./components/Auth/Login";
+import { Variables } from "./components/DataDictionaries/variables";
 
 export const myContext = createContext();
 export const authContext = createContext();
@@ -35,8 +36,12 @@ export const App = () => {
   const [propData, setPropData] = useState(location?.state?.propData);
   const [dataDictionary, setDataDictionary] = useState([]);
   const [reference, setReference] = useState({});
-  const [variableData, setVariableData] = useState({});
   const [modalData, setModalData] = useState({});
+  const [titleData, setTitleData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [observationData, setObservationData] = useState([]);
+  const [activityData, setActivityData] = useState([]);
+
   const [redirect, setRedirect] = useState(false);
 
   const { studyId } = useParams();
@@ -55,7 +60,7 @@ export const App = () => {
   const storeAccessToken = (accessToken) => {
     worker?.postMessage({
       type: "storeToken",
-      token: accessToken,
+      args: accessToken,
       url: URL,
     });
     // worker?.postMessage({ type: "report" });
@@ -78,39 +83,59 @@ export const App = () => {
   };
 
   const getDetails = (studyId) => {
-    worker?.postMessage({ type: "detailsRequest", studyParam: studyId });
+    worker?.postMessage({ type: "detailsRequest", args: studyId });
   };
 
   const getGraph = (studyId) => {
-    worker?.postMessage({ type: "graphRequest", studyParam: studyId });
+    worker?.postMessage({ type: "graphRequest", args: studyId });
   };
 
   const getDetailsDD = () => {
-    worker?.postMessage({ type: "detailsDDRequest", passedProp: propData });
+    worker?.postMessage({ type: "detailsDDRequest", args: propData });
   };
 
-  const getDDTableDetails = (refArray) => {
+  const getDDTableDetails = (refArray, studyParam) => {
     worker?.postMessage({
       type: "DDTableDetailsRequest",
-      selectedDictionaryReferences: refArray,
-    });
-  };
-
-  const getVariableSummary = (obsProp, studyId) => {
-    worker?.postMessage({
-      type: "variableSummaryRequest",
-      obsDefinition: obsProp,
-      studyParam: studyId,
+      args: { refArray, studyId },
     });
   };
 
   const getCodeableConcept = (referenceObj) => {
     worker?.postMessage({
       type: "codeableConceptRequest",
-      codeableConceptReference: referenceObj,
+      args: referenceObj,
     });
   };
 
+  const getDataDictionary = () => {
+    worker?.postMessage({
+      type: "dataDictionaryRequest",
+      args: searchTerm,
+    });
+  };
+
+  const getDataDictionaryReferences = (selectedDictionaryReferences) => {
+    worker?.postMessage({
+      type: "DDReferencesRequest",
+      args: selectedDictionaryReferences,
+    });
+  };
+
+  const getVariables = (search = null) => {
+    if (search == null) {
+      worker?.postMessage({
+        type: "variablesRequest",
+        args: searchTerm,
+      });
+    } else {
+      setSearchTerm("");
+      worker?.postMessage({
+        type: "variablesRequest",
+        args: "",
+      });
+    }
+  };
   worker !== null &&
     (worker.onmessage = (message) => {
       const { type, data } = message?.data ? message.data : {};
@@ -130,18 +155,20 @@ export const App = () => {
         setDataDictionary(data.entry);
       } else if (type === "DDTableDetails") {
         setReference(data);
-      } else if (type === "variableSummary") {
-        setVariableData(data.entry);
       } else if (type === "codeableConcept") {
         setModalData(data);
+      } else if (type === "dataDictionary") {
+        setTitleData(data.entry);
+      } else if (type === "DDReferences") {
+        setReference(data);
+      } else if (type === "variables") {
+        console.log("STINKY!", data);
+        setObservationData(data[0]);
+        setActivityData(data[1]);
       } else if (type === "report") {
         console.log("REPORT!!!!! ", data);
       }
     });
-
-  useEffect(() => {
-    location.pathname === "/variables" && setDDView(false);
-  }, [location]);
 
   return (
     <authContext.Provider
@@ -163,17 +190,25 @@ export const App = () => {
         dataDictionary,
         getDDTableDetails,
         reference,
-        getVariableSummary,
-        variableData,
         getCodeableConcept,
         modalData,
+        getDataDictionary,
+        setFilterText,
+        filterText,
+        titleData,
+        getDataDictionaryReferences,
+        searchTerm,
+        setSearchTerm,
+        getVariables,
+        observationData,
+        activityData,
       }}
     >
       <myContext.Provider
         value={{
           selectedObject,
           setSelectedObject,
-          filterText,
+
           setFilterText,
           loading,
           setLoading,
@@ -197,14 +232,12 @@ export const App = () => {
             <Route path="/login" element={<Login />} />
             <Route index element={<Table />} />
             <Route path="/details/:studyId" element={<DetailsView />} />
-            {/* 
             <Route path="/dataDictionary" element={<DataDictionary />} />
             <Route
               path="/dataDictionary/:DDReference"
               element={<DataDictionaryReferences />}
-              s
             />
-            <Route path="/variables" element={<DataDictionary />} />*/}
+            <Route path="/variables" element={<Variables />} />
             <Route
               path="/variable-summary/:studyId"
               element={<VariableSummary />}

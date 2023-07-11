@@ -9,8 +9,8 @@ function Table() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-  const { setSelectedObject, filterText, setFilterText, URL } =
-    useContext(myContext);
+  const { setSelectedObject, URL } = useContext(myContext);
+  const { filterText, setFilterText } = useContext(authContext);
   const { getTable, tableData } = useContext(authContext);
 
   const getFilteredItems = () =>
