@@ -154,7 +154,30 @@ export const App = () => {
       } else if (type === "detailsDD") {
         setDataDictionary(data.entry);
       } else if (type === "DDTableDetails") {
-        setReference(data);
+        // console.log("data.data", data?.data?.[0]?.code?.coding?.[0]?.code);
+        // console.log(
+        //   "varSums",
+        //   data?.varSums?.entry?.[0]?.resource.valueCodeableConcept.coding?.[0]
+        //     ?.code
+        // );
+        let vars = [];
+        data?.data?.forEach((v, index) => {
+          let matched = false;
+          data?.varSums?.entry?.forEach((vs) => {
+            if (
+              vs?.resource.valueCodeableConcept.coding?.[0]?.code ===
+              v?.code?.coding?.[0]?.code
+            ) {
+              matched = true;
+              vars.push({ ...v, detail: vs });
+              // varArray.push({ ...v, detail: vs });
+            }
+          });
+          if (!matched) {
+            vars.push(v);
+          }
+        });
+        setReference(vars);
       } else if (type === "codeableConcept") {
         setModalData(data);
       } else if (type === "dataDictionary") {

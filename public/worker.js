@@ -96,11 +96,13 @@
         .then((res) => res.json())
         .then((data) => postMessage({ type: "detailsDD", data }));
     } else if (type === "DDTableDetailsRequest") {
+      let table;
       if (!studyId) {
         studyId = args.studyId;
       }
       const { refArray } = args;
       let arr = [];
+      let d;
       Promise.all(
         refArray?.map((c) =>
           fetch(urlEndpoint + "/" + c.reference, {
@@ -115,31 +117,59 @@
         .then((responses) =>
           Promise.all(responses?.map((response) => response.json()))
         )
-        .then(async (data) => {
-          await Promise.all(
-            data.map((d) =>
-              fetch(
-                urlEndpoint +
-                  "/Observation?value-concept=" +
-                  d?.code?.coding?.[0]?.system +
-                  "|" +
-                  d?.code?.coding?.[0]?.code +
-                  "&focus=ResearchStudy/" +
-                  studyId,
-                {
-                  method: "GET",
-                  headers: {
-                    "Content-Type": "application/fhir+json; fhirVersion=4.0",
-                    Authorization: `Bearer ${accessToken}`,
-                  },
-                }
-              )
-                .then((response) => response.json())
-                .then((detail) => arr.push({ ...d, detail }))
-            )
-          );
-          return data;
+        .then((data) => {
+          d = data;
+          fetch(
+            urlEndpoint +
+              "/Observation?value-concept=" +
+              data?.[0]?.code?.coding?.[0]?.system +
+              "|&focus=ResearchStudy/" +
+              studyId,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/fhir+json; fhirVersion=4.0",
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          )
+            .then((res) => res.json())
+            .then((varSums) => {
+              arr = varSums;
+            })
+            .then(() =>
+              postMessage({
+                type: "DDTableDetails",
+                data: { data: d, varSums: arr },
+              })
+            );
         })
+
+        // .then(async (data) => {
+        //   await Promise.all(
+        //     data.map((d) =>
+        //       fetch(
+        //         urlEndpoint +
+        //           "/Observation?value-concept=" +
+        //           d?.code?.coding?.[0]?.system +
+        //   "|" +
+        //   d?.code?.coding?.[0]?.code +
+        //   "&focus=ResearchStudy/" +
+        //   studyId,
+        // {
+        //           method: "GET",
+        //           headers: {
+        //             "Content-Type": "application/fhir+json; fhirVersion=4.0",
+        //             Authorization: `Bearer ${accessToken}`,
+        //           },
+        //         }
+        //       )
+        //         .then((response) => response.json())
+        //         .then((detail) => arr.push({ ...d, detail }))
+        //     )
+        //   );
+        //   return data;
+        // })
         .then((data) => postMessage({ type: "DDTableDetails", data: arr }));
     } else if (type === "codeableConceptRequest") {
       fetch(urlEndpoint + "/" + args, {

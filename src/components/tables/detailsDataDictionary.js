@@ -3,6 +3,7 @@ import { authContext, myContext } from "../../App";
 import "./detailsDataDictionary.css";
 import { DataDictionaryTableDetails } from "./dataDictionaryTableDetails/dataDictionaryTableDetails";
 import { useNavigate } from "react-router-dom";
+import { capitalizeWord } from "../DataDictionaries/utilities";
 
 export const DetailsDataDictionary = ({ propData }) => {
   const { loading, setLoading, URL } = useContext(myContext);
@@ -14,10 +15,6 @@ export const DetailsDataDictionary = ({ propData }) => {
   const [active, setActive] = useState(-1);
 
   const navigate = useNavigate();
-
-  const capitalizeWord = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-  };
 
   const valueSplit =
     propData?.resource.identifier?.[0]?.value.split("_").length;

@@ -8,7 +8,7 @@ export const VariableSummaryString = ({ variableData }) => {
         <>
           <table className="variable-summary-table-string variable-summary-table">
             <tbody>
-              {variableData?.[0]?.resource?.component?.map((c) => (
+              {variableData?.resource?.component?.map((c) => (
                 <tr key={c?.resource?.id} className="variable-summary-row">
                   <td className="empty-column"></td>
                   <span className="variable-summary-head-string variable-summary-head">

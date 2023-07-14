@@ -7,7 +7,7 @@ export const VariableSummaryCodeableConcept = ({ variableData }) => {
       {variableData ? (
         <>
           <table className="variable-summary-table-codeable variable-summary-table">
-            {variableData?.[0]?.resource?.component?.map((c) => (
+            {variableData?.resource?.component?.map((c) => (
               <tr key={c?.resource?.id}>
                 <td className="empty-column"></td>
 

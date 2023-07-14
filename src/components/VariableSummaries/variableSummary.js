@@ -8,8 +8,9 @@ import { authContext, myContext } from "../../App";
 
 export const VariableSummary = ({ obsDefinition, height }) => {
   const { studyId } = useParams();
-  const variableData = obsDefinition.detail.entry;
+  const variableData = obsDefinition?.detail;
   const { URL } = useContext(myContext);
+  console.log("THIS", variableData);
 
   return obsDefinition ? (
     <div className={"variable-summary-wrapper"} style={height}>

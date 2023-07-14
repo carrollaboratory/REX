@@ -7,7 +7,7 @@ export const VariableSummaryQuantity = ({ variableData }) => {
       {variableData ? (
         <>
           <table className="variable-summary-table-quantity variable-summary-table">
-            {variableData?.[0]?.resource?.component?.map((c) => (
+            {variableData?.resource?.component?.map((c) => (
               <tr key={c?.resource?.id}>
                 <td className="empty-column"></td>
 
@@ -33,7 +33,6 @@ export const VariableSummaryQuantity = ({ variableData }) => {
               </tr>
             ))}
           </table>
-          ;
         </>
       ) : (
         <div className="no-data-div">

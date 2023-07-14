@@ -4,7 +4,7 @@ import { authContext } from "../../App";
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 
 export const Login = () => {
-  const { storeAccessToken } = useContext(authContext);
+  const { storeAccessToken, handleSignOut } = useContext(authContext);
 
   const google = window.google;
 
@@ -36,6 +36,7 @@ export const Login = () => {
   return (
     <div>
       <button onClick={handleSignIn}>Sign in with Google</button>
+      <button onClick={() => handleSignOut()}>Sign Out</button>
     </div>
   );
 };
