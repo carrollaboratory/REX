@@ -10,7 +10,6 @@ export const VariableSummary = ({ obsDefinition, height }) => {
   const { studyId } = useParams();
   const variableData = obsDefinition?.detail;
   const { URL } = useContext(myContext);
-  console.log("THIS", variableData);
 
   return obsDefinition ? (
     <div className={"variable-summary-wrapper"} style={height}>

@@ -5,13 +5,17 @@ import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 
 export const GraphAncestry = ({ focusData }) => {
-  const { loading } = useContext(myContext);
+  const { loading, clearGraph } = useContext(myContext);
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
 
   useEffect(() => {
     focusData && getData();
   }, [focusData]);
+
+  useEffect(() => {
+    console.log("FOCUS", focusData);
+  });
 
   const navigate = useNavigate();
 

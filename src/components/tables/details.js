@@ -15,14 +15,11 @@ import { DetailsDataDictionary } from "./detailsDataDictionary";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 
 function DetailsView() {
-  const { setDetails, loading, setLoading, details, URL } =
+  const { setDetails, loading, setLoading, details, URL, clearGraph } =
     useContext(myContext);
   const { getDetails, propData, setRedirect, redirect, focusData, getGraph } =
     useContext(authContext);
   const location = useLocation();
-  // const [focusData, setFocusData] = useState();
-  // const [propData, setPropData] = useState(location?.state?.propData);
-  // const [redirect, setRedirect] = useState(false);
   const navigate = useNavigate();
   const { studyId } = useParams();
 
@@ -30,6 +27,13 @@ function DetailsView() {
     // setLoading(true);
     loadCriticalData();
   }, []);
+
+  useEffect(
+    () => () => {
+      clearGraph();
+    },
+    []
+  );
 
   useEffect(() => {
     if (redirect) {
@@ -46,33 +50,6 @@ function DetailsView() {
     getGraph();
   };
 
-  // const getSingleStudyData = () => {
-  //   return fetch(`${URL}/ResearchStudy?_id=${studyId}`, {
-  //     method: "GET",
-  //   })
-  //     .then((res) => {
-  //       return res.json();
-  //     })
-  //     .then((data) => {
-  //       setPropData(data?.entry?.[0]);
-  //       setRedirect(true);
-  //     });
-  // };
-
-  // const getGraphData = () => {
-  //   fetch(`${URL}/Observation?focus=ResearchStudy/${studyId}`, {
-  //     method: "GET",
-  //   })
-  //     .then((res) => {
-  //       return res.json();
-  //     })
-  //     .then((d) => {
-  //       setFocusData(d);
-  //     })
-  //     .then(() => {
-  //       setLoading(false);
-  //     });
-  // };
   return (
     <>
       <DetailsNav />

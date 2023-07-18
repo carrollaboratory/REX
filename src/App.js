@@ -45,7 +45,6 @@ export const App = () => {
   const [redirect, setRedirect] = useState(false);
 
   const { studyId } = useParams();
-
   // userInfo !== null && console.log(userInfo);
   const URL = process.env.REACT_APP_API_ENDPOINT;
 
@@ -70,6 +69,7 @@ export const App = () => {
 
   const handleSignOut = () => {
     setUserInfo(null);
+    setFilterText("");
     worker?.postMessage({ type: "clearToken" });
     navigate("/login");
   };
@@ -88,6 +88,10 @@ export const App = () => {
 
   const getGraph = (studyId) => {
     worker?.postMessage({ type: "graphRequest", args: studyId });
+  };
+
+  const clearGraph = () => {
+    setFocusData(undefined);
   };
 
   const getDetailsDD = () => {
@@ -230,7 +234,6 @@ export const App = () => {
         value={{
           selectedObject,
           setSelectedObject,
-
           setFilterText,
           loading,
           setLoading,
@@ -238,6 +241,7 @@ export const App = () => {
           setDetails,
           dDView,
           setDDView,
+          clearGraph,
           URL,
         }}
       >
