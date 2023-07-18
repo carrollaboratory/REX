@@ -24,8 +24,9 @@ function DetailsView() {
   const { studyId } = useParams();
 
   useEffect(() => {
-    // setLoading(true);
+    setLoading(true);
     loadCriticalData();
+    setLoading(false);
   }, []);
 
   useEffect(
@@ -55,99 +56,98 @@ function DetailsView() {
       <DetailsNav />
 
       {details ? (
-        // (
-        //   loading ? (
-        //     <LoadingSpinner />
-        //   ) :
-        // )
-        <div
-          className="details-container"
-          style={{
-            display: "flex",
-            flexFlow: "row wrap",
-            justifyContent: "space-evenly",
-          }}
-        >
+        loading ? (
+          <LoadingSpinner />
+        ) : (
           <div
-            className="details-card-wrapper"
+            className="details-container"
             style={{
               display: "flex",
-              flexDirection: "row",
-              height: "fit-content",
+              flexFlow: "row wrap",
+              justifyContent: "space-evenly",
             }}
           >
             <div
-              className="DetailsCard"
+              className="details-card-wrapper"
               style={{
                 display: "flex",
-                border: "1px solid darkgray",
-                fontSize: ".8rem",
-                width: "27vw",
-                padding: "5px 5px 0 5px",
-                flexFlow: "column wrap",
+                flexDirection: "row",
+                height: "fit-content",
               }}
             >
-              <div className="details-properties">
-                <div className="title-div">Title:</div>
-                <div className="title-property">
-                  {propData?.resource?.title}
+              <div
+                className="DetailsCard"
+                style={{
+                  display: "flex",
+                  border: "1px solid darkgray",
+                  fontSize: ".8rem",
+                  width: "27vw",
+                  padding: "5px 5px 0 5px",
+                  flexFlow: "column wrap",
+                }}
+              >
+                <div className="details-properties">
+                  <div className="title-div">Title:</div>
+                  <div className="title-property">
+                    {propData?.resource?.title}
+                  </div>
+                </div>
+                <div className="details-properties">
+                  {propData?.resource?.partOf ? (
+                    <>
+                      <div className="title-div">Part of:</div>
+                      <div>
+                        {propData?.resource?.partOf[0]?.reference.split("/")[1]}
+                      </div>{" "}
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="details-properties">
+                  {propData?.resource?.relatedArtifact ? (
+                    <>
+                      <div className="title-div">Related Artifact:</div>
+                      <div>
+                        {
+                          <a
+                            href={propData?.resource?.relatedArtifact[0].url}
+                            target="_blank"
+                          >
+                            {propData?.resource?.relatedArtifact[0].label}
+                          </a>
+                        }
+                      </div>{" "}
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="details-properties">
+                  {propData?.resource?.description === "TBD" ? (
+                    ""
+                  ) : !!propData?.resource?.description ? (
+                    <>
+                      <div className="title-div">Description:</div>
+                      <div>
+                        {" "}
+                        {HtmlReactParser(propData?.resource?.description)}
+                      </div>
+                    </>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
-              <div className="details-properties">
-                {propData?.resource?.partOf ? (
-                  <>
-                    <div className="title-div">Part of:</div>
-                    <div>
-                      {propData?.resource?.partOf[0]?.reference.split("/")[1]}
-                    </div>{" "}
-                  </>
-                ) : (
-                  ""
-                )}
-              </div>
-              <div className="details-properties">
-                {propData?.resource?.relatedArtifact ? (
-                  <>
-                    <div className="title-div">Related Artifact:</div>
-                    <div>
-                      {
-                        <a
-                          href={propData?.resource?.relatedArtifact[0].url}
-                          target="_blank"
-                        >
-                          {propData?.resource?.relatedArtifact[0].label}
-                        </a>
-                      }
-                    </div>{" "}
-                  </>
-                ) : (
-                  ""
-                )}
-              </div>
-              <div className="details-properties">
-                {propData?.resource?.description === "TBD" ? (
-                  ""
-                ) : !!propData?.resource?.description ? (
-                  <>
-                    <div className="title-div">Description:</div>
-                    <div>
-                      {" "}
-                      {HtmlReactParser(propData?.resource?.description)}
-                    </div>
-                  </>
-                ) : (
-                  ""
-                )}
-              </div>
+            </div>
+            <div className="graph-sex-display">
+              <GraphSex focusData={focusData} />
+            </div>
+            <div className="graph-ancestry-display">
+              {<GraphAncestry focusData={focusData} />}
             </div>
           </div>
-          <div className="graph-sex-display">
-            <GraphSex focusData={focusData} />
-          </div>
-          <div className="graph-ancestry-display">
-            {<GraphAncestry focusData={focusData} />}
-          </div>
-        </div>
+        )
       ) : (
         <DetailsDataDictionary propData={propData} />
       )}

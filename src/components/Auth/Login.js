@@ -17,7 +17,6 @@ export const Login = () => {
           "https://www.googleapis.com/auth/userinfo.email"
         )
       ) {
-        // console.log("STORING", tokenResponse.access_token);
         storeAccessToken(tokenResponse.access_token);
       }
     }

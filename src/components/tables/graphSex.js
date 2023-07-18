@@ -140,12 +140,13 @@ export const GraphSex = ({ focusData }) => {
           }
         })}
 
-        {
-          // loading ? (
-          //   <LoadingSpinner />
-          // ) :
-          show ? renderPie() : "No available data"
-        }
+        {loading ? (
+          <LoadingSpinner />
+        ) : show ? (
+          renderPie()
+        ) : (
+          "No available data"
+        )}
       </div>
     </>
   );

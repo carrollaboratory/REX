@@ -25,6 +25,7 @@ function DataDictionaryReferences() {
   };
 
   const navigate = useNavigate();
+
   useEffect(() => {
     // setLoading(true);
     getDataDictionaryReferences(selectedDictionaryReferences);
@@ -144,12 +145,11 @@ function DataDictionaryReferences() {
                 </tbody>
               </table>
               {/* <tr id="no-border" colSpan="3"> */}
-              <button
-                className="dd-button"
-                onClick={() => navigate("/dataDictionary")}
-              >
+
+              <button className="dd-button" onClick={() => navigate(-1)}>
                 Back to Search
               </button>
+
               {/* </tr> */}
             </div>
           </>

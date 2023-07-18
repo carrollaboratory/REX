@@ -13,10 +13,6 @@ export const GraphAncestry = ({ focusData }) => {
     focusData && getData();
   }, [focusData]);
 
-  useEffect(() => {
-    console.log("FOCUS", focusData);
-  });
-
   const navigate = useNavigate();
 
   const colors = [
