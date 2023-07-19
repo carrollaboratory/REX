@@ -1,4 +1,10 @@
-import { Outlet, Route, Routes, useLocation } from "react-router-dom";
+import {
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import { createContext, useState, useEffect } from "react";
 import Table from "./components/tables/table";
 import { NavBar } from "./components/nav/navBar";
@@ -17,6 +23,7 @@ export const App = () => {
   const [details, setDetails] = useState(true);
   const [dDView, setDDView] = useState(true);
 
+  const { studyId } = useParams();
   const URL = process.env.REACT_APP_API_ENDPOINT;
 
   useEffect(() => {
@@ -37,6 +44,7 @@ export const App = () => {
         dDView,
         setDDView,
         URL,
+        studyId,
       }}
     >
       <Routes>
