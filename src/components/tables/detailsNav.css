@@ -22,3 +22,9 @@
 .details-navbar {
   margin: 30px 0 0 50px;
 }
+
+.details_nav_title {
+  padding-left: 15px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}

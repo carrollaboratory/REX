@@ -76,7 +76,7 @@ function DetailsView() {
   };
   return (
     <>
-      <DetailsNav />
+      <DetailsNav propData={propData} />
 
       {details ? (
         loading ? (
