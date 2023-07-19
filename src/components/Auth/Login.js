@@ -35,7 +35,7 @@ export const Login = () => {
   return (
     <div>
       <button onClick={handleSignIn}>Sign in with Google</button>
-      <button onClick={() => handleSignOut()}>Sign Out</button>
+      {/* <button onClick={() => handleSignOut()}>Sign Out</button> */}
     </div>
   );
 };
