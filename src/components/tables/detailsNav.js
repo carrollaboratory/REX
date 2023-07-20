@@ -1,10 +1,11 @@
 import { useContext, useEffect } from "react";
-import { myContext } from "../../App";
+import { authContext, myContext } from "../../App";
 import "./detailsNav.css";
 import { useParams } from "react-router-dom";
 
-export const DetailsNav = ({}) => {
+export const DetailsNav = () => {
   const { setDetails, studyId } = useContext(myContext);
+  const { propData } = useContext(authContext);
 
   useEffect(() => {
     setDetails(true);
@@ -22,6 +23,7 @@ export const DetailsNav = ({}) => {
         >
           Data Dictionary
         </button>
+        <span className="details_nav_title">{propData?.resource?.title}</span>
       </div>
     </>
   );
