@@ -142,7 +142,7 @@ function Table() {
         <DataTable
           columns={columns}
           data={getFilteredItems(tableData)}
-          progressPending={loading}
+          // progressPending={loading}
           pagination
           paginationComponentOptions={paginationComponentOptions}
           // fixedHeader
