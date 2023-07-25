@@ -51,6 +51,9 @@ export const App = () => {
   useEffect(() => {
     userInfo === null && navigate("/login");
   }, [userInfo]);
+  // useEffect(() => {
+  //   console.log(process.env.NODE_ENV);
+  // }, []);
 
   if (worker == null) {
     setWorker(new Worker("./worker.js"));
