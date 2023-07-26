@@ -22,7 +22,7 @@
   margin-bottom: 10px;
 }
 .DD-titles {
-  font-size: 0.9rem;
+  /* font-size: 0.9rem; */
   line-height: 1.8rem;
   padding: 10px;
   overflow-wrap: break-word;
@@ -30,9 +30,9 @@
 
 .DD-header {
   height: fit-content;
-  font-size: 0.9rem;
+  /* font-size: 0.9rem; */
   cursor: default;
-  background-color: #e7eef0;
+  background-color: #f2f2f2;
   border-bottom: 1px solid darkgray;
   padding-left: 10px;
   overflow-wrap: break-word;
@@ -45,7 +45,7 @@
 
 .button-details-DD {
   float: left;
-  background-color: #4051a3;
+  background-color: #035c94;
   color: white;
   border: none;
   width: fit-content;
@@ -54,6 +54,6 @@
 }
 
 .button-details-DD:hover {
-  background-color: #7e8dc6;
+  background-color: #7ebac0;
   color: white;
 }

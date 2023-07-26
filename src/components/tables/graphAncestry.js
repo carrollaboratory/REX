@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 
 export const GraphAncestry = ({ focusData }) => {
-  const { loading, clearGraph } = useContext(myContext);
+  const { loading } = useContext(myContext);
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
 
@@ -116,7 +116,7 @@ export const GraphAncestry = ({ focusData }) => {
                       padding: "0 5px",
                       fontSize: ".8rem",
                       margin: "9px",
-                      height: "98px",
+                      height: "133px",
                     }}
                   >
                     {c?.resource?.component
@@ -170,18 +170,15 @@ export const GraphAncestry = ({ focusData }) => {
             }
           })}
           {/*Bar graph is rendered if there is data available*/}
-          {
-            // loading ? (
-            //   <LoadingSpinner />
-            // ) :
-            show ? (
-              renderBar()
-            ) : (
-              <>
-                <div style={{ marginTop: "28px" }}>No available data</div>
-              </>
-            )
-          }
+          {loading ? (
+            <LoadingSpinner />
+          ) : show ? (
+            renderBar()
+          ) : (
+            <>
+              <div style={{ marginTop: "28px" }}>No available data</div>
+            </>
+          )}
         </div>
         <button
           className="button"

@@ -1,70 +1,69 @@
 .chart-div {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .graph-ancestry {
-    height: fit-content;
-    width: 42vw;
-    border: 1px solid darkgray;
-    text-align: center;
-    font-size: .8rem;
-    padding: 12px 0;
+  height: fit-content;
+  width: 42vw;
+  border: 1px solid darkgray;
+  text-align: center;
+  /* font-size: .8rem; */
+  padding: 12px 0;
 }
 
 .distribution-ancestry-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    padding: 0 5px;
-    font-size: .8rem;
-    margin: 9px;
-    height: 98px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 0 5px;
+  /* font-size: 0.8rem; */
+  margin: 9px;
+  height: 98px;
 }
 
 .distribution-ancestry {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .distribution-sex-container {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-evenly;
-    padding: 5px;
-    font-size: .8rem;
-    margin: 9px;
-    overflow-wrap: break-word;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  padding: 5px;
+  /* font-size: 0.8rem; */
+  margin: 9px;
+  overflow-wrap: break-word;
 }
 
 .display {
-    display: flex;
-    flex-flow: column wrap;
-    width: 60px;
+  display: flex;
+  flex-flow: column wrap;
+  width: 60px;
 }
 
 .legend {
-    width: 12px;
-    height: 12px;
-    border: 1px solid darkgray;
-    }
-
-.graph-sex {
-    display: flex;
-    flex-direction: column;
-    height: fit-content;
-    border: 1px solid darkgray;
-    width: 27vw;
-    text-align: center;
-    font-size: .8rem;
-    padding: 12px 0;
+  width: 12px;
+  height: 12px;
+  border: 1px solid darkgray;
 }
 
-.display-sex-wrapper
-{
-    display: flex; 
-    flex-direction: column;
+.graph-sex {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  border: 1px solid darkgray;
+  width: 27vw;
+  text-align: center;
+  /* font-size: 0.8rem; */
+  padding: 12px 0;
+}
+
+.display-sex-wrapper {
+  display: flex;
+  flex-direction: column;
 }

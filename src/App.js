@@ -13,7 +13,6 @@ import DetailsView from "./components/tables/details";
 import DataDictionary from "./components/DataDictionaries/dataDictionary";
 import DataDictionaryReferences from "./components/DataDictionaries/dataDictionaryReferences";
 import { VariableSummary } from "./components/VariableSummaries/variableSummary";
-import { Home } from "./components/home";
 import { Login } from "./components/Auth/Login";
 import { Variables } from "./components/DataDictionaries/variables";
 

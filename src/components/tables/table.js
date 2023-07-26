@@ -31,15 +31,20 @@ function Table() {
   const tableCustomStyles = {
     headRow: {
       style: {
-        backgroundColor: "#E7EEF0",
+        backgroundColor: "#F2F2F2",
+        fontSize: "16px",
       },
     },
     rows: {
       style: {
-        backgroundColor: "#E7EEF0",
+        backgroundColor: "#F2F2F2",
+        fontSize: "16px",
+        fontWeight: "400",
+        lineHeight: "24px",
+        padding: "5px 0px",
       },
       stripedStyle: {
-        color: "#000000",
+        color: "rgb(36, 41, 46)",
         backgroundColor: "#FFFFFF",
       },
     },
@@ -142,7 +147,7 @@ function Table() {
         <DataTable
           columns={columns}
           data={getFilteredItems(tableData)}
-          // progressPending={loading}
+          progressPending={loading}
           pagination
           paginationComponentOptions={paginationComponentOptions}
           // fixedHeader

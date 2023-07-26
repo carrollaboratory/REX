@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import AnvilLogo from "../../images/anvil-logo.png";
+import AnvilLogo from "../../images/anvil.png";
 import "./navBar.css";
 import { useEffect, useState, useContext } from "react";
 import { authContext } from "../../App";
@@ -35,7 +35,7 @@ export const NavBar = () => {
                 //   setActive(0);
                 // }}
                 // style={{
-                //   backgroundColor: active === 0 ? "#E7EEF0" : "",
+                //   backgroundColor: active === 0 ? "#F2F2F2" : "",
                 // }}
               >
                 <li className="nav-items">All Studies</li>
@@ -48,7 +48,7 @@ export const NavBar = () => {
                 //   setActive(1);
                 // }}
                 // style={{
-                //   backgroundColor: active === 1 ? "#E7EEF0" : "",
+                //   backgroundColor: active === 1 ? "#F2F2F2" : "",
                 // }}
               >
                 <li className="nav-items">Data Dictionaries</li>
