@@ -18,6 +18,7 @@ import { Variables } from "./components/DataDictionaries/variables";
 
 export const myContext = createContext();
 export const authContext = createContext();
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 
 export const App = () => {
   const location = useLocation();
@@ -50,6 +51,7 @@ export const App = () => {
   useEffect(() => {
     userInfo === null && navigate("/login");
   }, [userInfo]);
+
   // useEffect(() => {
   //   console.log(process.env.NODE_ENV);
   // }, []);
@@ -68,6 +70,18 @@ export const App = () => {
   };
   // console.log("REPORT");
   // worker?.postMessage({ type: "report" });
+
+  // const logout = function () {
+  //   document.location.href =
+  //     "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost:3000/login";
+  // };
+
+  // useEffect(
+  //   () => () => {
+  //     logout();
+  //   },
+  //   []
+  // );
 
   const handleSignOut = () => {
     setUserInfo(null);

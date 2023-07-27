@@ -59,35 +59,11 @@ function DetailsView() {
         loading ? (
           <LoadingSpinner />
         ) : (
-          <div
-            className="details-container"
-            style={{
-              display: "flex",
-              flexFlow: "row wrap",
-              justifyContent: "space-evenly",
-            }}
-          >
-            <div
-              className="details-card-wrapper"
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                height: "fit-content",
-              }}
-            >
-              <div
-                className="DetailsCard"
-                style={{
-                  display: "flex",
-                  border: "1px solid darkgray",
-                  fontSize: ".8rem",
-                  width: "27vw",
-                  padding: "5px 5px 0 5px",
-                  flexFlow: "column wrap",
-                }}
-              >
+          <div className="details-container">
+            <div className="details-card-wrapper">
+              <div className="details-card">
                 <div className="details-properties">
-                  <div className="title-div">Title:</div>
+                  <div className="title-div">Title</div>
                   <div className="title-property">
                     {propData?.resource?.title}
                   </div>
@@ -95,7 +71,7 @@ function DetailsView() {
                 <div className="details-properties">
                   {propData?.resource?.partOf ? (
                     <>
-                      <div className="title-div">Part of:</div>
+                      <div className="title-div">Part of</div>
                       <div>
                         {propData?.resource?.partOf[0]?.reference.split("/")[1]}
                       </div>{" "}
@@ -107,7 +83,7 @@ function DetailsView() {
                 <div className="details-properties">
                   {propData?.resource?.relatedArtifact ? (
                     <>
-                      <div className="title-div">Related Artifact:</div>
+                      <div className="title-div">Related Artifact</div>
                       <div>
                         {
                           <a
@@ -128,7 +104,7 @@ function DetailsView() {
                     ""
                   ) : !!propData?.resource?.description ? (
                     <>
-                      <div className="title-div">Description:</div>
+                      <div className="title-div">Description</div>
                       <div>
                         {" "}
                         {HtmlReactParser(propData?.resource?.description)}

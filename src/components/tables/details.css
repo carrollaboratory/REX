@@ -12,9 +12,34 @@
   color: white;
 }
 
-.details-properties {
+.details-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+}
+
+.details-card {
+  display: flex;
+  border: 1px solid darkgray;
+  font-size: 16px;
+  color: rgb(36, 41, 46);
+  /* font-weight: 400; */
+  line-height: 24px;
+  margin: 0px 0px 16px;
+  width: 27vw;
+  padding: 5px 5px 0 5px;
+  flex-flow: column wrap;
+}
+
+.details-card-wrapper {
   display: flex;
   flex-direction: row;
+  height: fit-content;
+}
+
+.details-properties {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 8px;
 }
 .details-properties > .title-property {
@@ -22,8 +47,4 @@
 }
 .title-div {
   font-weight: bold;
-  margin-right: 5px;
-  /* font-size: 0.7rem; */
-  min-width: 70px;
-  max-width: 70px;
 }
