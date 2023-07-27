@@ -32,16 +32,21 @@ function Table() {
     headRow: {
       style: {
         backgroundColor: "#F2F2F2",
-        fontSize: "16px",
+        fontSize: "14px",
+        // fontFamily:
+        //   "-apple-system, BlinkMacSystemFont,Helvetica, Arial,sans-serif",
       },
     },
     rows: {
       style: {
         backgroundColor: "#F2F2F2",
-        fontSize: "16px",
+        fontSize: "14px",
         fontWeight: "400",
         lineHeight: "24px",
         padding: "5px 0px",
+        color: "rgb(36, 41, 46)",
+        // fontFamily:
+        //   "-apple-system, BlinkMacSystemFont,Helvetica, Arial,sans-serif",
       },
       stripedStyle: {
         color: "rgb(36, 41, 46)",
@@ -59,6 +64,7 @@ function Table() {
       name: <b>Title</b>,
       selector: (row) => row?.resource?.title,
       wrap: true,
+      width: "350px",
     },
     {
       name: <b>Description</b>,
@@ -134,7 +140,7 @@ function Table() {
     <div className="table-wrapper">
       <div className="table">
         <div className="table-title">
-          <h4>AnVIL FHIR Research Study Data</h4>
+          <h2>AnVIL FHIR Research Study Data</h2>
         </div>
         <div className="search-input">
           <input

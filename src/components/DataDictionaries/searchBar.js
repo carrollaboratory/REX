@@ -13,22 +13,22 @@ export const SearchBar = ({ children }) => {
     <div className="dd-table-wrapper">
       <div className="table">
         <div className="dd-title">
-          <h4
+          <h3
             className="dd-nav-header"
             onClick={() => {
               navigate("/dataDictionary");
             }}
           >
             Data Dictionaries
-          </h4>
-          <h4
+          </h3>
+          <h3
             className="dd-nav-header"
             onClick={() => {
               navigate("/variables");
             }}
           >
             Variables
-          </h4>
+          </h3>
         </div>
         <div className="search-input-dd">
           <input

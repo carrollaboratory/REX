@@ -27,14 +27,14 @@
 }
 
 .dd-table {
-  width: 75vw;
+  width: 90vw;
 }
 
 .table-head-DDR,
 .table-cell-DDR {
   padding: 15px;
   border: 1px solid lightgray;
-  /* font-size: 0.8rem; */
+  font-size: 14px;
   border-left: transparent 1px solid;
   border-right: transparent 1px solid;
 }

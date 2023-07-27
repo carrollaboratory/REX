@@ -9,7 +9,7 @@
   width: 42vw;
   border: 1px solid darkgray;
   text-align: center;
-  /* font-size: .8rem; */
+  font-size: 0.8rem;
   padding: 12px 0;
 }
 
@@ -18,7 +18,7 @@
   flex-direction: row;
   justify-content: space-evenly;
   padding: 0 5px;
-  /* font-size: 0.8rem; */
+  font-size: 0.8rem;
   margin: 9px;
   height: 98px;
 }
@@ -35,7 +35,7 @@
   flex-flow: row wrap;
   justify-content: space-evenly;
   padding: 5px;
-  /* font-size: 0.8rem; */
+  font-size: 0.8rem;
   margin: 9px;
   overflow-wrap: break-word;
 }
@@ -59,7 +59,7 @@
   border: 1px solid darkgray;
   width: 27vw;
   text-align: center;
-  /* font-size: 0.8rem; */
+  font-size: 0.8rem;
   padding: 12px 0;
 }
 
