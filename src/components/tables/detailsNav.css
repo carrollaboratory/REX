@@ -10,10 +10,11 @@
   border: none;
   border-right: 1px solid darkgray;
   padding: 12px 15px;
+  font-size: 16px;
 }
 
 .details-nav-button:hover {
-  background-color: #e7eef0;
+  background-color: #f2f2f2;
 }
 
 .details-nav-button {
@@ -25,6 +26,6 @@
 
 .details_nav_title {
   padding-left: 15px;
-  font-size: 0.9rem;
   font-weight: bold;
+  color: rgb(36, 41, 46);
 }

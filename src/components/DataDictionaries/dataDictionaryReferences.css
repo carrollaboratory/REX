@@ -9,7 +9,7 @@
   margin: 0.5vw 12.5vw 0 0;
   display: flex;
   flex-direction: row;
-  background-color: #4051a3;
+  background-color: #035c94;
   color: white;
   border: none;
   padding: 5px 13px;
@@ -18,7 +18,7 @@
 }
 
 .dd-button:hover {
-  background-color: #7e8dc6;
+  background-color: #7ebac0;
   color: white;
 }
 
@@ -34,7 +34,7 @@
 .table-cell-DDR {
   padding: 15px;
   border: 1px solid lightgray;
-  font-size: 0.8rem;
+  font-size: 14px;
   border-left: transparent 1px solid;
   border-right: transparent 1px solid;
 }
@@ -63,9 +63,9 @@
 }
 
 .table-head-DD {
-  background-color: #e7eef0;
+  background-color: #f2f2f2;
 }
 
 .DDR-colored-row:nth-child(even) {
-  background-color: #e7eef0;
+  background-color: #f2f2f2;
 }

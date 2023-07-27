@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import AnvilLogo from "../../images/anvil-logo.png";
+import AnvilLogo from "../../images/anvil.png";
 import "./navBar.css";
 import { useEffect, useState } from "react";
 

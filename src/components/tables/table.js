@@ -30,15 +30,25 @@ function Table() {
   const tableCustomStyles = {
     headRow: {
       style: {
-        backgroundColor: "#E7EEF0",
+        backgroundColor: "#F2F2F2",
+        fontSize: "14px",
+        // fontFamily:
+        //   "-apple-system, BlinkMacSystemFont,Helvetica, Arial,sans-serif",
       },
     },
     rows: {
       style: {
-        backgroundColor: "#E7EEF0",
+        backgroundColor: "#F2F2F2",
+        fontSize: "14px",
+        fontWeight: "400",
+        lineHeight: "24px",
+        padding: "5px 0px",
+        color: "rgb(36, 41, 46)",
+        // fontFamily:
+        //   "-apple-system, BlinkMacSystemFont,Helvetica, Arial,sans-serif",
       },
       stripedStyle: {
-        color: "#000000",
+        color: "rgb(36, 41, 46)",
         backgroundColor: "#FFFFFF",
       },
     },
@@ -50,12 +60,13 @@ function Table() {
 
   const columns = [
     {
-      name: <b>Title</b>,
+      name: "Title",
       selector: (row) => row?.resource?.title,
       wrap: true,
+      width: "350px",
     },
     {
-      name: <b>Description</b>,
+      name: "Description",
       selector: (row) =>
         row?.resource?.description === "TBD"
           ? ""
@@ -64,7 +75,7 @@ function Table() {
       minWidth: "300px",
     },
     {
-      name: <b>Identifier - Value</b>,
+      name: "Identifier - Value",
       selector: (row) =>
         row?.resource?.identifier[0]?.value
           ? row?.resource?.identifier[0]?.value
@@ -72,7 +83,7 @@ function Table() {
       wrap: true,
     },
     {
-      name: <b>Part Of</b>,
+      name: "Part Of",
       selector: (row) =>
         row?.resource?.partOf
           ? row?.resource?.partOf[0]?.reference.split("/")[1]
@@ -81,7 +92,7 @@ function Table() {
       maxWidth: "fit-content",
     },
     {
-      name: <b>Related Artifact</b>,
+      name: "Related Artifact",
       selector: (row) =>
         row?.resource?.relatedArtifact ? (
           <a href={row?.resource?.relatedArtifact[0].url} target="_blank">
@@ -126,7 +137,7 @@ function Table() {
     <div className="table-wrapper">
       <div className="table">
         <div className="table-title">
-          <h4>AnVIL FHIR Research Study Data</h4>
+          <h2>AnVIL FHIR Research Study Data</h2>
         </div>
         <div className="search-input">
           <input

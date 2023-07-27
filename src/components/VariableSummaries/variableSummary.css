@@ -4,9 +4,9 @@
 }
 
 .variable-summary-head {
-  background-color: #e7eef0;
+  background-color: #f2f2f2;
   border: none;
-  font-size: 0.8rem;
+  /* font-size: 0.8rem; */
 }
 
 .variable-summary-head-cell {

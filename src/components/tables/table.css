@@ -1,19 +1,19 @@
 .table-wrapper {
-    display: flex;
-    justify-content: center;
-    margin: 30px 0 0 0;
-  }
-  
-  .table {
-    width: 75%;
-  }
-  
-  .table-title,
-  .search-input {
-    margin: 0 0 0 15px;
-  }
-  
-  .search-input input {
-    width: 200px;
-    height: 20px;
-  }
+  display: flex;
+  justify-content: center;
+  margin: 30px 0 0 0;
+}
+
+.table {
+  width: 90%;
+}
+
+.table-title,
+.search-input {
+  margin: 0 0 0 15px;
+}
+
+.search-input input {
+  width: 200px;
+  height: 20px;
+}

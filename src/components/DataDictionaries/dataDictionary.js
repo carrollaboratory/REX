@@ -50,7 +50,7 @@ function DataDictionary() {
       <div className="dd-table-wrapper">
         <div className="table">
           <div className="dd-title">
-            <h4
+            <h3
               className="dd-nav-header"
               onClick={() => {
                 setDDView(true);
@@ -58,8 +58,8 @@ function DataDictionary() {
               }}
             >
               Data Dictionaries
-            </h4>
-            <h4
+            </h3>
+            <h3
               className="dd-nav-header"
               onClick={() => {
                 setDDView(false);
@@ -67,7 +67,7 @@ function DataDictionary() {
               }}
             >
               Variables
-            </h4>
+            </h3>
           </div>
           {dDView ? (
             <>
