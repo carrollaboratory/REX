@@ -62,8 +62,7 @@
         .then((data) => postMessage({ type: "graph", data }));
     } else if (type === "detailsDDRequest") {
       propData = args;
-      const valueSplit =
-        propData?.resource.identifier?.[0]?.value.split("_").length;
+      const valueSplit = propData?.resource.identifier?.[0]?.value.split("_");
 
       const secondValue =
         propData?.resource.identifier?.[0]?.value.split("_")[1];
@@ -71,28 +70,30 @@
       const firstValue =
         propData?.resource.identifier?.[0]?.value.split("_")[0];
 
-      (valueSplit > 2
-        ? fetch(
-            urlEndpoint + "/ActivityDefinition?_tag=" + secondValue + "_DD",
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/fhir+json; fhirVersion=4.0",
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }
-          )
-        : fetch(
-            urlEndpoint + "/ActivityDefinition?_tag=" + firstValue + "_DD",
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/fhir+json; fhirVersion=4.0",
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }
-          )
-      )
+      const lowerCasedO =
+        firstValue.slice(0, 4) +
+        firstValue.charAt(4).toLowerCase() +
+        firstValue.slice(5);
+
+      // valueSplit > 2
+      // ? fetch(
+      //     urlEndpoint + "/ActivityDefinition?_tag=" + secondValue + "_DD",
+      //     {
+      //       method: "GET",
+      //       headers: {
+      //         "Content-Type": "application/fhir+json; fhirVersion=4.0",
+      //         Authorization: `Bearer ${accessToken}`,
+      //       },
+      //     }
+      //   )
+      // :
+      fetch(urlEndpoint + "/ActivityDefinition?_tag=" + lowerCasedO + "_DD", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/fhir+json; fhirVersion=4.0",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
         .then((res) => res.json())
         .then((data) => postMessage({ type: "detailsDD", data }));
     } else if (type === "DDTableDetailsRequest") {

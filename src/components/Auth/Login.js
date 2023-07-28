@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 
 export const Login = () => {
-  const { storeAccessToken, handleSignOut } = useContext(authContext);
+  const { storeAccessToken, client, setClient } = useContext(authContext);
 
   const google = window.google;
 
@@ -26,14 +26,20 @@ export const Login = () => {
       }
     }
   };
-
-  const handleSignIn = () => {
-    let client = google?.accounts.oauth2.initTokenClient({
-      client_id: CLIENT_ID,
-      scope:
-        "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
-      callback: callbackResponse,
-    });
+  const handleSignInError = (error) => {
+    console.log("ERROR", error);
+  };
+  const handleSignIn = async () => {
+    console.log("BOOP");
+    setClient(
+      await google?.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope:
+          "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
+        callback: callbackResponse,
+        error_callback: handleSignInError,
+      })
+    );
     client?.requestAccessToken();
   };
 

@@ -41,6 +41,7 @@ export const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [observationData, setObservationData] = useState([]);
   const [activityData, setActivityData] = useState([]);
+  const [client, setClient] = useState();
 
   const [redirect, setRedirect] = useState(false);
 
@@ -52,9 +53,17 @@ export const App = () => {
     userInfo === null && navigate("/login");
   }, [userInfo]);
 
-  // useEffect(() => {
-  //   console.log(process.env.NODE_ENV);
-  // }, []);
+  useEffect(
+    () => () => {
+      // console.log("leaving");
+      handleSignOut();
+    },
+    []
+  );
+
+  useEffect(() => {
+    console.log(client);
+  });
 
   if (worker == null) {
     setWorker(new Worker("./worker.js"));
@@ -81,13 +90,14 @@ export const App = () => {
   //     logout();
   //   },
   //   []
-  // );
+  // );.
 
   const handleSignOut = () => {
     setUserInfo(null);
     setFilterText("");
     worker?.postMessage({ type: "clearToken" });
     navigate("/login");
+    setClient(undefined);
   };
 
   const getTable = () => {
@@ -244,6 +254,8 @@ export const App = () => {
         getVariables,
         observationData,
         activityData,
+        client,
+        setClient,
       }}
     >
       <myContext.Provider
