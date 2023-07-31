@@ -61,10 +61,6 @@ export const App = () => {
     []
   );
 
-  useEffect(() => {
-    console.log(client);
-  });
-
   if (worker == null) {
     setWorker(new Worker("./worker.js"));
   }
@@ -93,11 +89,11 @@ export const App = () => {
   // );.
 
   const handleSignOut = () => {
+    setClient(undefined);
     setUserInfo(null);
     setFilterText("");
     worker?.postMessage({ type: "clearToken" });
     navigate("/login");
-    setClient(undefined);
   };
 
   const getTable = () => {

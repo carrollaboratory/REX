@@ -5,7 +5,6 @@
 
   onmessage = (event) => {
     const { type, args, studyParam, url } = event.data;
-
     if (type === "storeToken") {
       accessToken = args;
       urlEndpoint = url;

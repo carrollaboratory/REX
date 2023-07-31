@@ -1,10 +1,9 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { authContext } from "../../App";
 import AnvilLogo from "../../images/anvil.png";
 import AnvilSmallLogo from "../../images/AnVIL_Little_Logo.png";
 import GoogleLoginButton from "../../images/btn_google_signin_light_focus_web.png";
 import "./login.css";
-import { Link } from "react-router-dom";
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 
@@ -29,18 +28,18 @@ export const Login = () => {
   const handleSignInError = (error) => {
     console.log("ERROR", error);
   };
-  const handleSignIn = async () => {
-    console.log("BOOP");
-    setClient(
-      await google?.accounts.oauth2.initTokenClient({
-        client_id: CLIENT_ID,
-        scope:
-          "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
-        callback: callbackResponse,
-        error_callback: handleSignInError,
-      })
-    );
-    client?.requestAccessToken();
+
+  const handleSignIn = () => {
+    const c = google?.accounts.oauth2.initTokenClient({
+      client_id: CLIENT_ID,
+      scope:
+        "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
+      callback: callbackResponse,
+      error_callback: handleSignInError,
+    });
+    setClient(c);
+
+    c?.requestAccessToken();
   };
 
   return (
