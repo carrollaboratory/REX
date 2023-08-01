@@ -75,19 +75,7 @@ export const GraphSex = ({ focusData }) => {
 
   return (
     <>
-      <div
-        className="graph-sex"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          height: "fit-content",
-          border: "1px solid darkgray",
-          width: "27vw",
-          textAlign: "center",
-          fontSize: ".8rem",
-          padding: "12px 0",
-        }}
-      >
+      <div className="graph-sex">
         {focusData?.entry?.map((c) => {
           if (c?.resource?.valueCodeableConcept?.coding?.[0]?.code === "sex") {
             return (
@@ -98,18 +86,7 @@ export const GraphSex = ({ focusData }) => {
                   </b>
                 </div>
                 <div>Total: {sum}</div>
-                <div
-                  className="container"
-                  style={{
-                    display: "flex",
-                    flexFlow: "row wrap",
-                    justifyContent: "space-evenly",
-                    padding: "5px",
-                    fontSize: ".8rem",
-                    margin: "9px",
-                    overflowWrap: "break-word",
-                  }}
-                >
+                <div className="graph-sex-container">
                   {c?.resource?.component
                     ? c?.resource?.component?.map((c, index) => {
                         if (c.valueInteger !== 0) {
