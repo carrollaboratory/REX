@@ -2,6 +2,7 @@
   let accessToken;
   let urlEndpoint;
   let studyId;
+  let selectedStudy;
 
   onmessage = (event) => {
     const { type, args, studyParam, url } = event.data;
@@ -25,6 +26,7 @@
       accessToken = undefined;
       urlEndpoint = undefined;
       studyId = undefined;
+      selectedStudy = undefined;
     } else if (type === "tableRequest") {
       fetch(urlEndpoint + "/ResearchStudy?_count=500", {
         method: "GET",

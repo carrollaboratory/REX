@@ -51,6 +51,7 @@ export const App = () => {
   useEffect(
     () => () => {
       handleSignOut();
+      setSelectedStudy(undefined);
     },
     []
   );
@@ -89,6 +90,7 @@ export const App = () => {
     setClient(undefined);
     setUserInfo(null);
     setFilterText("");
+    setSelectedStudy(undefined);
     worker?.postMessage({ type: "clearToken" });
     navigate("/login");
   };

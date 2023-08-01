@@ -9,9 +9,10 @@ function Table() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-  const { setSelectedObject, URL } = useContext(myContext);
-  const { filterText, setFilterText, userInfo } = useContext(authContext);
-  const { getTable, tableData } = useContext(authContext);
+  const { setSelectedObject, URL, selectedStudy, setSelectedStudy } =
+    useContext(myContext);
+  const { filterText, setFilterText, userInfo, getTable, tableData } =
+    useContext(authContext);
 
   const getFilteredItems = () =>
     tableData?.filter(
@@ -107,7 +108,11 @@ function Table() {
     {
       name: "",
       selector: (row) => (
-        <Link state={{ propData: row }} to={`/details/${row?.resource?.id}`}>
+        <Link
+          state={{ propData: row }}
+          to={`/details/${row?.resource?.id}`}
+          onClick={setSelectedStudy(row?.resource?.id)}
+        >
           Details
         </Link>
       ),
