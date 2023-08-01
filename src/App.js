@@ -42,27 +42,24 @@ export const App = () => {
   const [observationData, setObservationData] = useState([]);
   const [activityData, setActivityData] = useState([]);
   const [client, setClient] = useState();
+  const [selectedStudy, setSelectedStudy] = useState(undefined);
 
   const [redirect, setRedirect] = useState(false);
 
-  const { studyId } = useParams();
   // userInfo !== null && console.log(userInfo);
   const URL = process.env.REACT_APP_API_ENDPOINT;
-
-  useEffect(() => {
-    userInfo === null && navigate("/login");
-  }, [userInfo]);
-
   useEffect(
     () => () => {
-      // console.log("leaving");
       handleSignOut();
     },
     []
   );
+  useEffect(() => {
+    userInfo === null && navigate("/login");
+  }, [userInfo]);
 
   if (worker == null) {
-    setWorker(new Worker("./worker.js"));
+    setWorker(new Worker("/worker.js"));
   }
 
   const storeAccessToken = (accessToken) => {
@@ -104,12 +101,12 @@ export const App = () => {
     worker?.postMessage({ type: "userRequest" });
   };
 
-  const getDetails = (studyId) => {
-    worker?.postMessage({ type: "detailsRequest", args: studyId });
+  const getDetails = (selectedStudy) => {
+    worker?.postMessage({ type: "detailsRequest", args: selectedStudy });
   };
 
-  const getGraph = (studyId) => {
-    worker?.postMessage({ type: "graphRequest", args: studyId });
+  const getGraph = (selectedStudy) => {
+    worker?.postMessage({ type: "graphRequest", args: selectedStudy });
   };
 
   const clearGraph = () => {
@@ -123,7 +120,7 @@ export const App = () => {
   const getDDTableDetails = (refArray, studyParam) => {
     worker?.postMessage({
       type: "DDTableDetailsRequest",
-      args: { refArray, studyId },
+      args: { refArray, selectedStudy },
     });
   };
 
@@ -167,9 +164,9 @@ export const App = () => {
       const { type, data } = message?.data ? message.data : {};
       if (type === "loggedIn") {
         getUserInfo();
-        navigate("/");
       } else if (type === "user") {
         setUserInfo(data);
+        selectedStudy ? navigate(`/details/${selectedStudy}`) : navigate("/");
       } else if (type === "table") {
         setTableData(data.entry);
       } else if (type === "details") {
@@ -180,12 +177,6 @@ export const App = () => {
       } else if (type === "detailsDD") {
         setDataDictionary(data.entry);
       } else if (type === "DDTableDetails") {
-        // console.log("data.data", data?.data?.[0]?.code?.coding?.[0]?.code);
-        // console.log(
-        //   "varSums",
-        //   data?.varSums?.entry?.[0]?.resource.valueCodeableConcept.coding?.[0]
-        //     ?.code
-        // );
         let vars = [];
         data?.data?.forEach((v, index) => {
           let matched = false;
@@ -214,7 +205,7 @@ export const App = () => {
         setObservationData(data[0]);
         setActivityData(data[1]);
       } else if (type === "report") {
-        console.log("REPORT!!!!! ", data);
+        console.log("REPORT! ", data);
       }
     });
 
@@ -258,6 +249,8 @@ export const App = () => {
         value={{
           selectedObject,
           setSelectedObject,
+          selectedStudy,
+          setSelectedStudy,
           setFilterText,
           loading,
           setLoading,

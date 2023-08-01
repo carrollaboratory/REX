@@ -1,14 +1,18 @@
 import { useContext, useEffect } from "react";
-import { authContext } from "../../App";
+import { authContext, myContext } from "../../App";
 import AnvilLogo from "../../images/anvil.png";
 import AnvilSmallLogo from "../../images/AnVIL_Little_Logo.png";
 import GoogleLoginButton from "../../images/btn_google_signin_light_focus_web.png";
 import "./login.css";
+import { useNavigate } from "react-router-dom";
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 
 export const Login = () => {
-  const { storeAccessToken, client, setClient } = useContext(authContext);
+  const { storeAccessToken, client, setClient, userInfo } =
+    useContext(authContext);
+  const { selectedStudy } = useContext(myContext);
+  const navigate = useNavigate();
 
   const google = window.google;
 

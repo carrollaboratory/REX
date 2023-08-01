@@ -15,8 +15,17 @@ import { DetailsDataDictionary } from "./detailsDataDictionary";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 
 function DetailsView() {
-  const { setDetails, loading, setLoading, details, URL, clearGraph } =
-    useContext(myContext);
+  const {
+    setDetails,
+    loading,
+    setLoading,
+    details,
+    URL,
+    clearGraph,
+    selectedStudy,
+    setSelectedStudy,
+    userInfo,
+  } = useContext(myContext);
   const { getDetails, propData, setRedirect, redirect, focusData, getGraph } =
     useContext(authContext);
   const location = useLocation();
@@ -24,9 +33,13 @@ function DetailsView() {
   const { studyId } = useParams();
 
   useEffect(() => {
-    setLoading(true);
-    loadCriticalData();
-    setLoading(false);
+    if (studyId && !selectedStudy) {
+      setSelectedStudy(studyId);
+    } else {
+      setLoading(true);
+      loadCriticalData();
+      setLoading(false);
+    }
   }, []);
 
   useEffect(
@@ -54,7 +67,6 @@ function DetailsView() {
   return (
     <>
       <DetailsNav />
-
       {details ? (
         loading ? (
           <LoadingSpinner />
