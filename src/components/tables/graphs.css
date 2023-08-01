@@ -20,7 +20,7 @@
   padding: 0 5px;
   font-size: 0.8rem;
   margin: 9px;
-  height: 98px;
+  height: fit-content;
 }
 
 .distribution-ancestry {
@@ -52,6 +52,16 @@
   border: 1px solid darkgray;
 }
 
+.graph-sex-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  padding: 5px;
+  font-size: 0.8rem;
+  margin: 9px;
+  overflow-wrap: break-word;
+}
+
 .graph-sex {
   display: flex;
   flex-direction: column;
@@ -61,6 +71,12 @@
   text-align: center;
   font-size: 0.8rem;
   padding: 12px 0;
+}
+
+.graph-display {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .display-sex-wrapper {

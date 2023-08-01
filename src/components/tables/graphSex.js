@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import { myContext } from "../../App";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
+import "./graphs.css";
 
 export const GraphSex = ({ focusData }) => {
   const { loading } = useContext(myContext);
@@ -47,13 +48,7 @@ export const GraphSex = ({ focusData }) => {
 
   const renderPie = () => {
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-        }}
-      >
+      <div className="graph-display">
         <Chart
           chartType="PieChart"
           data={data}
@@ -74,19 +69,7 @@ export const GraphSex = ({ focusData }) => {
 
   return (
     <>
-      <div
-        className="graph-sex"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          height: "fit-content",
-          border: "1px solid darkgray",
-          width: "27vw",
-          textAlign: "center",
-          fontSize: ".8rem",
-          padding: "12px 0",
-        }}
-      >
+      <div className="graph-sex">
         {focusData?.entry?.map((c, index) => {
           if (c?.resource?.valueCodeableConcept?.coding?.[0]?.code === "sex") {
             return (
@@ -97,30 +80,13 @@ export const GraphSex = ({ focusData }) => {
                   </b>
                 </div>
                 <div>Total: {sum}</div>
-                <div
-                  className="container"
-                  style={{
-                    display: "flex",
-                    flexFlow: "row wrap",
-                    justifyContent: "space-evenly",
-                    padding: "5px",
-                    fontSize: ".8rem",
-                    margin: "9px",
-                    overflowWrap: "break-word",
-                  }}
-                >
+                <div className="graph-sex-container">
                   {c?.resource?.component
                     ? c?.resource?.component?.map((c, index) => {
                         if (c.valueInteger !== 0) {
                           return (
                             <>
-                              <div
-                                key={index}
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                }}
-                              >
+                              <div key={index}>
                                 <div>{}</div>
                                 <div className="display">
                                   {c.code?.coding[0]?.display}
