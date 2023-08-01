@@ -3,6 +3,7 @@ import { Chart } from "react-google-charts";
 import { myContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
+import "./graphs.css";
 
 export const GraphAncestry = ({ focusData }) => {
   const { loading } = useContext(myContext);
@@ -83,17 +84,7 @@ export const GraphAncestry = ({ focusData }) => {
   return (
     <>
       <div>
-        <div
-          className="graph-ancestry"
-          style={{
-            height: "fit-content",
-            width: "42vw",
-            border: "1px solid darkgray",
-            textAlign: "center",
-            fontSize: ".8rem",
-            padding: "12px 0",
-          }}
-        >
+        <div className="graph-ancestry">
           {focusData?.entry?.map((c) => {
             if (
               c?.resource?.valueCodeableConcept?.coding?.[0]?.code ===
@@ -108,17 +99,7 @@ export const GraphAncestry = ({ focusData }) => {
                   </div>
                   <div>Total: {sum}</div>
 
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "space-evenly",
-                      padding: "0 5px",
-                      fontSize: ".8rem",
-                      margin: "9px",
-                      height: "98px",
-                    }}
-                  >
+                  <div className="distribution-ancestry-wrapper">
                     {c?.resource?.component
                       ? c?.resource?.component?.map((c, index) => {
                           if (c.valueInteger !== 0) {
@@ -126,12 +107,7 @@ export const GraphAncestry = ({ focusData }) => {
                               <>
                                 <div
                                   key={index}
-                                  style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: "center",
-                                    justifyContent: "space-between",
-                                  }}
+                                  className="distribution-ancestry"
                                 >
                                   <div className="display-wrapper">
                                     <div
@@ -152,9 +128,6 @@ export const GraphAncestry = ({ focusData }) => {
                                   <div
                                     className="legend"
                                     style={{
-                                      width: "12px",
-                                      height: "12px",
-                                      border: "1px solid darkgray",
                                       background: colors[index % colors.length],
                                     }}
                                   ></div>
@@ -176,7 +149,7 @@ export const GraphAncestry = ({ focusData }) => {
             renderBar()
           ) : (
             <>
-              <div style={{ marginTop: "28px" }}>No available data</div>
+              <div>No available data</div>
             </>
           )}
         </div>

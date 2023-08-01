@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import { myContext } from "../../App";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
+import "./graphs.css";
 
 export const GraphSex = ({ focusData }) => {
   const { loading } = useContext(myContext);
