@@ -55,13 +55,7 @@ export const GraphAncestry = ({ focusData }) => {
 
   const renderBar = () => {
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-        }}
-      >
+      <div className="graph-display">
         <Chart
           chartType="ColumnChart"
           data={data}
@@ -110,14 +104,7 @@ export const GraphAncestry = ({ focusData }) => {
                                   className="distribution-ancestry"
                                 >
                                   <div className="display-wrapper">
-                                    <div
-                                      className="display"
-                                      style={{
-                                        display: "flex",
-                                        flexFlow: "column wrap",
-                                        width: "60px",
-                                      }}
-                                    >
+                                    <div className="display">
                                       {c?.code?.coding[0]?.display}
                                     </div>
                                     <div className="value-integer">

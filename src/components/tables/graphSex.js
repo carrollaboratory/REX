@@ -48,13 +48,7 @@ export const GraphSex = ({ focusData }) => {
 
   const renderPie = () => {
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-        }}
-      >
+      <div className="graph-display">
         <Chart
           chartType="PieChart"
           data={data}
@@ -92,13 +86,7 @@ export const GraphSex = ({ focusData }) => {
                         if (c.valueInteger !== 0) {
                           return (
                             <>
-                              <div
-                                key={index}
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                }}
-                              >
+                              <div key={index}>
                                 <div>{}</div>
                                 <div className="display">
                                   {c.code?.coding[0]?.display}
