@@ -77,7 +77,6 @@ function DetailsView() {
   return (
     <>
       <DetailsNav propData={propData} />
-
       {details ? (
         loading ? (
           <LoadingSpinner />
