@@ -10,9 +10,11 @@
       accessToken = args;
       urlEndpoint = url;
       postMessage({ type: "loggedIn", data: accessToken });
-    } else if (type === "report") {
-      postMessage({ type: "report", data: accessToken });
-    } else if (type === "userRequest") {
+    }
+    // else if (type === "report") {
+    //   postMessage({ type: "report", data: accessToken });
+    // }
+    else if (type === "userRequest") {
       fetch("https://www.googleapis.com/oauth2/v1/userinfo?alt=json", {
         method: "GET",
         headers: {

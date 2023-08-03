@@ -41,7 +41,6 @@ export const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [observationData, setObservationData] = useState([]);
   const [activityData, setActivityData] = useState([]);
-  const [client, setClient] = useState();
   const [selectedStudy, setSelectedStudy] = useState(undefined);
 
   const [redirect, setRedirect] = useState(false);
@@ -87,7 +86,6 @@ export const App = () => {
   // );.
 
   const handleSignOut = () => {
-    setClient(undefined);
     setUserInfo(null);
     setFilterText("");
     setSelectedStudy(undefined);
@@ -206,9 +204,10 @@ export const App = () => {
       } else if (type === "variables") {
         setObservationData(data[0]);
         setActivityData(data[1]);
-      } else if (type === "report") {
-        console.log("REPORT! ", data);
       }
+      // else if (type === "report") {
+      //   console.log("REPORT! ", data);
+      // }
     });
 
   return (
@@ -243,8 +242,6 @@ export const App = () => {
         getVariables,
         observationData,
         activityData,
-        client,
-        setClient,
       }}
     >
       <myContext.Provider

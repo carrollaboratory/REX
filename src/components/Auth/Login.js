@@ -5,6 +5,7 @@ import AnvilSmallLogo from "../../images/AnVIL_Little_Logo.png";
 import GoogleLoginButton from "../../images/btn_google_signin_light_focus_web.png";
 import "./login.css";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 
@@ -15,6 +16,9 @@ export const Login = () => {
   const navigate = useNavigate();
 
   const google = window.google;
+  if (google === undefined) {
+    window.location.reload();
+  }
 
   const callbackResponse = (tokenResponse) => {
     if (tokenResponse && tokenResponse.access_token) {
@@ -32,18 +36,17 @@ export const Login = () => {
   const handleSignInError = (error) => {
     console.log("ERROR", error);
   };
-
   const handleSignIn = () => {
-    const c = google?.accounts.oauth2.initTokenClient({
+    let c = google?.accounts.oauth2.initTokenClient({
       client_id: CLIENT_ID,
       scope:
         "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
       callback: callbackResponse,
       error_callback: handleSignInError,
     });
-    setClient(c);
-
-    c?.requestAccessToken();
+    !!c
+      ? c?.requestAccessToken()
+      : alert("Something went wrong. Please try again.");
   };
 
   return (
@@ -58,7 +61,7 @@ export const Login = () => {
           <div>
             <img
               className="login-button"
-              alt="Google loggin button"
+              alt="Google login button"
               onClick={handleSignIn}
               src={GoogleLoginButton}
             />
