@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { authContext, myContext } from "../../App";
 import AnvilLogo from "../../images/anvil.png";
 import AnvilSmallLogo from "../../images/AnVIL_Little_Logo.png";
@@ -6,48 +6,17 @@ import GoogleLoginButton from "../../images/btn_google_signin_light_focus_web.pn
 import "./login.css";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
+import { useGoogleLogin, GoogleLogin } from "@react-oauth/google";
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 
 export const Login = () => {
   const { storeAccessToken, client, setClient, userInfo } =
     useContext(authContext);
-  const { selectedStudy } = useContext(myContext);
-  const navigate = useNavigate();
 
-  const google = window.google;
-  if (google === undefined) {
-    window.location.reload();
-  }
-
-  const callbackResponse = (tokenResponse) => {
-    if (tokenResponse && tokenResponse.access_token) {
-      if (
-        google.accounts.oauth2.hasGrantedAnyScope(
-          tokenResponse,
-          "https://www.googleapis.com/auth/cloud-platform",
-          "https://www.googleapis.com/auth/userinfo.email"
-        )
-      ) {
-        storeAccessToken(tokenResponse.access_token);
-      }
-    }
-  };
-  const handleSignInError = (error) => {
-    console.log("ERROR", error);
-  };
-  const handleSignIn = () => {
-    let c = google?.accounts.oauth2.initTokenClient({
-      client_id: CLIENT_ID,
-      scope:
-        "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
-      callback: callbackResponse,
-      error_callback: handleSignInError,
-    });
-    !!c
-      ? c?.requestAccessToken()
-      : alert("Something went wrong. Please try again.");
-  };
+  const login = useGoogleLogin({
+    onSuccess: (codeResponse) => storeAccessToken(codeResponse.access_token),
+  });
 
   return (
     <>
@@ -59,14 +28,23 @@ export const Login = () => {
           <div className="login-gregor">AnVIL Data Resource Portal:</div>
           <div className="login-gregor">GREGoR Consortium Workspace</div>
           <div>
+            {/* <GoogleLogin
+              className="login-button"
+              onSuccess={(credentialResponse) => {
+                console.log(credentialResponse);
+                storeAccessToken(credentialResponse.credential);
+              }}
+              onError={() => {
+                console.log("Login Failed");
+              }}
+            /> */}
             <img
               className="login-button"
               alt="Google login button"
-              onClick={handleSignIn}
+              onClick={login}
               src={GoogleLoginButton}
             />
           </div>
-          {/* <div className="login-trouble-div"> */}
           <div className="login-trouble">
             <p className="login-trouble-question">Having trouble logging in?</p>
             Contact your access manager,<br></br>

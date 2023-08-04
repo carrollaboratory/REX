@@ -49,15 +49,15 @@ function DetailsView() {
     []
   );
 
-  useEffect(() => {
-    if (redirect) {
-      setRedirect(false);
-      navigate(null, {
-        state: { propData: { ...propData } },
-        replace: true,
-      });
-    }
-  });
+  // useEffect(() => {
+  //   if (redirect) {
+  //     setRedirect(false);
+  //     navigate(null, {
+  //       state: { propData: { ...propData } },
+  //       replace: true,
+  //     });
+  //   }
+  // });
 
   const loadCriticalData = async () => {
     getDetails(studyId);
