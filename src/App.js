@@ -24,7 +24,6 @@ const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 export const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 
   const [selectedObject, setSelectedObject] = useState(null);
   const [filterText, setFilterText] = useState("");
@@ -44,19 +43,21 @@ export const App = () => {
   const [observationData, setObservationData] = useState([]);
   const [activityData, setActivityData] = useState([]);
   const [selectedStudy, setSelectedStudy] = useState(undefined);
+  const [selectedReference, setSelectedReference] = useState(undefined);
 
   const setRedirect = (url) => {
-    console.log("setting redirect to ", url);
+    // console.log("setting redirect to ", url);
     localStorage.setItem("redirect", url === "/login" ? "/" : url);
-    console.log(getRedirect());
+    // console.log(getRedirect());
   };
   const getRedirect = () => {
     return localStorage.getItem("redirect");
   };
   const path = useLocation().pathname;
   // console.log("APP PATH", path);
+
   useEffect(() => {
-    if (!!!getRedirect()) {
+    if (!!getRedirect()) {
       setRedirect(path);
     }
   }, []);
@@ -67,9 +68,12 @@ export const App = () => {
     () => () => {
       handleSignOut();
       setSelectedStudy(undefined);
+      setSelectedReference(undefined);
+      localStorage.clear();
     },
     []
   );
+
   useEffect(() => {
     userInfo === null && navigate("/login");
   }, [userInfo]);
@@ -88,18 +92,6 @@ export const App = () => {
   };
   // console.log("REPORT");
   // worker?.postMessage({ type: "report" });
-
-  // const logout = function () {
-  //   document.location.href =
-  //     "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost:3000/login";
-  // };
-
-  // useEffect(
-  //   () => () => {
-  //     logout();
-  //   },
-  //   []
-  // );.
 
   const handleSignOut = () => {
     setUserInfo(null);
@@ -155,10 +147,10 @@ export const App = () => {
     });
   };
 
-  const getDataDictionaryReferences = (selectedDictionaryReferences) => {
+  const getDataDictionaryReferences = () => {
     worker?.postMessage({
       type: "DDReferencesRequest",
-      args: selectedDictionaryReferences,
+      args: selectedReference,
     });
   };
 
@@ -248,6 +240,7 @@ export const App = () => {
           dataDictionary,
           getDDTableDetails,
           reference,
+          setReference,
           getCodeableConcept,
           modalData,
           getDataDictionary,
@@ -268,6 +261,8 @@ export const App = () => {
             setSelectedObject,
             selectedStudy,
             setSelectedStudy,
+            selectedReference,
+            setSelectedReference,
             setFilterText,
             loading,
             setLoading,

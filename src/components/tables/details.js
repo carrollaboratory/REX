@@ -1,11 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { authContext, myContext } from "../../App";
-import {
-  useNavigate,
-  useParams,
-  useLocation,
-  Navigate,
-} from "react-router-dom";
+import { useNavigate, useParams, Navigate } from "react-router-dom";
 import "./details.css";
 import HtmlReactParser from "html-react-parser";
 import { DetailsNav } from "./detailsNav";
@@ -28,18 +23,14 @@ function DetailsView() {
   } = useContext(myContext);
   const { getDetails, propData, setRedirect, redirect, focusData, getGraph } =
     useContext(authContext);
-  const location = useLocation();
   const navigate = useNavigate();
   const { studyId } = useParams();
+  setSelectedStudy(studyId);
 
   useEffect(() => {
-    if (studyId && !selectedStudy) {
-      setSelectedStudy(studyId);
-    } else {
-      setLoading(true);
-      loadCriticalData();
-      setLoading(false);
-    }
+    setLoading(true);
+    loadCriticalData();
+    setLoading(false);
   }, []);
 
   useEffect(

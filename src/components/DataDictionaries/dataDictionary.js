@@ -10,7 +10,8 @@ function DataDictionary() {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const { dDView, setDDView, URL } = useContext(myContext);
+  const { dDView, setDDView, URL, setSelectedReference } =
+    useContext(myContext);
   const {
     filterText,
     setFilterText,
@@ -54,9 +55,7 @@ function DataDictionary() {
                           </td>
                           <td className="dd-variable-name table-cell-DD">
                             <Link
-                              state={{
-                                selectedDictionaryReferences: r?.resource,
-                              }}
+                              onClick={() => setSelectedReference(r?.resource)}
                               to={`/dataDictionary/${r?.resource?.id}`}
                             >
                               Inspect

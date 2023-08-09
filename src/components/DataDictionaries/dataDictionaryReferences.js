@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./dataDictionaryReferences.css";
 import { CodeableConcept } from "../tables/codeableConcept";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
@@ -8,12 +8,20 @@ import { authContext, myContext } from "../../App";
 function DataDictionaryReferences() {
   // const [reference, setReference] = useState({});
   const location = useLocation();
-  const { selectedDictionaryReferences } = location.state;
+  // const { selectedDictionaryReferences } = location.state;
   const [codeableConceptReference, setCodeableConceptReference] = useState({});
   const [codeableConcept, setCodeableconcept] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const { loading, setLoading, URL } = useContext(myContext);
-  const { getDataDictionaryReferences, reference } = useContext(authContext);
+  const { loading, setLoading, URL, selectedReference, setSelectedReference } =
+    useContext(myContext);
+  const {
+    setReference,
+    getDataDictionaryReferences,
+    reference,
+    activityData,
+    getVariables,
+  } = useContext(authContext);
+  const { DDReference } = useParams();
 
   const handleCodeableConceptClick = (item) => {
     setCodeableConceptReference(item);
@@ -26,10 +34,35 @@ function DataDictionaryReferences() {
 
   const navigate = useNavigate();
 
+  useEffect(
+    () => () => {
+      setSelectedReference(undefined);
+      setReference(undefined);
+    },
+    []
+  );
+
   useEffect(() => {
-    // setLoading(true);
-    getDataDictionaryReferences(selectedDictionaryReferences);
-  }, [selectedDictionaryReferences]);
+    if (DDReference && !selectedReference) {
+      // console.log("DDReference 1: ", DDReference);
+      getVariables();
+    } else {
+      // console.log("DDReference 2: ", DDReference);
+      getDataDictionaryReferences();
+    }
+  }, [selectedReference]);
+
+  useEffect(() => {
+    if (selectedReference === undefined && activityData) {
+      // console.log("ACTIVITY!! ", activityData);
+      // console.log("DDREFERENCE: ", DDReference);
+      activityData?.forEach((v) => {
+        if (v?.resource?.id == DDReference) {
+          setSelectedReference(v.resource);
+        }
+      });
+    }
+  }, [activityData]);
 
   useEffect(() => {
     const setFromEvent = (e) => setPosition({ x: e.clientX, y: e.clientY });
@@ -64,14 +97,10 @@ function DataDictionaryReferences() {
                 <thead className="table-head-DD">
                   <tr>
                     <th className="dd-header-title" colSpan="3">
-                      {
-                        selectedDictionaryReferences?.title
-                          .split(" ")[3]
-                          .split("_")[0]
-                      }
+                      {selectedReference?.title.split(" ")[3].split("_")[0]}
                       &nbsp;
                       {capitalizeWord(
-                        selectedDictionaryReferences?.title.split(".").pop()
+                        selectedReference?.title.split(".").pop()
                       )}
                     </th>
                   </tr>
@@ -145,10 +174,10 @@ function DataDictionaryReferences() {
                 </tbody>
               </table>
               {/* <tr id="no-border" colSpan="3"> */}
-
+              {/* 
               <button className="dd-button" onClick={() => navigate(-1)}>
                 Back to Search
-              </button>
+              </button> */}
 
               {/* </tr> */}
             </div>

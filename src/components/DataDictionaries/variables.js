@@ -8,7 +8,8 @@ import { SearchBar } from "./searchBar";
 import { capitalizeWord } from "./utilities";
 
 export const Variables = () => {
-  const { loading, setLoading, URL } = useContext(myContext);
+  const { loading, setLoading, URL, setSelectedReference } =
+    useContext(myContext);
   const { observationData, activityData, getVariables } =
     useContext(authContext);
   const [codeableConceptReference, setCodeableConceptReference] =
@@ -49,6 +50,7 @@ export const Variables = () => {
                 state={{
                   selectedDictionaryReferences: activity?.resource,
                 }}
+                onClick={setSelectedReference(activity?.resource)}
                 to={`/dataDictionary/${activity?.resource?.id}`}
               >
                 {activity?.resource?.title.split(" ")[3].split("_")[0]} &nbsp;

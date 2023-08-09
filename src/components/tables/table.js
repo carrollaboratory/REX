@@ -108,11 +108,7 @@ function Table() {
     {
       name: "",
       selector: (row) => (
-        <Link
-          state={{ propData: row }}
-          to={`/details/${row?.resource?.id}`}
-          onClick={setSelectedStudy(row?.resource?.id)}
-        >
+        <Link state={{ propData: row }} to={`/details/${row?.resource?.id}`}>
           Details
         </Link>
       ),
