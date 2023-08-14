@@ -44,18 +44,14 @@ function DataDictionaryReferences() {
 
   useEffect(() => {
     if (DDReference && !selectedReference) {
-      // console.log("DDReference 1: ", DDReference);
       getVariables();
     } else {
-      // console.log("DDReference 2: ", DDReference);
       getDataDictionaryReferences();
     }
   }, [selectedReference]);
 
   useEffect(() => {
     if (selectedReference === undefined && activityData) {
-      // console.log("ACTIVITY!! ", activityData);
-      // console.log("DDREFERENCE: ", DDReference);
       activityData?.forEach((v) => {
         if (v?.resource?.id == DDReference) {
           setSelectedReference(v.resource);

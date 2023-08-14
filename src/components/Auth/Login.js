@@ -4,18 +4,18 @@ import AnvilLogo from "../../images/anvil.png";
 import AnvilSmallLogo from "../../images/AnVIL_Little_Logo.png";
 import GoogleLoginButton from "../../images/btn_google_signin_light_focus_web.png";
 import "./login.css";
-import { useNavigate } from "react-router-dom";
-import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 import { useGoogleLogin, GoogleLogin } from "@react-oauth/google";
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 
 export const Login = () => {
-  const { storeAccessToken, client, setClient, userInfo } =
+  const { storeAccessToken, client, setClient, userInfo, getTokenExpiration } =
     useContext(authContext);
 
   const login = useGoogleLogin({
-    onSuccess: (codeResponse) => storeAccessToken(codeResponse.access_token),
+    onSuccess: (codeResponse) => {
+      storeAccessToken(codeResponse);
+    },
   });
 
   return (
@@ -28,16 +28,6 @@ export const Login = () => {
           <div className="login-gregor">AnVIL Data Resource Portal:</div>
           <div className="login-gregor">GREGoR Consortium Workspace</div>
           <div>
-            {/* <GoogleLogin
-              className="login-button"
-              onSuccess={(credentialResponse) => {
-                console.log(credentialResponse);
-                storeAccessToken(credentialResponse.credential);
-              }}
-              onError={() => {
-                console.log("Login Failed");
-              }}
-            /> */}
             <img
               className="login-button"
               alt="Google login button"

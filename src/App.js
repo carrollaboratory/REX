@@ -54,7 +54,6 @@ export const App = () => {
     return localStorage.getItem("redirect");
   };
   const path = useLocation().pathname;
-  // console.log("APP PATH", path);
 
   useEffect(() => {
     if (!!getRedirect()) {
@@ -82,16 +81,19 @@ export const App = () => {
     setWorker(new Worker("/worker.js"));
   }
 
-  const storeAccessToken = (accessToken) => {
+  const storeAccessToken = (codeResponse) => {
+    const expiry = codeResponse.expires_in * 1000;
+    setTimeout(
+      () => alert("Your session will expire in one minute."),
+      expiry - 60000
+    );
+    setTimeout(handleSignOut, expiry);
     worker?.postMessage({
       type: "storeToken",
-      args: accessToken,
+      args: codeResponse.access_token,
       url: URL,
     });
-    // worker?.postMessage({ type: "report" });
   };
-  // console.log("REPORT");
-  // worker?.postMessage({ type: "report" });
 
   const handleSignOut = () => {
     setUserInfo(null);
@@ -168,7 +170,6 @@ export const App = () => {
       });
     }
   };
-  // console.log("Redirect", getRedirect());
 
   worker !== null &&
     (worker.onmessage = (message) => {
