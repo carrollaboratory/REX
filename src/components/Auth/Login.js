@@ -9,8 +9,7 @@ import { useGoogleLogin, GoogleLogin } from "@react-oauth/google";
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 
 export const Login = () => {
-  const { storeAccessToken, client, setClient, userInfo, getTokenExpiration } =
-    useContext(authContext);
+  const { storeAccessToken } = useContext(authContext);
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => {

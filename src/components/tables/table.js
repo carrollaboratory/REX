@@ -2,17 +2,15 @@ import DataTable from "react-data-table-component";
 import { useState, useEffect, useContext } from "react";
 import "./table.css";
 import HtmlReactParser from "html-react-parser";
-import { authContext, myContext } from "../../App";
+import { myContext } from "../../App";
 import { Link, useParams } from "react-router-dom";
 
 function Table() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-  const { setSelectedObject, URL, selectedStudy, setSelectedStudy } =
+  const { filterText, setFilterText, getTable, tableData } =
     useContext(myContext);
-  const { filterText, setFilterText, userInfo, getTable, tableData } =
-    useContext(authContext);
 
   const getFilteredItems = () =>
     tableData?.filter(

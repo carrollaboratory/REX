@@ -4,7 +4,7 @@ import "./variableSummary.css";
 import { VariableSummaryString } from "./variableSummaryString";
 import { VariableSummaryQuantity } from "./variableSummaryQuantity";
 import { VariableSummaryCodeableConcept } from "./variableSummaryCodeableConcept";
-import { authContext, myContext } from "../../App";
+import { myContext } from "../../App";
 import StopSign from "../../images/stop-sign.png";
 
 export const VariableSummary = ({ obsDefinition, height }) => {

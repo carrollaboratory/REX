@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { authContext } from "../../App";
+import { myContext } from "../../App";
 
 export const SearchBar = ({ children }) => {
-  const { searchTerm, setSearchTerm, getVariables } = useContext(authContext);
+  const { searchTerm, setSearchTerm, getVariables } = useContext(myContext);
   const navigate = useNavigate();
   useEffect(() => {
     getVariables("");

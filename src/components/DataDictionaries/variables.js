@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { authContext, myContext } from "../../App";
+import { myContext } from "../../App";
 import { CodeableConcept } from "../tables/codeableConcept";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 import { Link } from "react-router-dom";
@@ -8,10 +8,8 @@ import { SearchBar } from "./searchBar";
 import { capitalizeWord } from "./utilities";
 
 export const Variables = () => {
-  const { loading, setLoading, URL, setSelectedReference } =
+  const { setSelectedReference, observationData, activityData, getVariables } =
     useContext(myContext);
-  const { observationData, activityData, getVariables } =
-    useContext(authContext);
   const [codeableConceptReference, setCodeableConceptReference] =
     useState(null);
   const [codeableConcept, setCodeableconcept] = useState(false);

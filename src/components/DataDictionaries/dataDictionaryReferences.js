@@ -12,15 +12,16 @@ function DataDictionaryReferences() {
   const [codeableConceptReference, setCodeableConceptReference] = useState({});
   const [codeableConcept, setCodeableconcept] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const { loading, setLoading, URL, selectedReference, setSelectedReference } =
-    useContext(myContext);
   const {
+    selectedReference,
+    setSelectedReference,
     setReference,
     getDataDictionaryReferences,
     reference,
     activityData,
     getVariables,
-  } = useContext(authContext);
+  } = useContext(myContext);
+
   const { DDReference } = useParams();
 
   const handleCodeableConceptClick = (item) => {

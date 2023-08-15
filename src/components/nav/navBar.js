@@ -1,18 +1,12 @@
 import { Link } from "react-router-dom";
 import AnvilLogo from "../../images/anvil.png";
 import "./navBar.css";
-import { useEffect, useState, useContext } from "react";
+import { useContext } from "react";
 import { authContext } from "../../App";
 
 export const NavBar = () => {
-  const { getUserInfo, userInfo } = useContext(authContext);
-  const { handleSignOut } = useContext(authContext);
+  const { userInfo, handleSignOut } = useContext(authContext);
 
-  // useEffect(() => {
-  //   getUserInfo();
-  // }, []);
-
-  const [active, setActive] = useState(-1);
   return (
     <>
       {userInfo ? (
@@ -28,29 +22,11 @@ export const NavBar = () => {
               </Link>
             </li>
             <div className="nav-items-wrapper">
-              <Link
-                to="/"
-                className="nav-link"
-                // onClick={() => {
-                //   setActive(0);
-                // }}
-                // style={{
-                //   backgroundColor: active === 0 ? "#F2F2F2" : "",
-                // }}
-              >
+              <Link to="/" className="nav-link">
                 <li className="nav-items">All Studies</li>
               </Link>
 
-              <Link
-                to="/dataDictionary"
-                className="nav-link"
-                // onClick={() => {
-                //   setActive(1);
-                // }}
-                // style={{
-                //   backgroundColor: active === 1 ? "#F2F2F2" : "",
-                // }}
-              >
+              <Link to="/dataDictionary" className="nav-link">
                 <li className="nav-items">Data Dictionaries</li>
               </Link>
             </div>

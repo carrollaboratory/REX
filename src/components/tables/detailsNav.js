@@ -1,11 +1,10 @@
 import { useContext, useEffect } from "react";
-import { authContext, myContext } from "../../App";
+import { myContext } from "../../App";
 import "./detailsNav.css";
 import { useParams } from "react-router-dom";
 
 export const DetailsNav = () => {
-  const { setDetails, studyId } = useContext(myContext);
-  const { propData } = useContext(authContext);
+  const { setDetails, studyId, propData } = useContext(myContext);
 
   useEffect(() => {
     setDetails(true);

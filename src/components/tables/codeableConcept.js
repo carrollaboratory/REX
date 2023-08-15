@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import "./codeableConcept.css";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
-import { authContext, myContext } from "../../App";
+import { myContext } from "../../App";
 
 export const CodeableConcept = ({
   toggleModal,
@@ -9,10 +9,7 @@ export const CodeableConcept = ({
   isOpen,
   ...props
 }) => {
-  // const [modalData, setModalData] = useState({});
-  const [loading, setLoading] = useState(true);
-  const { URL } = useContext(myContext);
-  const { getCodeableConcept, modalData } = useContext(authContext);
+  const { getCodeableConcept, modalData } = useContext(myContext);
 
   useEffect(() => {
     if (isOpen) {

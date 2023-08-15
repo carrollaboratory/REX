@@ -1,13 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import { authContext, myContext } from "../../App";
+import { myContext } from "../../App";
 import "./detailsDataDictionary.css";
 import { DataDictionaryTableDetails } from "./dataDictionaryTableDetails/dataDictionaryTableDetails";
 import { useNavigate } from "react-router-dom";
 import { capitalizeWord } from "../DataDictionaries/utilities";
 
 export const DetailsDataDictionary = ({ propData }) => {
-  const { loading, setLoading, URL } = useContext(myContext);
-  const { getDetailsDD, dataDictionary } = useContext(authContext);
+  const { getDetailsDD, dataDictionary } = useContext(myContext);
   // const [dataDictionary, setDataDictionary] = useState([]);
   const [selectedDictionaryReferences, setSelectedDictionaryReferences] =
     useState([]);

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { authContext, myContext } from "../../App";
+import { myContext } from "../../App";
 import { useNavigate, useParams, Navigate } from "react-router-dom";
 import "./details.css";
 import HtmlReactParser from "html-react-parser";
@@ -11,18 +11,16 @@ import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 
 function DetailsView() {
   const {
-    setDetails,
     loading,
     setLoading,
     details,
-    URL,
     clearGraph,
-    selectedStudy,
     setSelectedStudy,
-    userInfo,
+    getDetails,
+    propData,
+    focusData,
+    getGraph,
   } = useContext(myContext);
-  const { getDetails, propData, setRedirect, redirect, focusData, getGraph } =
-    useContext(authContext);
   const navigate = useNavigate();
   const { studyId } = useParams();
   setSelectedStudy(studyId);
@@ -39,16 +37,6 @@ function DetailsView() {
     },
     []
   );
-
-  // useEffect(() => {
-  //   if (redirect) {
-  //     setRedirect(false);
-  //     navigate(null, {
-  //       state: { propData: { ...propData } },
-  //       replace: true,
-  //     });
-  //   }
-  // });
 
   const loadCriticalData = async () => {
     getDetails(studyId);

@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import LoadingSpinner from "../../LoadingSpinner/loadingSpinner";
 import "./dataDictionaryTableDetails.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { TableRow } from "./tableRow";
-import { authContext, myContext } from "../../../App";
+import { myContext } from "../../../App";
 import DownArrow from "../../../images/down_arrow.png";
 
 export const DataDictionaryTableDetails = ({
@@ -11,7 +11,6 @@ export const DataDictionaryTableDetails = ({
   active,
 }) => {
   // const [reference, setReference] = useState({});
-  const [loading, setLoading] = useState(true);
   const [codeableConceptReference, setCodeableConceptReference] =
     useState(null);
   const [codeableConcept, setCodeableconcept] = useState(false);
@@ -21,7 +20,7 @@ export const DataDictionaryTableDetails = ({
 
   const { studyId } = useParams();
   const { URL } = useContext(myContext);
-  const { getDDTableDetails, reference } = useContext(authContext);
+  const { getDDTableDetails, reference } = useContext(myContext);
 
   const handleOpen = (open, set) => {
     set(open);

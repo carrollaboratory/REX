@@ -10,15 +10,8 @@ function DataDictionary() {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const { dDView, setDDView, URL, setSelectedReference } =
+  const { setSelectedReference, activityData, getVariables } =
     useContext(myContext);
-  const {
-    filterText,
-    setFilterText,
-    getDataDictionary,
-    activityData,
-    getVariables,
-  } = useContext(authContext);
 
   useEffect(() => {
     getVariables();
