@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
-import { myContext } from "../../App";
+import { myContext } from "../AppFHIR";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 import "./graphs.css";
 

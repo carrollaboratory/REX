@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { myContext } from "../../App";
+import { myContext } from "../AppFHIR";
 import { useNavigate, useParams, Navigate } from "react-router-dom";
 import "./details.css";
 import HtmlReactParser from "html-react-parser";

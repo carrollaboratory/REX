@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import AnvilLogo from "../../images/anvil.png";
 import "./navBar.css";
 import { useContext } from "react";
-import { authContext } from "../../App";
+import { authContext } from "../AuthContext/AuthProvider";
 
 export const NavBar = () => {
   const { userInfo, handleSignOut } = useContext(authContext);

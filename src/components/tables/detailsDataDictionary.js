@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { myContext } from "../../App";
+import { myContext } from "../AppFHIR";
 import "./detailsDataDictionary.css";
 import { DataDictionaryTableDetails } from "./dataDictionaryTableDetails/dataDictionaryTableDetails";
 import { useNavigate } from "react-router-dom";

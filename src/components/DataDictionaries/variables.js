@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { myContext } from "../../App";
+import { myContext } from "../AppFHIR";
 import { CodeableConcept } from "../tables/codeableConcept";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 import { Link } from "react-router-dom";

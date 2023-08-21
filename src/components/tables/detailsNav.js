@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { myContext } from "../../App";
+import { myContext } from "../AppFHIR";
 import "./detailsNav.css";
 import { useParams } from "react-router-dom";
 

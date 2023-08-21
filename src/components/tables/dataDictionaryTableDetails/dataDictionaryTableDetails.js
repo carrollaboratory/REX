@@ -3,7 +3,7 @@ import LoadingSpinner from "../../LoadingSpinner/loadingSpinner";
 import "./dataDictionaryTableDetails.css";
 import { useParams } from "react-router-dom";
 import { TableRow } from "./tableRow";
-import { myContext } from "../../../App";
+import { myContext } from "../../AppFHIR";
 import DownArrow from "../../../images/down_arrow.png";
 
 export const DataDictionaryTableDetails = ({

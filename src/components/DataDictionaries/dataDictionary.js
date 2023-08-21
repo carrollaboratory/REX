@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import "./dataDictionary.css";
-import { authContext, myContext } from "../../App";
+import { authContext, myContext } from "../AppFHIR";
 import { Link } from "react-router-dom";
 import { Variables } from "./variables";
 import { capitalizeWord } from "./utilities";

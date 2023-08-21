@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import "./codeableConcept.css";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
-import { myContext } from "../../App";
+import { myContext } from "../AppFHIR";
 
 export const CodeableConcept = ({
   toggleModal,

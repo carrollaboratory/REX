@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { myContext } from "../../App";
+import { myContext } from "../AppFHIR";
 
 export const SearchBar = ({ children }) => {
   const { searchTerm, setSearchTerm, getVariables } = useContext(myContext);

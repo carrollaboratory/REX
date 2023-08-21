@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from "react";
-import { authContext, myContext } from "../../App";
+import { useContext } from "react";
 import AnvilLogo from "../../images/anvil.png";
 import AnvilSmallLogo from "../../images/AnVIL_Little_Logo.png";
 import GoogleLoginButton from "../../images/btn_google_signin_light_focus_web.png";
 import "./login.css";
 import { useGoogleLogin, GoogleLogin } from "@react-oauth/google";
+import { authContext } from "../AuthContext/AuthProvider";
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 
@@ -14,6 +14,9 @@ export const Login = () => {
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => {
       storeAccessToken(codeResponse);
+    },
+    onError: (error) => {
+      console.log("ERROR ", error);
     },
   });
 

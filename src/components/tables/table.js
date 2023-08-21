@@ -2,7 +2,7 @@ import DataTable from "react-data-table-component";
 import { useState, useEffect, useContext } from "react";
 import "./table.css";
 import HtmlReactParser from "html-react-parser";
-import { myContext } from "../../App";
+import { myContext } from "../AppFHIR";
 import { Link, useParams } from "react-router-dom";
 
 function Table() {

@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./dataDictionaryReferences.css";
 import { CodeableConcept } from "../tables/codeableConcept";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
-import { authContext, myContext } from "../../App";
+import { authContext, myContext } from "../AppFHIR";
 
 function DataDictionaryReferences() {
   // const [reference, setReference] = useState({});
