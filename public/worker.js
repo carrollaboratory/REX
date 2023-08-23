@@ -5,7 +5,21 @@
   let selectedStudy;
 
   onmessage = (event) => {
-    const { type, args, studyParam, url } = event.data;
+    const { type, args, url, auth } = event.data;
+
+    const authHeaders = {
+      headers: {
+        "Content-Type": "application/fhir+json; fhirVersion=4.0",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+    const checkFetch = (url, obj) => {
+      postMessage({
+        type: "report",
+        data: { url, ...(auth ? { ...obj, ...authHeaders } : obj) },
+      });
+      return fetch(url, auth ? { ...obj, ...authHeaders } : obj);
+    };
     if (type === "storeToken") {
       accessToken = args;
       urlEndpoint = url;
@@ -15,7 +29,7 @@
     //   postMessage({ type: "report", data: accessToken });
     // }
     else if (type === "userRequest") {
-      fetch("https://www.googleapis.com/oauth2/v1/userinfo?alt=json", {
+      checkFetch("https://www.googleapis.com/oauth2/v1/userinfo?alt=json", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -30,37 +44,53 @@
       studyId = undefined;
       selectedStudy = undefined;
     } else if (type === "tableRequest") {
-      fetch(urlEndpoint + "/ResearchStudy?_count=500", {
+      urlEndpoint = url;
+      console.log("URL", urlEndpoint);
+      // console.log("PROCESS.ENV", process.env);
+      // process.env.REACT_APP_USE_AUTH === "true"
+      //   ? checkFetch(urlEndpoint + "/ResearchStudy?_count=500", {
+      //       method: "GET",
+      //       headers: {
+      //         "Content-Type": "application/fhir+json; fhirVersion=4.0",
+      //         Authorization: `Bearer ${accessToken}`,
+      //       },
+      //     })
+      //       .then((res) => res.json())
+      //       .then((data) => postMessage({ type: "table", data }))
+      //   :
+      checkFetch(urlEndpoint + "/ResearchStudy?_count=500", {
         method: "GET",
-        headers: {
-          "Content-Type": "application/fhir+json; fhirVersion=4.0",
-          Authorization: `Bearer ${accessToken}`,
-        },
       })
         .then((res) => res.json())
         .then((data) => postMessage({ type: "table", data }));
     } else if (type === "detailsRequest") {
       studyId = args;
-      fetch(urlEndpoint + "/ResearchStudy?_id=" + studyId, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/fhir+json; fhirVersion=4.0",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
+      checkFetch(
+        urlEndpoint + "/ResearchStudy?_id=" + studyId
+        // , {
+        //   method: "GET",
+        //   headers: {
+        //     "Content-Type": "application/fhir+json; fhirVersion=4.0",
+        //     // Authorization: `Bearer ${accessToken}`,
+        //   },
+        // }
+      )
         .then((res) => res.json())
         .then((data) => postMessage({ type: "details", data }));
     } else if (type === "graphRequest") {
       if (!studyId) {
         studyId = args;
       }
-      fetch(urlEndpoint + "/Observation?focus=ResearchStudy/" + studyId, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/fhir+json; fhirVersion=4.0",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
+      checkFetch(
+        urlEndpoint + "/Observation?focus=ResearchStudy/" + studyId
+        // , {
+        //   method: "GET",
+        //   headers: {
+        //     "Content-Type": "application/fhir+json; fhirVersion=4.0",
+        //     // Authorization: `Bearer ${accessToken}`,
+        //   },
+        // }
+      )
         .then((res) => res.json())
         .then((data) => postMessage({ type: "graph", data }));
     } else if (type === "detailsDDRequest") {
@@ -79,7 +109,7 @@
         firstValue.slice(5);
 
       // valueSplit > 2
-      // ? fetch(
+      // ? checkFetch(
       //     urlEndpoint + "/ActivityDefinition?_tag=" + secondValue + "_DD",
       //     {
       //       method: "GET",
@@ -90,13 +120,16 @@
       //     }
       //   )
       // :
-      fetch(urlEndpoint + "/ActivityDefinition?_tag=" + lowerCasedO + "_DD", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/fhir+json; fhirVersion=4.0",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
+      checkFetch(
+        urlEndpoint + "/ActivityDefinition?_tag=" + lowerCasedO + "_DD",
+        {
+          method: "GET",
+          // headers: {
+          //   "Content-Type": "application/fhir+json; fhirVersion=4.0",
+          //   // Authorization: `Bearer ${accessToken}`,
+          // },
+        }
+      )
         .then((res) => res.json())
         .then((data) => postMessage({ type: "detailsDD", data }));
     } else if (type === "DDTableDetailsRequest") {
@@ -109,12 +142,12 @@
       let d;
       Promise.all(
         refArray?.map((c) =>
-          fetch(urlEndpoint + "/" + c.reference, {
+          checkFetch(urlEndpoint + "/" + c.reference, {
             method: "GET",
-            headers: {
-              "Content-Type": "application/fhir+json; fhirVersion=4.0",
-              Authorization: `Bearer ${accessToken}`,
-            },
+            // headers: {
+            //   "Content-Type": "application/fhir+json; fhirVersion=4.0",
+            //   // Authorization: `Bearer ${accessToken}`,
+            // },
           })
         )
       )
@@ -123,7 +156,7 @@
         )
         .then((data) => {
           d = data;
-          fetch(
+          checkFetch(
             urlEndpoint +
               "/Observation?value-concept=" +
               data?.[0]?.code?.coding?.[0]?.system +
@@ -131,10 +164,10 @@
               studyId,
             {
               method: "GET",
-              headers: {
-                "Content-Type": "application/fhir+json; fhirVersion=4.0",
-                Authorization: `Bearer ${accessToken}`,
-              },
+              // headers: {
+              //   "Content-Type": "application/fhir+json; fhirVersion=4.0",
+              //   // Authorization: `Bearer ${accessToken}`,
+              // },
             }
           )
             .then((res) => res.json())
@@ -152,7 +185,7 @@
         // .then(async (data) => {
         //   await Promise.all(
         //     data.map((d) =>
-        //       fetch(
+        //       checkFetch(
         //         urlEndpoint +
         //           "/Observation?value-concept=" +
         //           d?.code?.coding?.[0]?.system +
@@ -176,22 +209,22 @@
         // })
         .then((data) => postMessage({ type: "DDTableDetails", data: arr }));
     } else if (type === "codeableConceptRequest") {
-      fetch(urlEndpoint + "/" + args, {
+      checkFetch(urlEndpoint + "/" + args, {
         method: "GET",
         headers: {
           "Content-Type": "application/fhir+json; fhirVersion=4.0",
-          Authorization: `Bearer ${accessToken}`,
+          // Authorization: `Bearer ${accessToken}`,
         },
       })
         .then((res) => res.json())
         .then((d) =>
-          fetch(
+          checkFetch(
             urlEndpoint + "/CodeSystem?url=" + d?.compose?.include[0]?.system,
             {
               method: "GET",
               headers: {
                 "Content-Type": "application/fhir+json; fhirVersion=4.0",
-                Authorization: `Bearer ${accessToken}`,
+                // Authorization: `Bearer ${accessToken}`,
               },
             }
           )
@@ -200,7 +233,7 @@
         .then((data) => postMessage({ type: "codeableConcept", data }));
     } else if (type === "dataDictionaryRequest") {
       args != ""
-        ? fetch(
+        ? checkFetch(
             urlEndpoint +
               "/ObservationDefinition?code:text=" +
               args +
@@ -209,17 +242,17 @@
               method: "GET",
               headers: {
                 "Content-Type": "application/fhir+json; fhirVersion=4.0",
-                Authorization: `Bearer ${accessToken}`,
+                // Authorization: `Bearer ${accessToken}`,
               },
             }
           )
             .then((res) => res.json())
             .then((data) => postMessage({ type: "dataDictionary", data }))
-        : fetch(urlEndpoint + "/ActivityDefinition", {
+        : checkFetch(urlEndpoint + "/ActivityDefinition", {
             method: "GET",
             headers: {
               "Content-Type": "application/fhir+json; fhirVersion=4.0",
-              Authorization: `Bearer ${accessToken}`,
+              // Authorization: `Bearer ${accessToken}`,
             },
           })
             .then((res) => res.json())
@@ -227,11 +260,11 @@
     } else if (type === "DDReferencesRequest") {
       Promise.all(
         args?.observationResultRequirement?.map((c) =>
-          fetch(urlEndpoint + "/" + c.reference, {
+          checkFetch(urlEndpoint + "/" + c.reference, {
             method: "GET",
             headers: {
               "Content-Type": "application/fhir+json; fhirVersion=4.0",
-              Authorization: `Bearer ${accessToken}`,
+              // Authorization: `Bearer ${accessToken}`,
             },
           })
         )
@@ -244,7 +277,7 @@
       let observationArray = [];
       let activityArray = [];
       args != ""
-        ? fetch(
+        ? checkFetch(
             urlEndpoint +
               "/ObservationDefinition?code:text=" +
               args +
@@ -253,7 +286,7 @@
               method: "GET",
               headers: {
                 "Content-Type": "application/fhir+json; fhirVersion=4.0",
-                Authorization: `Bearer ${accessToken}`,
+                // Authorization: `Bearer ${accessToken}`,
               },
             }
           )
@@ -273,14 +306,14 @@
                 data: [observationArray, activityArray],
               })
             )
-        : fetch(
+        : checkFetch(
             urlEndpoint +
               "/ActivityDefinition?_include=ActivityDefinition:result",
             {
               method: "GET",
               headers: {
                 "Content-Type": "application/fhir+json; fhirVersion=4.0",
-                Authorization: `Bearer ${accessToken}`,
+                // Authorization: `Bearer ${accessToken}`,
               },
             }
           )

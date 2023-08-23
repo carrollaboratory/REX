@@ -19,6 +19,8 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { WorkerProvider, workerContext } from "./WorkerContext/WorkerProvider";
 import AuthProvider, { authContext } from "./AuthContext/AuthProvider";
 
+// import AuthProvider, { authContext } from "./AuthContext/AuthProvider";
+
 export const myContext = createContext();
 // export const authContext = createContext();
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
@@ -45,10 +47,13 @@ export const AppFHIR = () => {
   const [activityData, setActivityData] = useState([]);
   const [selectedStudy, setSelectedStudy] = useState(undefined);
   const [selectedReference, setSelectedReference] = useState(undefined);
-  const { userInfo, setUserInfo, getRedirect, setRedirect } =
+  const { setUserInfo, getRedirect, setRedirect, getUserInfo } =
     useContext(authContext);
 
   const { worker } = useContext(workerContext);
+
+  const useAuth = process.env.REACT_APP_USE_AUTH === "true";
+  console.log("AUTH: ", useAuth, process.env);
 
   useEffect(
     () => () => {
@@ -59,10 +64,6 @@ export const AppFHIR = () => {
     },
     []
   );
-
-  //   useEffect(() => {
-  //     userInfo === null && navigate("/login");
-  //   }, [userInfo]);
 
   //   const storeAccessToken = (codeResponse) => {
   //     const expiry = codeResponse.expires_in * 1000;
@@ -87,20 +88,23 @@ export const AppFHIR = () => {
     navigate("/login");
   };
 
-  const getTable = () => {
-    worker?.postMessage({ type: "tableRequest" });
+  const workerPost = (obj) => {
+    worker?.postMessage({ ...obj, auth: useAuth });
   };
 
-  const getUserInfo = () => {
-    worker?.postMessage({ type: "userRequest" });
+  const getTable = () => {
+    workerPost({
+      type: "tableRequest",
+      url: process.env.REACT_APP_API_ENDPOINT,
+    });
   };
 
   const getDetails = (selectedStudy) => {
-    worker?.postMessage({ type: "detailsRequest", args: selectedStudy });
+    workerPost({ type: "detailsRequest", args: selectedStudy });
   };
 
   const getGraph = (selectedStudy) => {
-    worker?.postMessage({ type: "graphRequest", args: selectedStudy });
+    workerPost({ type: "graphRequest", args: selectedStudy });
   };
 
   const clearGraph = () => {
@@ -108,32 +112,32 @@ export const AppFHIR = () => {
   };
 
   const getDetailsDD = () => {
-    worker?.postMessage({ type: "detailsDDRequest", args: propData });
+    workerPost({ type: "detailsDDRequest", args: propData });
   };
 
   const getDDTableDetails = (refArray, studyParam) => {
-    worker?.postMessage({
+    workerPost({
       type: "DDTableDetailsRequest",
       args: { refArray, selectedStudy },
     });
   };
 
   const getCodeableConcept = (referenceObj) => {
-    worker?.postMessage({
+    workerPost({
       type: "codeableConceptRequest",
       args: referenceObj,
     });
   };
 
   const getDataDictionary = () => {
-    worker?.postMessage({
+    workerPost({
       type: "dataDictionaryRequest",
       args: searchTerm,
     });
   };
 
   const getDataDictionaryReferences = () => {
-    worker?.postMessage({
+    workerPost({
       type: "DDReferencesRequest",
       args: selectedReference,
     });
@@ -141,13 +145,13 @@ export const AppFHIR = () => {
 
   const getVariables = (search = null) => {
     if (search == null) {
-      worker?.postMessage({
+      workerPost({
         type: "variablesRequest",
         args: searchTerm,
       });
     } else {
       setSearchTerm("");
-      worker?.postMessage({
+      workerPost({
         type: "variablesRequest",
         args: "",
       });
@@ -204,85 +208,146 @@ export const AppFHIR = () => {
       }
     });
 
-  return (
-    <GoogleOAuthProvider clientId={CLIENT_ID}>
-      {/* <authContext.Provider
-        value={{
-          storeAccessToken,
-          getUserInfo,
-          userInfo,
-          handleSignOut,
-        }}
-      > */}
-      <myContext.Provider
-        value={{
-          selectedObject,
-          setSelectedObject,
-          selectedStudy,
-          setSelectedStudy,
-          selectedReference,
-          setSelectedReference,
-          setFilterText,
-          loading,
-          setLoading,
-          details,
-          setDetails,
-          dDView,
-          setDDView,
-          clearGraph,
-          URL,
-          getTable,
-          tableData,
-          getDetails,
-          propData,
-          getGraph,
-          focusData,
-          getDetailsDD,
-          dataDictionary,
-          getDDTableDetails,
-          reference,
-          setReference,
-          getCodeableConcept,
-          modalData,
-          getDataDictionary,
-          setFilterText,
-          filterText,
-          titleData,
-          getDataDictionaryReferences,
-          searchTerm,
-          setSearchTerm,
-          getVariables,
-          observationData,
-          activityData,
-        }}
-      >
-        <Routes>
+  return !useAuth ? (
+    <myContext.Provider
+      value={{
+        selectedObject,
+        setSelectedObject,
+        selectedStudy,
+        setSelectedStudy,
+        selectedReference,
+        setSelectedReference,
+        setFilterText,
+        loading,
+        setLoading,
+        details,
+        setDetails,
+        dDView,
+        setDDView,
+        clearGraph,
+        URL,
+        getTable,
+        tableData,
+        getDetails,
+        propData,
+        getGraph,
+        focusData,
+        getDetailsDD,
+        dataDictionary,
+        getDDTableDetails,
+        reference,
+        setReference,
+        getCodeableConcept,
+        modalData,
+        getDataDictionary,
+        setFilterText,
+        filterText,
+        titleData,
+        getDataDictionaryReferences,
+        searchTerm,
+        setSearchTerm,
+        getVariables,
+        observationData,
+        activityData,
+      }}
+    >
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <NavBar />
+              <Outlet />
+            </>
+          }
+        >
+          <Route index element={<Table />} />
+          <Route path="/details/:studyId" element={<DetailsView />} />
+          <Route path="/dataDictionary" element={<DataDictionary />} />
           <Route
-            path="/"
-            element={
-              <>
-                <NavBar />
-                <Outlet />
-              </>
-            }
-          >
-            <Route path="/login" element={<Login />} />
-            <Route index element={<Table />} />
-            <Route path="/details/:studyId" element={<DetailsView />} />
-            <Route path="/dataDictionary" element={<DataDictionary />} />
+            path="/dataDictionary/:DDReference"
+            element={<DataDictionaryReferences />}
+          />
+          <Route path="/variables" element={<Variables />} />
+          <Route
+            path="/variable-summary/:studyId"
+            element={<VariableSummary />}
+          />
+        </Route>
+      </Routes>
+    </myContext.Provider>
+  ) : (
+    <GoogleOAuthProvider clientId={CLIENT_ID}>
+      <AuthProvider>
+        <myContext.Provider
+          value={{
+            selectedObject,
+            setSelectedObject,
+            selectedStudy,
+            setSelectedStudy,
+            selectedReference,
+            setSelectedReference,
+            setFilterText,
+            loading,
+            setLoading,
+            details,
+            setDetails,
+            dDView,
+            setDDView,
+            clearGraph,
+            URL,
+            getTable,
+            tableData,
+            getDetails,
+            propData,
+            getGraph,
+            focusData,
+            getDetailsDD,
+            dataDictionary,
+            getDDTableDetails,
+            reference,
+            setReference,
+            getCodeableConcept,
+            modalData,
+            getDataDictionary,
+            setFilterText,
+            filterText,
+            titleData,
+            getDataDictionaryReferences,
+            searchTerm,
+            setSearchTerm,
+            getVariables,
+            observationData,
+            activityData,
+          }}
+        >
+          <Routes>
             <Route
-              path="/dataDictionary/:DDReference"
-              element={<DataDictionaryReferences />}
-            />
-            <Route path="/variables" element={<Variables />} />
-            <Route
-              path="/variable-summary/:studyId"
-              element={<VariableSummary />}
-            />
-          </Route>
-        </Routes>
-      </myContext.Provider>
-      {/* </authContext.Provider> */}
+              path="/"
+              element={
+                <>
+                  <NavBar />
+                  <Outlet />
+                </>
+              }
+            >
+              <Route path="/login" element={<Login />} />
+              <Route index element={<Table />} />
+              <Route path="/details/:studyId" element={<DetailsView />} />
+              <Route path="/dataDictionary" element={<DataDictionary />} />
+              <Route
+                path="/dataDictionary/:DDReference"
+                element={<DataDictionaryReferences />}
+              />
+              <Route path="/variables" element={<Variables />} />
+              <Route
+                path="/variable-summary/:studyId"
+                element={<VariableSummary />}
+              />
+            </Route>
+          </Routes>
+        </myContext.Provider>
+      </AuthProvider>
     </GoogleOAuthProvider>
   );
 };
