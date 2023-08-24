@@ -53,7 +53,7 @@ export const AppFHIR = () => {
   const { worker } = useContext(workerContext);
 
   const useAuth = process.env.REACT_APP_USE_AUTH === "true";
-  console.log("AUTH: ", useAuth, process.env);
+  // console.log("AUTH: ", useAuth, process.env);
 
   useEffect(
     () => () => {

@@ -45,7 +45,7 @@
       selectedStudy = undefined;
     } else if (type === "tableRequest") {
       urlEndpoint = url;
-      console.log("URL", urlEndpoint);
+      // console.log("URL", urlEndpoint);
       // console.log("PROCESS.ENV", process.env);
       // process.env.REACT_APP_USE_AUTH === "true"
       //   ? checkFetch(urlEndpoint + "/ResearchStudy?_count=500", {
@@ -96,7 +96,7 @@
     } else if (type === "detailsDDRequest") {
       propData = args;
       const valueSplit = propData?.resource.identifier?.[0]?.value.split("_");
-
+      console.log("valuesplit", valueSplit);
       const secondValue =
         propData?.resource.identifier?.[0]?.value.split("_")[1];
 
@@ -108,18 +108,6 @@
         firstValue.charAt(4).toLowerCase() +
         firstValue.slice(5);
 
-      // valueSplit > 2
-      // ? checkFetch(
-      //     urlEndpoint + "/ActivityDefinition?_tag=" + secondValue + "_DD",
-      //     {
-      //       method: "GET",
-      //       headers: {
-      //         "Content-Type": "application/fhir+json; fhirVersion=4.0",
-      //         Authorization: `Bearer ${accessToken}`,
-      //       },
-      //     }
-      //   )
-      // :
       auth
         ? checkFetch(
             urlEndpoint + "/ActivityDefinition?_tag=" + lowerCasedO + "_DD",
@@ -133,8 +121,17 @@
           )
             .then((res) => res.json())
             .then((data) => postMessage({ type: "detailsDD", data }))
-        : checkFetch(
+        : valueSplit.length > 2
+        ? checkFetch(
             urlEndpoint + "/ActivityDefinition?_tag=" + secondValue + "_DD",
+            {
+              method: "GET",
+            }
+          )
+            .then((res) => res.json())
+            .then((data) => postMessage({ type: "detailsDD", data }))
+        : checkFetch(
+            urlEndpoint + "/ActivityDefinition?_tag=" + firstValue + "_DD",
             {
               method: "GET",
             }
