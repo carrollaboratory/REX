@@ -120,18 +120,27 @@
       //     }
       //   )
       // :
-      checkFetch(
-        urlEndpoint + "/ActivityDefinition?_tag=" + lowerCasedO + "_DD",
-        {
-          method: "GET",
-          // headers: {
-          //   "Content-Type": "application/fhir+json; fhirVersion=4.0",
-          //   // Authorization: `Bearer ${accessToken}`,
-          // },
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => postMessage({ type: "detailsDD", data }));
+      auth
+        ? checkFetch(
+            urlEndpoint + "/ActivityDefinition?_tag=" + lowerCasedO + "_DD",
+            {
+              method: "GET",
+              // headers: {
+              //   "Content-Type": "application/fhir+json; fhirVersion=4.0",
+              //   // Authorization: `Bearer ${accessToken}`,
+              // },
+            }
+          )
+            .then((res) => res.json())
+            .then((data) => postMessage({ type: "detailsDD", data }))
+        : checkFetch(
+            urlEndpoint + "/ActivityDefinition?_tag=" + secondValue + "_DD",
+            {
+              method: "GET",
+            }
+          )
+            .then((res) => res.json())
+            .then((data) => postMessage({ type: "detailsDD", data }));
     } else if (type === "DDTableDetailsRequest") {
       let table;
       if (!studyId) {
