@@ -217,10 +217,6 @@
     } else if (type === "codeableConceptRequest") {
       checkFetch(urlEndpoint + "/" + args, {
         method: "GET",
-        headers: {
-          "Content-Type": "application/fhir+json; fhirVersion=4.0",
-          // Authorization: `Bearer ${accessToken}`,
-        },
       })
         .then((res) => res.json())
         .then((d) =>
@@ -228,10 +224,6 @@
             urlEndpoint + "/CodeSystem?url=" + d?.compose?.include[0]?.system,
             {
               method: "GET",
-              headers: {
-                "Content-Type": "application/fhir+json; fhirVersion=4.0",
-                // Authorization: `Bearer ${accessToken}`,
-              },
             }
           )
         )
@@ -246,20 +238,12 @@
               "&_revinclude=ActivityDefinition:result",
             {
               method: "GET",
-              headers: {
-                "Content-Type": "application/fhir+json; fhirVersion=4.0",
-                // Authorization: `Bearer ${accessToken}`,
-              },
             }
           )
             .then((res) => res.json())
             .then((data) => postMessage({ type: "dataDictionary", data }))
         : checkFetch(urlEndpoint + "/ActivityDefinition", {
             method: "GET",
-            headers: {
-              "Content-Type": "application/fhir+json; fhirVersion=4.0",
-              // Authorization: `Bearer ${accessToken}`,
-            },
           })
             .then((res) => res.json())
             .then((data) => postMessage({ type: "dataDictionary", data }));
@@ -268,10 +252,6 @@
         args?.observationResultRequirement?.map((c) =>
           checkFetch(urlEndpoint + "/" + c.reference, {
             method: "GET",
-            headers: {
-              "Content-Type": "application/fhir+json; fhirVersion=4.0",
-              // Authorization: `Bearer ${accessToken}`,
-            },
           })
         )
       )
@@ -290,10 +270,6 @@
               "&_revinclude=ActivityDefinition:result",
             {
               method: "GET",
-              headers: {
-                "Content-Type": "application/fhir+json; fhirVersion=4.0",
-                // Authorization: `Bearer ${accessToken}`,
-              },
             }
           )
             .then((res) => res.json())
@@ -317,10 +293,6 @@
               "/ActivityDefinition?_include=ActivityDefinition:result",
             {
               method: "GET",
-              headers: {
-                "Content-Type": "application/fhir+json; fhirVersion=4.0",
-                // Authorization: `Bearer ${accessToken}`,
-              },
             }
           )
             .then((res) => {

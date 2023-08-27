@@ -15,7 +15,6 @@ import DataDictionaryReferences from "./DataDictionaries/dataDictionaryReference
 import { VariableSummary } from "./VariableSummaries/variableSummary";
 import { Login } from "./Auth/Login";
 import { Variables } from "./DataDictionaries/variables";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import { WorkerProvider, workerContext } from "./WorkerContext/WorkerProvider";
 import AuthProvider, { authContext } from "./AuthContext/AuthProvider";
 
@@ -23,7 +22,6 @@ import AuthProvider, { authContext } from "./AuthContext/AuthProvider";
 
 export const myContext = createContext();
 // export const authContext = createContext();
-const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 
 export const AppFHIR = () => {
   const location = useLocation();
@@ -35,7 +33,6 @@ export const AppFHIR = () => {
   const [details, setDetails] = useState(true);
   const [dDView, setDDView] = useState(true);
   const [tableData, setTableData] = useState([]);
-  //   const [userInfo, setUserInfo] = useState(null);
   const [focusData, setFocusData] = useState();
   const [propData, setPropData] = useState(location?.state?.propData);
   const [dataDictionary, setDataDictionary] = useState([]);
@@ -47,13 +44,15 @@ export const AppFHIR = () => {
   const [activityData, setActivityData] = useState([]);
   const [selectedStudy, setSelectedStudy] = useState(undefined);
   const [selectedReference, setSelectedReference] = useState(undefined);
-  const { setUserInfo, getRedirect, setRedirect, getUserInfo } =
-    useContext(authContext);
+  const authStuff = useContext(authContext);
+  const useAuth = process.env.REACT_APP_USE_AUTH === "true";
 
   const { worker } = useContext(workerContext);
 
-  const useAuth = process.env.REACT_APP_USE_AUTH === "true";
   // console.log("AUTH: ", useAuth, process.env);
+  const automationURL = useAuth
+    ? process.env.REACT_APP_API_ENDPOINT_AUTH
+    : process.env.REACT_APP_API_ENDPOINT;
 
   useEffect(
     () => () => {
@@ -64,6 +63,10 @@ export const AppFHIR = () => {
     },
     []
   );
+
+  useEffect(() => {
+    console.log("AAAAAAAHHHHH", authStuff?.userInfo);
+  }, [authStuff?.userInfo]);
 
   //   const storeAccessToken = (codeResponse) => {
   //     const expiry = codeResponse.expires_in * 1000;
@@ -80,11 +83,12 @@ export const AppFHIR = () => {
   //   };
 
   const handleSignOut = () => {
-    setUserInfo(null);
+    // console.log("SIGNOUT");
+    authStuff?.setUserInfo(null);
     setFilterText("");
     setSelectedStudy(undefined);
     worker?.postMessage({ type: "clearToken" });
-    setRedirect("/");
+    authStuff?.setRedirect("/");
     navigate("/login");
   };
 
@@ -95,7 +99,7 @@ export const AppFHIR = () => {
   const getTable = () => {
     workerPost({
       type: "tableRequest",
-      url: process.env.REACT_APP_API_ENDPOINT,
+      url: automationURL,
     });
   };
 
@@ -162,10 +166,10 @@ export const AppFHIR = () => {
     (worker.onmessage = (message) => {
       const { type, data } = message?.data ? message.data : {};
       if (type === "loggedIn") {
-        getUserInfo();
+        authStuff?.getUserInfo();
       } else if (type === "user") {
-        setUserInfo(data);
-        navigate(getRedirect());
+        authStuff?.setUserInfo(data);
+        navigate(authStuff.getRedirect());
         //selectedStudy ? navigate(`/details/${selectedStudy}`) : navigate("/");
       } else if (type === "table") {
         setTableData(data.entry);
@@ -204,11 +208,13 @@ export const AppFHIR = () => {
         setObservationData(data[0]);
         setActivityData(data[1]);
       } else if (type === "report") {
-        console.log("REPORT! ", data);
+        // console.log("REPORT! ", data);
       }
     });
 
-  return !useAuth ? (
+  // console.log("AppFHIR: ", userInfo);
+
+  return (
     <myContext.Provider
       value={{
         selectedObject,
@@ -249,6 +255,7 @@ export const AppFHIR = () => {
         getVariables,
         observationData,
         activityData,
+        handleSignOut,
       }}
     >
       <Routes>
@@ -261,6 +268,7 @@ export const AppFHIR = () => {
             </>
           }
         >
+          <Route path="/login" element={<Login />} />
           <Route index element={<Table />} />
           <Route path="/details/:studyId" element={<DetailsView />} />
           <Route path="/dataDictionary" element={<DataDictionary />} />
@@ -276,78 +284,5 @@ export const AppFHIR = () => {
         </Route>
       </Routes>
     </myContext.Provider>
-  ) : (
-    <GoogleOAuthProvider clientId={CLIENT_ID}>
-      <AuthProvider>
-        <myContext.Provider
-          value={{
-            selectedObject,
-            setSelectedObject,
-            selectedStudy,
-            setSelectedStudy,
-            selectedReference,
-            setSelectedReference,
-            setFilterText,
-            loading,
-            setLoading,
-            details,
-            setDetails,
-            dDView,
-            setDDView,
-            clearGraph,
-            URL,
-            getTable,
-            tableData,
-            getDetails,
-            propData,
-            getGraph,
-            focusData,
-            getDetailsDD,
-            dataDictionary,
-            getDDTableDetails,
-            reference,
-            setReference,
-            getCodeableConcept,
-            modalData,
-            getDataDictionary,
-            setFilterText,
-            filterText,
-            titleData,
-            getDataDictionaryReferences,
-            searchTerm,
-            setSearchTerm,
-            getVariables,
-            observationData,
-            activityData,
-          }}
-        >
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <>
-                  <NavBar />
-                  <Outlet />
-                </>
-              }
-            >
-              <Route path="/login" element={<Login />} />
-              <Route index element={<Table />} />
-              <Route path="/details/:studyId" element={<DetailsView />} />
-              <Route path="/dataDictionary" element={<DataDictionary />} />
-              <Route
-                path="/dataDictionary/:DDReference"
-                element={<DataDictionaryReferences />}
-              />
-              <Route path="/variables" element={<Variables />} />
-              <Route
-                path="/variable-summary/:studyId"
-                element={<VariableSummary />}
-              />
-            </Route>
-          </Routes>
-        </myContext.Provider>
-      </AuthProvider>
-    </GoogleOAuthProvider>
   );
 };

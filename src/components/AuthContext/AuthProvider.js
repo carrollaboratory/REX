@@ -1,12 +1,14 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { workerContext } from "../WorkerContext/WorkerProvider";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 export const authContext = createContext();
 
 export default function AuthProvider({ children }) {
   const useAuth = process.env.REACT_APP_USE_AUTH === "true";
   const [userInfo, setUserInfo] = useState(null);
+  const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 
   const { worker } = useContext(workerContext);
   const navigate = useNavigate();
@@ -33,7 +35,7 @@ export default function AuthProvider({ children }) {
     worker?.postMessage({
       type: "storeToken",
       args: codeResponse.access_token,
-      url: process.env.REACT_APP_API_ENDPOINT,
+      url: process.env.REACT_APP_API_ENDPOINT_AUTH,
     });
     getReport("test");
   };
@@ -67,7 +69,11 @@ export default function AuthProvider({ children }) {
     clearToken,
     getUserInfo,
   };
-  return (
-    <authContext.Provider value={AuthStore}>{children}</authContext.Provider>
+  return useAuth ? (
+    <GoogleOAuthProvider clientId={CLIENT_ID}>
+      <authContext.Provider value={AuthStore}>{children}</authContext.Provider>{" "}
+    </GoogleOAuthProvider>
+  ) : (
+    children
   );
 }

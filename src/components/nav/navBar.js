@@ -1,15 +1,23 @@
-import { Link } from "react-router-dom";
-import AnvilLogo from "../../images/anvil.png";
-import "./navBar.css";
 import { useContext } from "react";
+import "./navBar.css";
+import { NavBarAuth } from "./navBarAuth";
+import { NavBarPublic } from "./navBarPublic";
 import { authContext } from "../AuthContext/AuthProvider";
+import { Link, useLocation } from "react-router-dom";
+import AnvilLogo from "../../images/anvil.png";
+import { myContext } from "../AppFHIR";
+
+const useAuth = process.env.REACT_APP_USE_AUTH === "true";
 
 export const NavBar = () => {
-  const { userInfo, handleSignOut } = useContext(authContext);
-
+  const authStuff = useContext(authContext);
+  const { handleSignOut } = useContext(myContext);
+  const here = useLocation();
+  const loginPage = here.pathname == "/login";
+  // console.log("ALLNAV: ", userInfo);
   return (
     <>
-      {userInfo ? (
+      {!loginPage ? (
         <div className="navbar-wrapper">
           <ul className="navbar">
             <li className="nav-logo">
@@ -22,30 +30,54 @@ export const NavBar = () => {
               </Link>
             </li>
             <div className="nav-items-wrapper">
-              <Link to="/" className="nav-link">
+              <Link
+                to="/"
+                className="nav-link"
+                // onClick={() => {
+                //   setActive(0);
+                // }}
+                // style={{
+                //   backgroundColor: active === 0 ? "#F2F2F2" : "",
+                // }}
+              >
                 <li className="nav-items">All Studies</li>
               </Link>
 
-              <Link to="/dataDictionary" className="nav-link">
+              <Link
+                to="/dataDictionary"
+                className="nav-link"
+                // onClick={() => {
+                //   setActive(1);
+                // }}
+                // style={{
+                //   backgroundColor: active === 1 ? "#F2F2F2" : "",
+                // }}
+              >
                 <li className="nav-items">Data Dictionaries</li>
               </Link>
             </div>
-            <div className="nav-user-wrapper">
-              <li className="nav-user-info">
-                <img
-                  className="nav-user-picture"
-                  alt="user's Google profile image"
-                  src={userInfo?.picture}
-                />{" "}
-                {userInfo?.email}
-              </li>
-              <button
-                className="sign-out-button"
-                onClick={() => handleSignOut()}
-              >
-                Sign Out
-              </button>
-            </div>
+            {useAuth ? (
+              <div className="nav-user-wrapper">
+                <li className="nav-user-info">
+                  <img
+                    className="nav-user-picture"
+                    alt="user's Google profile image"
+                    src={authStuff.userInfo?.picture}
+                  />{" "}
+                  {authStuff.userInfo?.email}
+                </li>
+                <button
+                  className="sign-out-button"
+                  onClick={() => {
+                    handleSignOut();
+                  }}
+                >
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <div className="nav-user-wrapper"></div>
+            )}
           </ul>
         </div>
       ) : (
@@ -54,5 +86,3 @@ export const NavBar = () => {
     </>
   );
 };
-{
-}
