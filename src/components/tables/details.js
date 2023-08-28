@@ -21,6 +21,7 @@ function DetailsView() {
     focusData,
     getGraph,
   } = useContext(myContext);
+
   const navigate = useNavigate();
   const { studyId } = useParams();
   setSelectedStudy(studyId);

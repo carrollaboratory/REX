@@ -10,7 +10,7 @@ import { myContext } from "../AppFHIR";
 const useAuth = process.env.REACT_APP_USE_AUTH === "true";
 
 export const NavBar = () => {
-  const authStuff = useContext(authContext);
+  const authContextVar = useContext(authContext);
   const { handleSignOut } = useContext(myContext);
   const here = useLocation();
   const loginPage = here.pathname == "/login";
@@ -62,9 +62,9 @@ export const NavBar = () => {
                   <img
                     className="nav-user-picture"
                     alt="user's Google profile image"
-                    src={authStuff.userInfo?.picture}
+                    src={authContextVar.userInfo?.picture}
                   />{" "}
-                  {authStuff.userInfo?.email}
+                  {authContextVar.userInfo?.email}
                 </li>
                 <button
                   className="sign-out-button"

@@ -20,6 +20,8 @@ export const Login = () => {
     },
   });
 
+  console.log("RENDER LOGIN!");
+
   return (
     <>
       <div className="login-wrapper">

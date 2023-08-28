@@ -44,7 +44,7 @@ export const AppFHIR = () => {
   const [activityData, setActivityData] = useState([]);
   const [selectedStudy, setSelectedStudy] = useState(undefined);
   const [selectedReference, setSelectedReference] = useState(undefined);
-  const authStuff = useContext(authContext);
+  const authContextVar = useContext(authContext);
   const useAuth = process.env.REACT_APP_USE_AUTH === "true";
 
   const { worker } = useContext(workerContext);
@@ -64,9 +64,9 @@ export const AppFHIR = () => {
     []
   );
 
-  useEffect(() => {
-    console.log("AAAAAAAHHHHH", authStuff?.userInfo);
-  }, [authStuff?.userInfo]);
+  // useEffect(() => {
+  //   console.log("AAAAAAAHHHHH", authContextVar?.userInfo);
+  // }, [authContextVar?.userInfo]);
 
   //   const storeAccessToken = (codeResponse) => {
   //     const expiry = codeResponse.expires_in * 1000;
@@ -84,11 +84,11 @@ export const AppFHIR = () => {
 
   const handleSignOut = () => {
     // console.log("SIGNOUT");
-    authStuff?.setUserInfo(null);
+    authContextVar?.setUserInfo(null);
     setFilterText("");
     setSelectedStudy(undefined);
     worker?.postMessage({ type: "clearToken" });
-    authStuff?.setRedirect("/");
+    authContextVar?.setRedirect("/");
     navigate("/login");
   };
 
@@ -166,10 +166,10 @@ export const AppFHIR = () => {
     (worker.onmessage = (message) => {
       const { type, data } = message?.data ? message.data : {};
       if (type === "loggedIn") {
-        authStuff?.getUserInfo();
+        authContextVar?.getUserInfo();
       } else if (type === "user") {
-        authStuff?.setUserInfo(data);
-        navigate(authStuff.getRedirect());
+        authContextVar?.setUserInfo(data);
+        navigate(authContextVar.getRedirect());
         //selectedStudy ? navigate(`/details/${selectedStudy}`) : navigate("/");
       } else if (type === "table") {
         setTableData(data.entry);

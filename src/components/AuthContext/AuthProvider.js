@@ -15,15 +15,25 @@ export default function AuthProvider({ children }) {
 
   const path = useLocation().pathname;
 
-  useEffect(() => {
-    if (useAuth && !getRedirect()) {
-      setRedirect(path);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (useAuth && !getRedirect()) {
+  //     setRedirect(path);
+  //   }
+  // }, []);
 
   useEffect(() => {
-    userInfo === null && useAuth && navigate("/login");
+    if (userInfo === null && useAuth) {
+      setRedirect(path);
+      navigate("/login");
+    }
   }, [userInfo]);
+
+  useEffect(
+    () => () => {
+      localStorage.clear();
+    },
+    []
+  );
 
   const storeAccessToken = (codeResponse) => {
     //   const expiry = codeResponse.expires_in * 1000;
@@ -43,9 +53,12 @@ export default function AuthProvider({ children }) {
   const getRedirect = () => {
     return localStorage.getItem("redirect");
   };
+  console.log("ARE WE AUTH: ", useAuth, getRedirect());
 
   const setRedirect = (url) => {
+    console.log("setting redirect to ", url);
     localStorage.setItem("redirect", url === "/login" ? "/" : url);
+    console.log("getRedirect:", getRedirect());
   };
 
   const clearToken = () => {
