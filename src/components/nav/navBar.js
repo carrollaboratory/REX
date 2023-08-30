@@ -12,8 +12,8 @@ const useAuth = process.env.REACT_APP_USE_AUTH === "true";
 export const NavBar = () => {
   const authContextVar = useContext(authContext);
   const { handleSignOut } = useContext(myContext);
-  const here = useLocation();
-  const loginPage = here.pathname == "/login";
+  const location = useLocation();
+  const loginPage = location.pathname == "/login";
   // console.log("ALLNAV: ", userInfo);
   return (
     <>

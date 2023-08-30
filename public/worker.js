@@ -65,6 +65,8 @@
         .then((data) => postMessage({ type: "table", data }));
     } else if (type === "detailsRequest") {
       studyId = args;
+      urlEndpoint = url;
+
       checkFetch(
         urlEndpoint + "/ResearchStudy?_id=" + studyId
         // , {
@@ -78,6 +80,8 @@
         .then((res) => res.json())
         .then((data) => postMessage({ type: "details", data }));
     } else if (type === "graphRequest") {
+      urlEndpoint = url;
+
       if (!studyId) {
         studyId = args;
       }
@@ -94,6 +98,7 @@
         .then((res) => res.json())
         .then((data) => postMessage({ type: "graph", data }));
     } else if (type === "detailsDDRequest") {
+      urlEndpoint = url;
       propData = args;
       const valueSplit = propData?.resource.identifier?.[0]?.value.split("_");
       console.log("valuesplit", valueSplit);
@@ -139,6 +144,8 @@
             .then((res) => res.json())
             .then((data) => postMessage({ type: "detailsDD", data }));
     } else if (type === "DDTableDetailsRequest") {
+      urlEndpoint = url;
+
       let table;
       if (!studyId) {
         studyId = args.studyId;
@@ -215,6 +222,8 @@
         // })
         .then((data) => postMessage({ type: "DDTableDetails", data: arr }));
     } else if (type === "codeableConceptRequest") {
+      urlEndpoint = url;
+
       checkFetch(urlEndpoint + "/" + args, {
         method: "GET",
       })
@@ -230,6 +239,8 @@
         .then((res) => res.json())
         .then((data) => postMessage({ type: "codeableConcept", data }));
     } else if (type === "dataDictionaryRequest") {
+      urlEndpoint = url;
+
       args != ""
         ? checkFetch(
             urlEndpoint +
@@ -260,6 +271,8 @@
         )
         .then((data) => postMessage({ type: "DDReferences", data }));
     } else if (type === "variablesRequest") {
+      urlEndpoint = url;
+
       let observationArray = [];
       let activityArray = [];
       args != ""

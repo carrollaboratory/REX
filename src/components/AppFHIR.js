@@ -104,11 +104,19 @@ export const AppFHIR = () => {
   };
 
   const getDetails = (selectedStudy) => {
-    workerPost({ type: "detailsRequest", args: selectedStudy });
+    workerPost({
+      type: "detailsRequest",
+      args: selectedStudy,
+      url: automationURL,
+    });
   };
 
   const getGraph = (selectedStudy) => {
-    workerPost({ type: "graphRequest", args: selectedStudy });
+    workerPost({
+      type: "graphRequest",
+      args: selectedStudy,
+      url: automationURL,
+    });
   };
 
   const clearGraph = () => {
@@ -116,13 +124,18 @@ export const AppFHIR = () => {
   };
 
   const getDetailsDD = () => {
-    workerPost({ type: "detailsDDRequest", args: propData });
+    workerPost({
+      type: "detailsDDRequest",
+      args: propData,
+      url: automationURL,
+    });
   };
 
   const getDDTableDetails = (refArray, studyParam) => {
     workerPost({
       type: "DDTableDetailsRequest",
       args: { refArray, selectedStudy },
+      url: automationURL,
     });
   };
 
@@ -130,6 +143,7 @@ export const AppFHIR = () => {
     workerPost({
       type: "codeableConceptRequest",
       args: referenceObj,
+      url: automationURL,
     });
   };
 
@@ -137,6 +151,7 @@ export const AppFHIR = () => {
     workerPost({
       type: "dataDictionaryRequest",
       args: searchTerm,
+      url: automationURL,
     });
   };
 
@@ -144,6 +159,7 @@ export const AppFHIR = () => {
     workerPost({
       type: "DDReferencesRequest",
       args: selectedReference,
+      url: automationURL,
     });
   };
 
@@ -152,12 +168,14 @@ export const AppFHIR = () => {
       workerPost({
         type: "variablesRequest",
         args: searchTerm,
+        url: automationURL,
       });
     } else {
       setSearchTerm("");
       workerPost({
         type: "variablesRequest",
         args: "",
+        url: automationURL,
       });
     }
   };
