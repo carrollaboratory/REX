@@ -67,16 +67,7 @@
       studyId = args;
       urlEndpoint = url;
 
-      checkFetch(
-        urlEndpoint + "/ResearchStudy?_id=" + studyId
-        // , {
-        //   method: "GET",
-        //   headers: {
-        //     "Content-Type": "application/fhir+json; fhirVersion=4.0",
-        //     // Authorization: `Bearer ${accessToken}`,
-        //   },
-        // }
-      )
+      checkFetch(urlEndpoint + "/ResearchStudy?_id=" + studyId)
         .then((res) => res.json())
         .then((data) => postMessage({ type: "details", data }));
     } else if (type === "graphRequest") {
@@ -85,23 +76,13 @@
       if (!studyId) {
         studyId = args;
       }
-      checkFetch(
-        urlEndpoint + "/Observation?focus=ResearchStudy/" + studyId
-        // , {
-        //   method: "GET",
-        //   headers: {
-        //     "Content-Type": "application/fhir+json; fhirVersion=4.0",
-        //     // Authorization: `Bearer ${accessToken}`,
-        //   },
-        // }
-      )
+      checkFetch(urlEndpoint + "/Observation?focus=ResearchStudy/" + studyId)
         .then((res) => res.json())
         .then((data) => postMessage({ type: "graph", data }));
     } else if (type === "detailsDDRequest") {
       urlEndpoint = url;
       propData = args;
       const valueSplit = propData?.resource.identifier?.[0]?.value.split("_");
-      console.log("valuesplit", valueSplit);
       const secondValue =
         propData?.resource.identifier?.[0]?.value.split("_")[1];
 
@@ -118,10 +99,6 @@
             urlEndpoint + "/ActivityDefinition?_tag=" + lowerCasedO + "_DD",
             {
               method: "GET",
-              // headers: {
-              //   "Content-Type": "application/fhir+json; fhirVersion=4.0",
-              //   // Authorization: `Bearer ${accessToken}`,
-              // },
             }
           )
             .then((res) => res.json())
@@ -157,10 +134,6 @@
         refArray?.map((c) =>
           checkFetch(urlEndpoint + "/" + c.reference, {
             method: "GET",
-            // headers: {
-            //   "Content-Type": "application/fhir+json; fhirVersion=4.0",
-            //   // Authorization: `Bearer ${accessToken}`,
-            // },
           })
         )
       )

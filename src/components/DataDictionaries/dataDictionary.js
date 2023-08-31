@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Variables } from "./variables";
 import { capitalizeWord } from "./utilities";
 import { SearchBar } from "./searchBar";
+import { workerContext } from "../WorkerContext/WorkerProvider";
 
 function DataDictionary() {
   const [data, setData] = useState({});
@@ -12,9 +13,10 @@ function DataDictionary() {
   const [searchTerm, setSearchTerm] = useState("");
   const { setSelectedReference, activityData, getVariables } =
     useContext(myContext);
+  const { worker } = useContext(workerContext);
 
   useEffect(() => {
-    getVariables();
+    getVariables(searchTerm, setSearchTerm, worker);
   }, []);
 
   return (

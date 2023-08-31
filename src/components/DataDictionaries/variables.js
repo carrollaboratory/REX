@@ -6,10 +6,13 @@ import { Link } from "react-router-dom";
 import "./dataDictionary.css";
 import { SearchBar } from "./searchBar";
 import { capitalizeWord } from "./utilities";
+import { workerContext } from "../WorkerContext/WorkerProvider";
 
 export const Variables = () => {
   const { setSelectedReference, observationData, activityData, getVariables } =
     useContext(myContext);
+  const { worker } = useContext(workerContext);
+
   const [codeableConceptReference, setCodeableConceptReference] =
     useState(null);
   const [codeableConcept, setCodeableconcept] = useState(false);
@@ -35,7 +38,7 @@ export const Variables = () => {
   // };
 
   useEffect(() => {
-    getVariables();
+    getVariables(worker);
   }, []);
 
   const getObservationMatch = (observation) => {

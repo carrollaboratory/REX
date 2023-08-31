@@ -4,9 +4,11 @@ import "./detailsDataDictionary.css";
 import { DataDictionaryTableDetails } from "./dataDictionaryTableDetails/dataDictionaryTableDetails";
 import { useNavigate } from "react-router-dom";
 import { capitalizeWord } from "../DataDictionaries/utilities";
+import { workerContext } from "../WorkerContext/WorkerProvider";
 
 export const DetailsDataDictionary = ({ propData }) => {
   const { getDetailsDD, dataDictionary } = useContext(myContext);
+  const { worker } = useContext(workerContext);
   // const [dataDictionary, setDataDictionary] = useState([]);
   const [selectedDictionaryReferences, setSelectedDictionaryReferences] =
     useState([]);
@@ -25,7 +27,7 @@ export const DetailsDataDictionary = ({ propData }) => {
   useEffect(
     () => {
       // setLoading(true);
-      getDetailsDD();
+      getDetailsDD(propData, worker);
     },
     [
       /*selectedDictionaryReferences*/

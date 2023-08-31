@@ -4,6 +4,7 @@ import "./dataDictionaryReferences.css";
 import { CodeableConcept } from "../tables/codeableConcept";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 import { authContext, myContext } from "../AppFHIR";
+import { workerContext } from "../WorkerContext/WorkerProvider";
 
 function DataDictionaryReferences() {
   // const [reference, setReference] = useState({});
@@ -13,6 +14,8 @@ function DataDictionaryReferences() {
   const [codeableConcept, setCodeableconcept] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const {
+    searchTerm,
+    setSearchTerm,
     selectedReference,
     setSelectedReference,
     setReference,
@@ -21,6 +24,7 @@ function DataDictionaryReferences() {
     activityData,
     getVariables,
   } = useContext(myContext);
+  const { worker } = useContext(workerContext);
 
   const { DDReference } = useParams();
 
@@ -45,9 +49,9 @@ function DataDictionaryReferences() {
 
   useEffect(() => {
     if (DDReference && !selectedReference) {
-      getVariables();
+      getVariables(searchTerm, setSearchTerm, worker);
     } else {
-      getDataDictionaryReferences();
+      getDataDictionaryReferences(searchTerm, worker);
     }
   }, [selectedReference]);
 

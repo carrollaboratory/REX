@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import "./codeableConcept.css";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 import { myContext } from "../AppFHIR";
+import { workerContext } from "../WorkerContext/WorkerProvider";
 
 export const CodeableConcept = ({
   toggleModal,
@@ -10,11 +11,12 @@ export const CodeableConcept = ({
   ...props
 }) => {
   const { getCodeableConcept, modalData } = useContext(myContext);
+  const { worker } = useContext(workerContext);
 
   useEffect(() => {
     if (isOpen) {
       // setLoading(true);
-      getCodeableConcept(codeableConceptReference);
+      getCodeableConcept(codeableConceptReference, worker);
     }
   }, [codeableConceptReference]);
 

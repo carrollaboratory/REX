@@ -8,6 +8,7 @@ import { GraphSex } from "./graphSex";
 import { GraphAncestry } from "./graphAncestry";
 import { DetailsDataDictionary } from "./detailsDataDictionary";
 import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
+import { workerContext } from "../WorkerContext/WorkerProvider";
 
 function DetailsView() {
   const {
@@ -21,6 +22,7 @@ function DetailsView() {
     focusData,
     getGraph,
   } = useContext(myContext);
+  const { worker } = useContext(workerContext);
 
   const navigate = useNavigate();
   const { studyId } = useParams();
@@ -40,8 +42,8 @@ function DetailsView() {
   );
 
   const loadCriticalData = async () => {
-    getDetails(studyId);
-    getGraph();
+    getDetails(studyId, worker);
+    getGraph(studyId, worker);
   };
 
   return (

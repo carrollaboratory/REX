@@ -4,6 +4,7 @@ import "./table.css";
 import HtmlReactParser from "html-react-parser";
 import { myContext } from "../AppFHIR";
 import { Link, useParams } from "react-router-dom";
+import { workerContext } from "../WorkerContext/WorkerProvider";
 
 function Table() {
   const [data, setData] = useState([]);
@@ -11,6 +12,7 @@ function Table() {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const { filterText, setFilterText, getTable, tableData } =
     useContext(myContext);
+  const { worker } = useContext(workerContext);
 
   const getFilteredItems = () =>
     tableData?.filter(
@@ -116,7 +118,7 @@ function Table() {
 
   useEffect(() => {
     setLoading(true);
-    getTable();
+    getTable(worker);
     setLoading(false);
   }, []);
 

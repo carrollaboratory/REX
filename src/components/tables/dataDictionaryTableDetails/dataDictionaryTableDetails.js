@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { TableRow } from "./tableRow";
 import { myContext } from "../../AppFHIR";
 import DownArrow from "../../../images/down_arrow.png";
+import { workerContext } from "../../WorkerContext/WorkerProvider";
 
 export const DataDictionaryTableDetails = ({
   selectedDictionaryReferences,
@@ -21,6 +22,7 @@ export const DataDictionaryTableDetails = ({
   const { studyId } = useParams();
   const { URL } = useContext(myContext);
   const { getDDTableDetails, reference } = useContext(myContext);
+  const { worker } = useContext(workerContext);
 
   const handleOpen = (open, set) => {
     set(open);
@@ -31,7 +33,7 @@ export const DataDictionaryTableDetails = ({
   };
 
   useEffect(() => {
-    getDDTableDetails(selectedDictionaryReferences);
+    getDDTableDetails(selectedDictionaryReferences, studyId, worker);
   }, [selectedDictionaryReferences]);
 
   useEffect(() => {

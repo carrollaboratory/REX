@@ -17,6 +17,7 @@ import { Login } from "./Auth/Login";
 import { Variables } from "./DataDictionaries/variables";
 import { WorkerProvider, workerContext } from "./WorkerContext/WorkerProvider";
 import AuthProvider, { authContext } from "./AuthContext/AuthProvider";
+import * as actions from "../components/WorkerActions/Actions";
 
 // import AuthProvider, { authContext } from "./AuthContext/AuthProvider";
 
@@ -48,6 +49,17 @@ export const AppFHIR = () => {
   const useAuth = process.env.REACT_APP_USE_AUTH === "true";
 
   const { worker } = useContext(workerContext);
+  const {
+    getTable,
+    getDetails,
+    getGraph,
+    getDetailsDD,
+    getCodeableConcept,
+    getDDTableDetails,
+    getDataDictionary,
+    getDataDictionaryReferences,
+    getVariables,
+  } = actions;
 
   // console.log("AUTH: ", useAuth, process.env);
   const automationURL = useAuth
@@ -92,92 +104,8 @@ export const AppFHIR = () => {
     navigate("/login");
   };
 
-  const workerPost = (obj) => {
-    worker?.postMessage({ ...obj, auth: useAuth });
-  };
-
-  const getTable = () => {
-    workerPost({
-      type: "tableRequest",
-      url: automationURL,
-    });
-  };
-
-  const getDetails = (selectedStudy) => {
-    workerPost({
-      type: "detailsRequest",
-      args: selectedStudy,
-      url: automationURL,
-    });
-  };
-
-  const getGraph = (selectedStudy) => {
-    workerPost({
-      type: "graphRequest",
-      args: selectedStudy,
-      url: automationURL,
-    });
-  };
-
   const clearGraph = () => {
     setFocusData(undefined);
-  };
-
-  const getDetailsDD = () => {
-    workerPost({
-      type: "detailsDDRequest",
-      args: propData,
-      url: automationURL,
-    });
-  };
-
-  const getDDTableDetails = (refArray, studyParam) => {
-    workerPost({
-      type: "DDTableDetailsRequest",
-      args: { refArray, selectedStudy },
-      url: automationURL,
-    });
-  };
-
-  const getCodeableConcept = (referenceObj) => {
-    workerPost({
-      type: "codeableConceptRequest",
-      args: referenceObj,
-      url: automationURL,
-    });
-  };
-
-  const getDataDictionary = () => {
-    workerPost({
-      type: "dataDictionaryRequest",
-      args: searchTerm,
-      url: automationURL,
-    });
-  };
-
-  const getDataDictionaryReferences = () => {
-    workerPost({
-      type: "DDReferencesRequest",
-      args: selectedReference,
-      url: automationURL,
-    });
-  };
-
-  const getVariables = (search = null) => {
-    if (search == null) {
-      workerPost({
-        type: "variablesRequest",
-        args: searchTerm,
-        url: automationURL,
-      });
-    } else {
-      setSearchTerm("");
-      workerPost({
-        type: "variablesRequest",
-        args: "",
-        url: automationURL,
-      });
-    }
   };
 
   !!worker &&

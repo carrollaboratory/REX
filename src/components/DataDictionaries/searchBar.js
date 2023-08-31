@@ -1,9 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { myContext } from "../AppFHIR";
+import { workerContext } from "../WorkerContext/WorkerProvider";
 
 export const SearchBar = ({ children }) => {
   const { searchTerm, setSearchTerm, getVariables } = useContext(myContext);
+  const { worker } = useContext(workerContext);
   const navigate = useNavigate();
   useEffect(() => {
     getVariables("");
@@ -41,14 +43,17 @@ export const SearchBar = ({ children }) => {
             }}
           />
 
-          <button className="search-button" onClick={(e) => getVariables()}>
+          <button
+            className="search-button"
+            onClick={(e) => getVariables(searchTerm, setSearchTerm, worker)}
+          >
             Search
           </button>
           <button
             className="clear-button"
             onClick={() => {
               setSearchTerm("");
-              getVariables("");
+              getVariables("", setSearchTerm, worker);
             }}
           >
             X

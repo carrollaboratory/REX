@@ -53,7 +53,7 @@ export default function AuthProvider({ children }) {
   const getRedirect = () => {
     return localStorage.getItem("redirect");
   };
-  console.log("ARE WE AUTH: ", useAuth, getRedirect());
+  // console.log("ARE WE AUTH: ", useAuth, getRedirect());
 
   const setRedirect = (url) => {
     console.log("setting redirect to ", url);
