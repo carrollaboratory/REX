@@ -232,6 +232,8 @@
             .then((res) => res.json())
             .then((data) => postMessage({ type: "dataDictionary", data }));
     } else if (type === "DDReferencesRequest") {
+      urlEndpoint = url;
+
       Promise.all(
         args?.observationResultRequirement?.map((c) =>
           checkFetch(urlEndpoint + "/" + c.reference, {

@@ -51,7 +51,7 @@ function DataDictionaryReferences() {
     if (DDReference && !selectedReference) {
       getVariables(searchTerm, setSearchTerm, worker);
     } else {
-      getDataDictionaryReferences(searchTerm, worker);
+      getDataDictionaryReferences(selectedReference, worker);
     }
   }, [selectedReference]);
 

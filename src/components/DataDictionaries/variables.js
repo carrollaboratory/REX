@@ -9,8 +9,14 @@ import { capitalizeWord } from "./utilities";
 import { workerContext } from "../WorkerContext/WorkerProvider";
 
 export const Variables = () => {
-  const { setSelectedReference, observationData, activityData, getVariables } =
-    useContext(myContext);
+  const {
+    setSelectedReference,
+    observationData,
+    activityData,
+    getVariables,
+    searchTerm,
+    setSearchTerm,
+  } = useContext(myContext);
   const { worker } = useContext(workerContext);
 
   const [codeableConceptReference, setCodeableConceptReference] =
@@ -38,7 +44,7 @@ export const Variables = () => {
   // };
 
   useEffect(() => {
-    getVariables(worker);
+    getVariables(searchTerm, setSearchTerm, worker);
   }, []);
 
   const getObservationMatch = (observation) => {
