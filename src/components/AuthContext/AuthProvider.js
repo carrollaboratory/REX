@@ -3,12 +3,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { workerContext } from "../WorkerContext/WorkerProvider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 export const authContext = createContext();
 
 export default function AuthProvider({ children }) {
   const useAuth = process.env.REACT_APP_USE_AUTH === "true";
   const [userInfo, setUserInfo] = useState(null);
-  const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 
   const { worker } = useContext(workerContext);
   const navigate = useNavigate();
@@ -56,9 +56,9 @@ export default function AuthProvider({ children }) {
   // console.log("ARE WE AUTH: ", useAuth, getRedirect());
 
   const setRedirect = (url) => {
-    console.log("setting redirect to ", url);
+    // console.log("setting redirect to ", url);
     localStorage.setItem("redirect", url === "/login" ? "/" : url);
-    console.log("getRedirect:", getRedirect());
+    // console.log("getRedirect:", getRedirect());
   };
 
   const clearToken = () => {

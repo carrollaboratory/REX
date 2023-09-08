@@ -11,6 +11,7 @@ import { workerContext } from "../WorkerContext/WorkerProvider";
 export const Variables = () => {
   const {
     setSelectedReference,
+    selectedReference,
     observationData,
     activityData,
     getVariables,
@@ -50,14 +51,12 @@ export const Variables = () => {
   const getObservationMatch = (observation) => {
     for (let activity of activityData) {
       for (const r of activity?.resource?.observationResultRequirement) {
-        if (r.reference == observation?.fullUrl?.slice(-58)) {
+        console.log(r);
+        if (r.reference === observation?.fullUrl?.slice(-58)) {
           return (
             <>
               <Link
-                state={{
-                  selectedDictionaryReferences: activity?.resource,
-                }}
-                onClick={setSelectedReference(activity?.resource)}
+                onClick={() => setSelectedReference(activity?.resource)}
                 to={`/dataDictionary/${activity?.resource?.id}`}
               >
                 {activity?.resource?.title.split(" ")[3].split("_")[0]} &nbsp;
