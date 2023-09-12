@@ -10,14 +10,9 @@ import { workerContext } from "../WorkerContext/WorkerProvider";
 function DataDictionary() {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
   const { setSelectedReference, activityData, getVariables } =
     useContext(myContext);
   const { worker } = useContext(workerContext);
-
-  useEffect(() => {
-    getVariables(searchTerm, setSearchTerm, worker);
-  }, []);
 
   return (
     <>

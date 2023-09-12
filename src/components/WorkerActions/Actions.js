@@ -99,27 +99,21 @@ export const getDataDictionaryReferences = (selectedReference, worker) => {
   );
 };
 
-export const getVariables = (
-  searchTerm,
-  setSearchTerm,
-  worker,
-  search = null
-) => {
-  if (search == null) {
+export const getVariables = (searchTerm, worker) => {
+  if (searchTerm == null || !searchTerm) {
     workerPost(
       {
         type: "variablesRequest",
-        args: searchTerm,
+        args: "",
         url: automationURL,
       },
       worker
     );
   } else {
-    setSearchTerm("");
     workerPost(
       {
         type: "variablesRequest",
-        args: "",
+        args: searchTerm,
         url: automationURL,
       },
       worker

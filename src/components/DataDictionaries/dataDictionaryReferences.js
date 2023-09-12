@@ -49,7 +49,7 @@ function DataDictionaryReferences() {
 
   useEffect(() => {
     if (DDReference && !selectedReference) {
-      getVariables(searchTerm, setSearchTerm, worker);
+      getVariables("", worker);
     } else {
       getDataDictionaryReferences(selectedReference, worker);
     }

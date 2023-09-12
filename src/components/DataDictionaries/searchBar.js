@@ -1,15 +1,19 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { myContext } from "../AppFHIR";
 import { workerContext } from "../WorkerContext/WorkerProvider";
 
 export const SearchBar = ({ children }) => {
-  const { searchTerm, setSearchTerm, getVariables } = useContext(myContext);
+  const { getVariables } = useContext(myContext);
   const { worker } = useContext(workerContext);
+  const [searchTerm, setSearchTerm] = useState("");
+  const searchBar = useRef();
+
   const navigate = useNavigate();
+
   useEffect(() => {
-    getVariables("");
-  }, []);
+    getVariables(searchTerm, worker);
+  }, [searchTerm]);
 
   return (
     <div className="dd-table-wrapper">
@@ -36,16 +40,13 @@ export const SearchBar = ({ children }) => {
           <input
             id="inputText"
             type="text"
+            ref={searchBar}
             placeholder="Search by value..."
-            value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-            }}
           />
 
           <button
             className="search-button"
-            onClick={(e) => getVariables(searchTerm, setSearchTerm, worker)}
+            onClick={() => setSearchTerm(searchBar.current.value)}
           >
             Search
           </button>
@@ -53,7 +54,6 @@ export const SearchBar = ({ children }) => {
             className="clear-button"
             onClick={() => {
               setSearchTerm("");
-              getVariables("", setSearchTerm, worker);
             }}
           >
             X

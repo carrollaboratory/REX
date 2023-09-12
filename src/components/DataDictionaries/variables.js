@@ -15,8 +15,6 @@ export const Variables = () => {
     observationData,
     activityData,
     getVariables,
-    searchTerm,
-    setSearchTerm,
   } = useContext(myContext);
   const { worker } = useContext(workerContext);
 
@@ -43,10 +41,6 @@ export const Variables = () => {
   //     return observationData;
   //   }
   // };
-
-  useEffect(() => {
-    getVariables(searchTerm, setSearchTerm, worker);
-  }, []);
 
   const getObservationMatch = (observation) => {
     for (let activity of activityData) {

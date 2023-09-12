@@ -196,8 +196,6 @@ export const AppFHIR = () => {
         filterText,
         titleData,
         getDataDictionaryReferences,
-        searchTerm,
-        setSearchTerm,
         getVariables,
         observationData,
         activityData,
