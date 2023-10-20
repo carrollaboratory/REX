@@ -30,8 +30,8 @@ function DetailsView() {
 
   const replaceString = (str) => {
     return str.replace(
-      'a href="study.cgi?study_id=',
-      'a href="https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id="'
+      "study.cgi?study_id=",
+      "https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id="
     );
   };
 
