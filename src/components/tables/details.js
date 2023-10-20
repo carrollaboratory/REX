@@ -28,6 +28,13 @@ function DetailsView() {
   const { studyId } = useParams();
   setSelectedStudy(studyId);
 
+  const replaceString = (str) => {
+    return str.replace(
+      'a href="study.cgi?study_id=',
+      'a href="https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id="'
+    );
+  };
+
   useEffect(() => {
     setLoading(true);
     loadCriticalData();
@@ -101,7 +108,9 @@ function DetailsView() {
                       <div className="title-div">Description</div>
                       <div>
                         {" "}
-                        {HtmlReactParser(propData?.resource?.description)}
+                        {HtmlReactParser(
+                          replaceString(propData?.resource?.description)
+                        )}
                       </div>
                     </>
                   ) : (

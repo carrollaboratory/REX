@@ -3,8 +3,8 @@ import { myContext } from "../AppFHIR";
 import "./detailsDataDictionary.css";
 import { DataDictionaryTableDetails } from "./dataDictionaryTableDetails/dataDictionaryTableDetails";
 import { useNavigate } from "react-router-dom";
-import { capitalizeWord } from "../DataDictionaries/utilities";
 import { workerContext } from "../WorkerContext/WorkerProvider";
+import { capitalizeWord } from "../DataDictionaries/utilities";
 
 export const DetailsDataDictionary = ({ propData }) => {
   const { getDetailsDD, dataDictionary } = useContext(myContext);

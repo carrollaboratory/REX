@@ -103,6 +103,17 @@
           )
             .then((res) => res.json())
             .then((data) => postMessage({ type: "detailsDD", data }))
+        : propData?.resource?.keyword?.[0]?.coding?.[0]?.code === "INCLUDE"
+        ? checkFetch(
+            urlEndpoint +
+              "/ActivityDefinition?_tag=" +
+              propData?.resource?.keyword?.[0]?.coding?.[0]?.code,
+            {
+              method: "GET",
+            }
+          )
+            .then((res) => res.json())
+            .then((data) => postMessage({ type: "detailsDD", data }))
         : valueSplit.length > 2
         ? checkFetch(
             urlEndpoint + "/ActivityDefinition?_tag=" + secondValue + "_DD",

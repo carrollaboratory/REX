@@ -5,8 +5,8 @@ import LoadingSpinner from "../LoadingSpinner/loadingSpinner";
 import { Link } from "react-router-dom";
 import "./dataDictionary.css";
 import { SearchBar } from "./searchBar";
-import { capitalizeWord } from "./utilities";
 import { workerContext } from "../WorkerContext/WorkerProvider";
+import { capitalizeWord } from "./utilities";
 
 export const Variables = () => {
   const {

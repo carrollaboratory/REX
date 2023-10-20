@@ -97,9 +97,19 @@ function Table() {
       name: <b>Related Artifact</b>,
       selector: (row) =>
         row?.resource?.relatedArtifact ? (
-          <a href={row?.resource?.relatedArtifact[0].url} target="_blank">
-            {row?.resource?.relatedArtifact[0].url}
-          </a>
+          row?.resource?.relatedArtifact[0]?.label === "DbGaP" &&
+          !row?.resource?.relatedArtifact[0]?.url.startsWith("http") ? (
+            <a
+              href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${row?.resource?.relatedArtifact[0].url}`}
+              target="_blank"
+            >
+              {row?.resource?.relatedArtifact[0].url}
+            </a>
+          ) : (
+            <a href={row?.resource?.relatedArtifact[0].url} target="_blank">
+              {row?.resource?.relatedArtifact[0].url}
+            </a>
+          )
         ) : (
           ""
         ),

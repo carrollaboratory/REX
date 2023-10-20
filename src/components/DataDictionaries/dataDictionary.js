@@ -3,9 +3,9 @@ import "./dataDictionary.css";
 import { authContext, myContext } from "../AppFHIR";
 import { Link } from "react-router-dom";
 import { Variables } from "./variables";
-import { capitalizeWord } from "./utilities";
 import { SearchBar } from "./searchBar";
 import { workerContext } from "../WorkerContext/WorkerProvider";
+import { capitalizeWord } from "./utilities";
 
 function DataDictionary() {
   const [data, setData] = useState({});
