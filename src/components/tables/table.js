@@ -70,7 +70,7 @@ function Table() {
     {
       name: <b>Description</b>,
       selector: (row) =>
-        row?.resource?.description === "TBD"
+        !row?.resource?.description || row?.resource?.description === "TBD"
           ? ""
           : HtmlReactParser(ellipsisString(row.resource?.description)),
       wrap: true,
