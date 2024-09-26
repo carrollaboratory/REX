@@ -46,7 +46,7 @@ export const SearchBar = ({ children }) => {
 
           <button
             className="search-button"
-            onClick={() => setSearchTerm(searchBar.current.value)}
+            onClick={() => setSearchTerm(searchBar.current.defaultValue)}
           >
             Search
           </button>
